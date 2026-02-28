@@ -10,16 +10,16 @@
 html { scroll-behavior: smooth; }
 
 :root {
-  --bg:       #0a0508;
-  --bg2:      #130a0f;
-  --bg3:      #1a0d14;
+  --bg:       #fafafa;
+  --bg2:      #f2f2f4;
+  --bg3:      #e8e8ec;
   --cyan:     #d4337a;
   --green:    #e8559a;
   --purple:   #b02060;
   --red:      #c0185a;
-  --white:    #f5e8ef;
-  --muted:    #6a4458;
-  --border:   rgba(212,51,122,0.15);
+  --white:    #1a0a12;
+  --muted:    #9a7080;
+  --border:   rgba(212,51,122,0.18);
   --font-mono: 'Share Tech Mono', monospace;
   --font-head: 'Syne', sans-serif;
   --font-body: 'DM Sans', sans-serif;
@@ -50,7 +50,7 @@ body::before {
   content:'';
   position:fixed; inset:0; z-index:0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity:.025; pointer-events:none;
+  opacity:.015; pointer-events:none;
 }
 
 /* ══════════════════════════════════════
@@ -60,7 +60,7 @@ nav {
   position: fixed; top:0; left:0; right:0; z-index:500;
   display:flex; align-items:center; justify-content:space-between;
   padding: 20px 60px;
-  background: rgba(7,11,16,.85);
+  background: rgba(250,250,250,.92);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
@@ -91,7 +91,7 @@ nav {
 .nav-links a {
   font-family: var(--font-mono);
   font-size:13px;
-  color: var(--muted);
+  color: #7a5060;
   text-decoration:none;
   padding: 8px 18px;
   border: 1px solid transparent;
@@ -154,9 +154,9 @@ nav {
 .orb {
   position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none;
 }
-.orb-1 { width:500px; height:500px; background:rgba(212,51,122,.08); top:-100px; right:-100px; animation: float-orb 8s ease-in-out infinite; }
-.orb-2 { width:350px; height:350px; background:rgba(176,32,96,.06); bottom:-50px; left:10%; animation: float-orb 10s ease-in-out infinite reverse; }
-.orb-3 { width:250px; height:250px; background:rgba(232,85,154,.05); top:40%; left:40%; animation: float-orb 12s ease-in-out infinite 2s; }
+.orb-1 { width:500px; height:500px; background:rgba(212,51,122,.12); top:-100px; right:-100px; animation: float-orb 8s ease-in-out infinite; }
+.orb-2 { width:350px; height:350px; background:rgba(176,32,96,.08); bottom:-50px; left:10%; animation: float-orb 10s ease-in-out infinite reverse; }
+.orb-3 { width:250px; height:250px; background:rgba(232,85,154,.07); top:40%; left:40%; animation: float-orb 12s ease-in-out infinite 2s; }
 @keyframes float-orb {
   0%,100%{ transform:translate(0,0) scale(1); }
   50%{ transform:translate(20px,-30px) scale(1.05); }
@@ -189,12 +189,12 @@ nav {
   margin-bottom: 32px;
 }
 .hero-title .accent { color: var(--cyan); }
-.hero-title .line2 { color: var(--muted); font-weight: 600; }
+.hero-title .line2 { color: #c090a8; font-weight: 600; }
 
 .hero-desc {
   font-size: 17px;
   line-height: 1.75;
-  color: #7a8fa0;
+  color: #6a5060;
   max-width: 540px;
   margin-bottom: 48px;
 }
@@ -236,10 +236,11 @@ nav {
 .terminal {
   position: absolute;
   right: 5%;
-  top: 50%;
-  transform: translateY(-50%);
+  bottom: 60px;
+  top: auto;
+  transform: none;
   width: 420px;
-  background: rgba(12,18,25,.9);
+  background: #ffffff;
   border: 1px solid rgba(212,51,122,.2);
   border-radius: 8px;
   overflow: hidden;
@@ -260,8 +261,8 @@ nav {
 .term-title { font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-left:8px; }
 .term-body { padding: 20px; font-family: var(--font-mono); font-size: 13px; line-height: 2; }
 .t-prompt { color: var(--green); }
-.t-cmd { color: var(--white); }
-.t-out { color: var(--muted); }
+.t-cmd { color: #1a0a12; }
+.t-out { color: #7a5060; }
 .t-cyan { color: #d4337a; }
 .t-purple { color: var(--purple); }
 .t-red-t { color: var(--red); }
@@ -277,7 +278,7 @@ nav {
   display:grid;
   grid-template-columns: repeat(4,1fr);
   border-top: 1px solid var(--border);
-  background: rgba(12,18,25,.6);
+  background: rgba(242,242,244,.8);
   backdrop-filter: blur(8px);
 }
 .stat-c {
@@ -298,7 +299,7 @@ nav {
   font-family: var(--font-head);
   font-size: 40px;
   font-weight: 800;
-  color: var(--white);
+  color: #1a0a12;
   line-height:1;
 }
 .stat-num .unit { font-size:24px; color:var(--cyan); }
@@ -306,7 +307,7 @@ nav {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing:2px;
-  color: var(--muted);
+  color: #9a7080;
   margin-top:6px;
   text-transform:uppercase;
 }
@@ -326,16 +327,16 @@ nav {
 }
 .info-text h2 {
   font-family:var(--font-head); font-size:clamp(32px,4vw,52px); font-weight:800;
-  line-height:1.1; margin-bottom:24px; letter-spacing:-1px;
+  line-height:1.1; margin-bottom:24px; letter-spacing:-1px; color:#1a0a12;
 }
-.info-text p { font-size:16px; line-height:1.8; color:#7a8fa0; margin-bottom:20px; }
+.info-text p { font-size:16px; line-height:1.8; color:#6a5060; margin-bottom:20px; }
 
 .pillars {
   display:grid; grid-template-columns:1fr 1fr; gap:16px;
 }
 .pillar {
   border: 1px solid var(--border);
-  background: rgba(212,51,122,.02);
+  background: rgba(212,51,122,.04);
   padding: 24px;
   position:relative; overflow:hidden;
   transition: all .3s;
@@ -346,7 +347,7 @@ nav {
   font-family:var(--font-head); font-size:16px; font-weight:700;
   color:var(--white); margin-bottom:8px;
 }
-.pillar-desc { font-size:13px; line-height:1.6; color:var(--muted); }
+.pillar-desc { font-size:13px; line-height:1.6; color:#9a7080; }
 .pillar-badge {
   position:absolute; top:12px; right:12px;
   font-family:var(--font-mono); font-size:9px; letter-spacing:1px;
@@ -367,18 +368,18 @@ nav {
 
 .page-label {
   font-family:var(--font-mono); font-size:11px; letter-spacing:4px;
-  color:var(--muted); margin-bottom:8px; text-transform:uppercase;
+  color:#9a7080; margin-bottom:8px; text-transform:uppercase;
 }
 .page-title {
   font-family:var(--font-head); font-size:clamp(40px,6vw,80px);
-  font-weight:800; line-height:.95; letter-spacing:-2px;
+  font-weight:800; line-height:.95; letter-spacing:-2px; color:#1a0a12;
 }
 .page-title span { color:#d4337a; }
 
 .services-grid {
   display:grid; grid-template-columns: repeat(3,1fr);
   gap: 1px;
-  background: var(--border);
+  background: rgba(212,51,122,.12);
   margin-bottom: 1px;
 }
 
@@ -389,7 +390,7 @@ nav {
   cursor:none;
   transition: background .3s;
 }
-.svc-card:hover { background: var(--bg2); }
+.svc-card:hover { background: #efeff3; }
 
 /* Color accent bar top */
 .svc-card::before {
@@ -404,7 +405,7 @@ nav {
 
 .svc-number {
   font-family:var(--font-mono); font-size:11px; letter-spacing:3px;
-  color:var(--muted); margin-bottom:32px;
+  color:#b090a0; margin-bottom:32px;
 }
 
 .svc-icon {
@@ -424,7 +425,7 @@ nav {
 .svc-3 .svc-title { color:#ff3b5c; }
 
 .svc-desc {
-  font-size:15px; line-height:1.8; color:#7a8fa0;
+  font-size:15px; line-height:1.8; color:#6a5060;
   margin-bottom:32px;
 }
 
@@ -441,7 +442,7 @@ nav {
 
 .svc-features { list-style:none; margin-bottom:40px; }
 .svc-features li {
-  font-size:14px; color:#7a8fa0;
+  font-size:14px; color:#6a5060;
   padding:10px 0;
   border-bottom:1px solid var(--border);
   display:flex; align-items:center; gap:12px;
@@ -488,7 +489,7 @@ nav {
 .svc-extra-desc { font-size:15px; line-height:1.8; color:#7a8fa0; margin-bottom:32px; }
 .svc-extra-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
 .threat-card {
-  border:1px solid rgba(255,59,92,.15); background:rgba(255,59,92,.03);
+  border:1px solid rgba(255,59,92,.15); background:#fff5f7;
   padding:20px;
   transition:all .3s;
 }
@@ -501,6 +502,7 @@ nav {
 .process-strip {
   display:grid; grid-template-columns:repeat(5,1fr);
   border-top:1px solid var(--border);
+  background:#f5f5f8;
 }
 .proc-step {
   padding:32px 28px;
@@ -509,8 +511,8 @@ nav {
 }
 .proc-step:last-child { border-right:none; }
 .proc-num { font-family:var(--font-mono); font-size:32px; color:rgba(212,51,122,.15); margin-bottom:8px; }
-.proc-title { font-family:var(--font-head); font-size:14px; font-weight:700; color:var(--white); margin-bottom:6px; }
-.proc-desc { font-family:var(--font-mono); font-size:11px; color:var(--muted); line-height:1.5; }
+.proc-title { font-family:var(--font-head); font-size:14px; font-weight:700; color:#1a0a12; margin-bottom:6px; }
+.proc-desc { font-family:var(--font-mono); font-size:11px; color:#9a7080; line-height:1.5; }
 
 /* ══════════════════════════════════════
    CONTACT — PAGE 3
@@ -532,11 +534,11 @@ nav {
 .ci-title {
   font-family:var(--font-head); font-size:clamp(36px,4vw,60px);
   font-weight:800; letter-spacing:-1.5px; line-height:1;
-  margin-bottom:12px;
+  margin-bottom:12px; color:#1a0a12;
 }
 .ci-title span { color:#d4337a; }
 
-.ci-sub { font-size:15px; color:#7a8fa0; line-height:1.7; margin-bottom:56px; max-width:400px; }
+.ci-sub { font-size:15px; color:#6a5060; line-height:1.7; margin-bottom:56px; max-width:400px; }
 
 .contact-item {
   display:flex; gap:20px; align-items:flex-start;
@@ -556,8 +558,8 @@ nav {
   font-family:var(--font-mono); font-size:10px; letter-spacing:3px;
   color:var(--muted); text-transform:uppercase; margin-bottom:4px;
 }
-.ci-detail-value { font-size:15px; color:var(--white); font-weight:500; }
-.ci-detail-value a { color:var(--white); text-decoration:none; transition:color .2s; }
+.ci-detail-value { font-size:15px; color:#1a0a12; font-weight:500; }
+.ci-detail-value a { color:#1a0a12; text-decoration:none; transition:color .2s; }
 .ci-detail-value a:hover { color:#d4337a; }
 
 /* Social links */
@@ -568,7 +570,7 @@ nav {
   background:transparent; padding:8px 16px; cursor:none;
   text-decoration:none; transition:all .2s;
 }
-.social-btn:hover { background:rgba(212,51,122,.08); border-color:#d4337a; }
+.social-btn:hover { background:rgba(212,51,122,.12); border-color:#d4337a; }
 
 /* Hours / status */
 .status-box {
@@ -589,7 +591,7 @@ nav {
 }
 .form-header { margin-bottom:40px; }
 .form-header .tag { font-family:var(--font-mono); font-size:11px; letter-spacing:3px; color:var(--cyan); margin-bottom:12px; }
-.form-header h3 { font-family:var(--font-head); font-size:32px; font-weight:800; letter-spacing:-0.5px; }
+.form-header h3 { font-family:var(--font-head); font-size:32px; font-weight:800; letter-spacing:-0.5px; color:#1a0a12; }
 
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
 
@@ -599,9 +601,9 @@ nav {
   color:var(--muted); text-transform:uppercase;
 }
 .field input, .field textarea, .field select {
-  background: rgba(255,255,255,.03);
-  border:1px solid var(--border);
-  color:var(--white);
+  background: #ffffff;
+  border:1px solid rgba(212,51,122,.2);
+  color:#1a0a12;
   font-family:var(--font-mono); font-size:13px;
   padding:14px 16px;
   outline:none;
@@ -610,7 +612,7 @@ nav {
   cursor:none;
   -webkit-appearance:none;
 }
-.field input::placeholder, .field textarea::placeholder { color:var(--muted); }
+.field input::placeholder, .field textarea::placeholder { color:#b090a0; }
 .field input:focus, .field textarea:focus, .field select:focus {
   border-color:rgba(212,51,122,.5);
   background:rgba(212,51,122,.03);
@@ -622,9 +624,9 @@ nav {
 .field-full { margin-bottom:16px; }
 .field-full input, .field-full textarea, .field-full select {
   width:100%;
-  background: rgba(255,255,255,.03);
-  border:1px solid var(--border);
-  color:var(--white);
+  background: #ffffff;
+  border:1px solid rgba(212,51,122,.2);
+  color:#1a0a12;
   font-family:var(--font-mono); font-size:13px;
   padding:14px 16px;
   outline:none;
@@ -634,7 +636,7 @@ nav {
   -webkit-appearance:none;
   display:block;
 }
-.field-full input::placeholder, .field-full textarea::placeholder { color:var(--muted); }
+.field-full input::placeholder, .field-full textarea::placeholder { color:#b090a0; }
 .field-full label { font-family:var(--font-mono); font-size:11px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; display:block; margin-bottom:8px; }
 .field-full input:focus, .field-full textarea:focus, .field-full select:focus {
   border-color:rgba(212,51,122,.5);
@@ -646,7 +648,7 @@ nav {
   display:flex; align-items:flex-start; gap:12px; margin-bottom:28px;
 }
 .form-check input { width:16px; height:16px; margin-top:2px; accent-color:var(--cyan); cursor:none; }
-.form-check label { font-size:13px; color:var(--muted); line-height:1.5; cursor:none; }
+.form-check label { font-size:13px; color:#7a5060; line-height:1.5; cursor:none; }
 .form-check a { color:#d4337a; }
 
 .btn-submit {
@@ -684,11 +686,11 @@ nav {
 .map-section {
   border-top:1px solid var(--border);
   padding:60px;
-  background:var(--bg2);
+  background:#eeeef2;
 }
 .map-box {
   width:100%; height:300px;
-  background:var(--bg3);
+  background:#e0e0e8;
   border:1px solid var(--border);
   display:flex; align-items:center; justify-content:center;
   position:relative; overflow:hidden;
@@ -707,11 +709,11 @@ footer {
   border-top:1px solid var(--border);
   padding:32px 60px;
   display:flex; align-items:center; justify-content:space-between;
-  background:rgba(7,11,16,.9);
+  background:rgba(245,245,248,.95);
 }
-.footer-left { font-family:var(--font-mono); font-size:12px; color:var(--muted); }
+.footer-left { font-family:var(--font-mono); font-size:12px; color:#9a7080; }
 .footer-right { font-family:var(--font-mono); font-size:11px; color:var(--muted); display:flex; gap:24px; }
-.footer-right a { color:var(--muted); text-decoration:none; transition:color .2s; }
+.footer-right a { color:#9a7080; text-decoration:none; transition:color .2s; }
 .footer-right a:hover { color:#d4337a; }
 
 /* ══════════════════════════════════════
@@ -2994,35 +2996,35 @@ QH//2Q==" alt="ATENEA" style="height:64px;width:auto;" />
 
 
   <!-- MAFI Featured Showcase -->
-  <div style="background:linear-gradient(135deg, rgba(245,158,11,.06) 0%, rgba(239,68,68,.06) 100%); border-top:1px solid rgba(245,158,11,.15); border-bottom:1px solid rgba(245,158,11,.15); padding:60px 60px;">
+  <div style="background:linear-gradient(135deg, rgba(245,158,11,.08) 0%, rgba(239,68,68,.06) 100%); border-top:1px solid rgba(245,158,11,.15); border-bottom:1px solid rgba(245,158,11,.15); padding:60px 60px;">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
       <div>
         <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:3px;color:#f59e0b;text-transform:uppercase;margin-bottom:16px;">// PRODUCTO ESTRELLA</p>
-        <h2 style="font-family:var(--font-head);font-size:clamp(36px,4vw,60px);font-weight:800;letter-spacing:-1.5px;line-height:1;color:var(--white);margin-bottom:20px;">
+        <h2 style="font-family:var(--font-head);font-size:clamp(36px,4vw,60px);font-weight:800;letter-spacing:-1.5px;line-height:1;color:#1a0a12;margin-bottom:20px;">
           ¿QUÉ ES<br><span style="color:#f59e0b;">MAFI?</span>
         </h2>
-        <p style="font-size:15px;line-height:1.8;color:#7a8fa0;margin-bottom:28px;">
+        <p style="font-size:15px;line-height:1.8;color:#6a5060;margin-bottom:28px;">
           <strong style="color:var(--white);">Maestro Análisis Financiero Inteligente</strong> es una plataforma SaaS diseñada para instituciones financieras, fintechs y empresas que necesitan evaluar riesgos crediticios y perfiles socioeconómicos de forma rápida, precisa y automatizada.
         </p>
-        <p style="font-size:15px;line-height:1.8;color:#7a8fa0;margin-bottom:36px;">
+        <p style="font-size:15px;line-height:1.8;color:#6a5060;margin-bottom:36px;">
           Su motor de decisiones procesa miles de variables en segundos, entregando un score crediticio completo, alertas de riesgo y recomendaciones accionables integradas directamente en tus flujos de negocio.
         </p>
         <a href="#" class="btn-cyan" onclick="showPage('contact');return false;" style="background:#f59e0b;clip-path:polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);display:inline-block;font-family:var(--font-mono);font-size:13px;letter-spacing:1px;color:#070b10;border:none;padding:14px 32px;cursor:none;text-decoration:none;transition:all .2s;">SOLICITAR DEMO GRATUITA →</a>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-        <div style="border:1px solid rgba(245,158,11,.2);background:rgba(245,158,11,.04);padding:28px 24px;">
+        <div style="border:1px solid rgba(245,158,11,.25);background:#fffbf0;padding:28px 24px;">
           <div style="font-size:36px;font-family:var(--font-head);font-weight:800;color:#f59e0b;line-height:1;margin-bottom:6px;">&lt;2s</div>
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">RESPUESTA POR CONSULTA</div>
         </div>
-        <div style="border:1px solid rgba(245,158,11,.2);background:rgba(245,158,11,.04);padding:28px 24px;">
+        <div style="border:1px solid rgba(245,158,11,.25);background:#fffbf0;padding:28px 24px;">
           <div style="font-size:36px;font-family:var(--font-head);font-weight:800;color:#f59e0b;line-height:1;margin-bottom:6px;">98%</div>
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">PRECISIÓN DEL MODELO</div>
         </div>
-        <div style="border:1px solid rgba(245,158,11,.2);background:rgba(245,158,11,.04);padding:28px 24px;">
+        <div style="border:1px solid rgba(245,158,11,.25);background:#fffbf0;padding:28px 24px;">
           <div style="font-size:36px;font-family:var(--font-head);font-weight:800;color:#f59e0b;line-height:1;margin-bottom:6px;">50+</div>
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">VARIABLES ANALIZADAS</div>
         </div>
-        <div style="border:1px solid rgba(245,158,11,.2);background:rgba(245,158,11,.04);padding:28px 24px;">
+        <div style="border:1px solid rgba(245,158,11,.25);background:#fffbf0;padding:28px 24px;">
           <div style="font-size:36px;font-family:var(--font-head);font-weight:800;color:#f59e0b;line-height:1;margin-bottom:6px;">API</div>
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;">INTEGRACIÓN NATIVA</div>
         </div>
@@ -3032,7 +3034,7 @@ QH//2Q==" alt="ATENEA" style="height:64px;width:auto;" />
 
 
   <!-- ATENEA Featured Showcase -->
-  <div style="background:linear-gradient(135deg, rgba(201,168,76,.05) 0%, rgba(232,213,163,.04) 100%); border-top:1px solid rgba(201,168,76,.18); border-bottom:1px solid rgba(201,168,76,.18); padding:70px 60px;">
+  <div style="background:linear-gradient(135deg, rgba(201,168,76,.08) 0%, rgba(232,213,163,.06) 100%); border-top:1px solid rgba(201,168,76,.18); border-bottom:1px solid rgba(201,168,76,.18); padding:70px 60px;">
     <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:80px;align-items:center;">
 
       <!-- Left: info -->
@@ -3252,10 +3254,10 @@ QH//2Q==" alt="ATENEA" style="height:80px;width:auto;" />
             <h2 style="font-family:var(--font-head);font-size:clamp(28px,3vw,42px);font-weight:800;letter-spacing:-1px;line-height:1;color:var(--white);">COBRANZA<br><span style="color:#c9a84c;">INTELIGENTE</span></h2>
           </div>
         </div>
-        <p style="font-size:15px;line-height:1.85;color:#7a8fa0;margin-bottom:20px;">
+        <p style="font-size:15px;line-height:1.85;color:#6a5060;margin-bottom:20px;">
           <strong style="color:var(--white);">ATENEA</strong> es un CRM diseñado desde cero para equipos de cobranza. Centraliza la gestión de deudores, automatiza comunicaciones y activa campañas masivas con un solo clic — mientras tus datos se actualizan en tiempo real desde múltiples fuentes.
         </p>
-        <p style="font-size:15px;line-height:1.85;color:#7a8fa0;margin-bottom:36px;">
+        <p style="font-size:15px;line-height:1.85;color:#6a5060;margin-bottom:36px;">
           Su módulo <strong style="color:#c9a84c;">Turbo Cobro</strong> prioriza automáticamente tu cartera por probabilidad de pago, permitiendo que tus gestores se enfoquen en lo que más genera recuperación.
         </p>
 
@@ -3273,21 +3275,21 @@ QH//2Q==" alt="ATENEA" style="height:80px;width:auto;" />
 
       <!-- Right: feature cards -->
       <div style="display:grid;grid-template-columns:1fr;gap:1px;background:rgba(201,168,76,.1);">
-        <div style="background:var(--bg);padding:24px 28px;border-left:3px solid #c9a84c;">
+        <div style="background:#fafafa;padding:24px 28px;border-left:3px solid #c9a84c;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:#c9a84c;margin-bottom:8px;">01 — ACTUALIZACIÓN DE DEUDORES</div>
-          <div style="font-size:13px;color:#7a8fa0;line-height:1.6;">Sincronización automática de datos de contacto, empleo, domicilio y estado financiero desde fuentes externas. Siempre trabajas con información vigente.</div>
+          <div style="font-size:13px;color:#6a5060;line-height:1.6;">Sincronización automática de datos de contacto, empleo, domicilio y estado financiero desde fuentes externas. Siempre trabajas con información vigente.</div>
         </div>
-        <div style="background:var(--bg);padding:24px 28px;border-left:3px solid #c9a84c;">
+        <div style="background:#fafafa;padding:24px 28px;border-left:3px solid #c9a84c;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:#c9a84c;margin-bottom:8px;">02 — COBRANZA MASIVA</div>
-          <div style="font-size:13px;color:#7a8fa0;line-height:1.6;">Lanza campañas multi-canal (SMS, email, llamadas, WhatsApp) a segmentos completos de tu cartera con un solo proceso automatizado.</div>
+          <div style="font-size:13px;color:#6a5060;line-height:1.6;">Lanza campañas multi-canal (SMS, email, llamadas, WhatsApp) a segmentos completos de tu cartera con un solo proceso automatizado.</div>
         </div>
-        <div style="background:var(--bg);padding:24px 28px;border-left:3px solid #c9a84c;">
+        <div style="background:#fafafa;padding:24px 28px;border-left:3px solid #c9a84c;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:#c9a84c;margin-bottom:8px;">03 — TURBO COBRO</div>
-          <div style="font-size:13px;color:#7a8fa0;line-height:1.6;">Motor de priorización inteligente que clasifica deudores por propensión de pago, optimizando el tiempo de tus gestores y aumentando la recuperación.</div>
+          <div style="font-size:13px;color:#6a5060;line-height:1.6;">Motor de priorización inteligente que clasifica deudores por propensión de pago, optimizando el tiempo de tus gestores y aumentando la recuperación.</div>
         </div>
-        <div style="background:var(--bg);padding:24px 28px;border-left:3px solid #c9a84c;">
+        <div style="background:#fafafa;padding:24px 28px;border-left:3px solid #c9a84c;">
           <div style="font-family:var(--font-mono);font-size:11px;letter-spacing:2px;color:#c9a84c;margin-bottom:8px;">04 — REPORTERÍA PERSONALIZADA</div>
-          <div style="font-size:13px;color:#7a8fa0;line-height:1.6;">Dashboards configurables, reportes ejecutivos automáticos y alertas de KPIs de cobranza en tiempo real para toma de decisiones ágil.</div>
+          <div style="font-size:13px;color:#6a5060;line-height:1.6;">Dashboards configurables, reportes ejecutivos automáticos y alertas de KPIs de cobranza en tiempo real para toma de decisiones ágil.</div>
         </div>
       </div>
 
@@ -3295,15 +3297,15 @@ QH//2Q==" alt="ATENEA" style="height:80px;width:auto;" />
   </div>
 
   <!-- Ciberseguridad: Mega Showcase -->
-  <div style="background:var(--bg2);border-top:1px solid rgba(255,59,92,.2);">
+  <div style="background:#f8f4f6;border-top:1px solid rgba(255,59,92,.2);">
 
     <!-- Hero header -->
     <div style="padding:70px 60px 40px;border-bottom:1px solid rgba(255,59,92,.12);position:relative;overflow:hidden;">
-      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%, rgba(255,59,92,.06) 0%, transparent 60%);pointer-events:none;"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 50%, rgba(255,59,92,.05) 0%, transparent 60%);pointer-events:none;"></div>
       <div style="position:relative;z-index:1;display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;">
         <div>
           <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:4px;color:#ff3b5c;text-transform:uppercase;margin-bottom:16px;">// CIBERSEGURIDAD AVANZADA — 04 / 04</p>
-          <h2 style="font-family:var(--font-head);font-size:clamp(44px,6vw,80px);font-weight:800;letter-spacing:-2px;line-height:.95;color:var(--white);margin-bottom:24px;">
+          <h2 style="font-family:var(--font-head);font-size:clamp(44px,6vw,80px);font-weight:800;letter-spacing:-2px;line-height:.95;color:#1a0a12;margin-bottom:24px;">
             SEGURIDAD<br><span style="color:#ff3b5c;">DE ÉLITE</span>
           </h2>
           <p style="font-size:16px;line-height:1.8;color:#7a8fa0;max-width:620px;">
@@ -3319,91 +3321,91 @@ QH//2Q==" alt="ATENEA" style="height:80px;width:auto;" />
             <span style="width:12px;height:32px;background:#ff3b5c;"></span>
             <span style="width:12px;height:32px;background:rgba(255,59,92,.2);"></span>
           </div>
-          <div style="font-family:var(--font-head);font-size:28px;font-weight:800;color:#ff3b5c;">CRÍTICO</div>
+          <div style="font-family:var(--font-head);font-size:28px;font-weight:800;color:#c0185a;">CRÍTICO</div>
           <a href="#" onclick="showPage('contact');return false;" style="display:inline-block;font-family:var(--font-mono);font-size:12px;letter-spacing:2px;color:#070b10;background:#ff3b5c;padding:12px 24px;text-decoration:none;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);cursor:none;">CONTACTAR →</a>
         </div>
       </div>
     </div>
 
     <!-- Services grid: 6 categories -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,59,92,.08);">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,59,92,.06);">
 
       <!-- Pentest -->
-      <div style="background:var(--bg);padding:40px;transition:background .3s;" onmouseenter="this.style.background='#0c1219'" onmouseleave="this.style.background='#070b10'">
+      <div style="background:#fafafa;padding:40px;transition:background .3s;" onmouseenter="this.style.background='#f0f0f4'" onmouseleave="this.style.background='#fafafa'">
         <div style="font-size:28px;margin-bottom:12px;">⚔️</div>
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:#ff3b5c;margin-bottom:10px;text-transform:uppercase;">PENTESTING</div>
-        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;">Pruebas de Penetración</h4>
-        <p style="font-size:13px;color:#7a8fa0;line-height:1.7;margin-bottom:16px;">Simulación controlada de ataques reales para identificar vulnerabilidades antes que los atacantes.</p>
+        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#1a0a12;margin-bottom:12px;">Pruebas de Penetración</h4>
+        <p style="font-size:13px;color:#6a5060;line-height:1.7;margin-bottom:16px;">Simulación controlada de ataques reales para identificar vulnerabilidades antes que los atacantes.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Pentest Básico — Superficie externa</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Pentest Avanzado — Interno + externo</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Pentest Extenso — Full scope</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Web, móvil, redes e infraestructura</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Pentest Básico — Superficie externa</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Pentest Avanzado — Interno + externo</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Pentest Extenso — Full scope</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Web, móvil, redes e infraestructura</li>
         </ul>
       </div>
 
       <!-- Red/Purple Team -->
-      <div style="background:var(--bg);padding:40px;transition:background .3s;border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#0c1219'" onmouseleave="this.style.background='#070b10'">
+      <div style="background:#fafafa;padding:40px;transition:background .3s;border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#f0f0f4'" onmouseleave="this.style.background='#fafafa'">
         <div style="font-size:28px;margin-bottom:12px;">🎯</div>
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:#ff3b5c;margin-bottom:10px;text-transform:uppercase;">OPERACIONES DE EQUIPO</div>
-        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;">Red / Purple Team</h4>
-        <p style="font-size:13px;color:#7a8fa0;line-height:1.7;margin-bottom:16px;">Simulaciones avanzadas de adversarios reales con coordinación entre equipos ofensivos y defensivos.</p>
+        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#1a0a12;margin-bottom:12px;">Red / Purple Team</h4>
+        <p style="font-size:13px;color:#6a5060;line-height:1.7;margin-bottom:16px;">Simulaciones avanzadas de adversarios reales con coordinación entre equipos ofensivos y defensivos.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Red Team: ataque persistente APT</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Purple Team: colaboración ofensiva</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Simulación de cadena de ataque</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Reporte ejecutivo + técnico</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Red Team: ataque persistente APT</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Purple Team: colaboración ofensiva</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Simulación de cadena de ataque</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Reporte ejecutivo + técnico</li>
         </ul>
       </div>
 
       <!-- SOC -->
-      <div style="background:var(--bg);padding:40px;transition:background .3s;border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#0c1219'" onmouseleave="this.style.background='#070b10'">
+      <div style="background:#fafafa;padding:40px;transition:background .3s;border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#f0f0f4'" onmouseleave="this.style.background='#fafafa'">
         <div style="font-size:28px;margin-bottom:12px;">🖥️</div>
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:#ff3b5c;margin-bottom:10px;text-transform:uppercase;">CENTRO DE OPERACIONES</div>
-        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;">SOC I, SOC II &amp; NOC</h4>
-        <p style="font-size:13px;color:#7a8fa0;line-height:1.7;margin-bottom:16px;">Monitoreo continuo 24/7 de seguridad y redes con respuesta a incidentes en tiempo real.</p>
+        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#1a0a12;margin-bottom:12px;">SOC I, SOC II &amp; NOC</h4>
+        <p style="font-size:13px;color:#6a5060;line-height:1.7;margin-bottom:16px;">Monitoreo continuo 24/7 de seguridad y redes con respuesta a incidentes en tiempo real.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> SOC I: detección y alertas</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> SOC II: análisis e investigación</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> NOC: operaciones de red 24/7</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> SIEM, EDR y correlación de eventos</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> SOC I: detección y alertas</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> SOC II: análisis e investigación</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> NOC: operaciones de red 24/7</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> SIEM, EDR y correlación de eventos</li>
         </ul>
       </div>
 
       <!-- Cumplimiento -->
-      <div style="background:var(--bg);padding:40px;transition:background .3s;border-top:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#0c1219'" onmouseleave="this.style.background='#070b10'">
+      <div style="background:#fafafa;padding:40px;transition:background .3s;border-top:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#f0f0f4'" onmouseleave="this.style.background='#fafafa'">
         <div style="font-size:28px;margin-bottom:12px;">📋</div>
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:#ff3b5c;margin-bottom:10px;text-transform:uppercase;">NORMATIVA</div>
-        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;">Prevención y Cumplimiento</h4>
-        <p style="font-size:13px;color:#7a8fa0;line-height:1.7;margin-bottom:16px;">Alineación con marcos normativos internacionales y mejores prácticas del sector.</p>
+        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#1a0a12;margin-bottom:12px;">Prevención y Cumplimiento</h4>
+        <p style="font-size:13px;color:#6a5060;line-height:1.7;margin-bottom:16px;">Alineación con marcos normativos internacionales y mejores prácticas del sector.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> ISO 27001 / NIST / PCI-DSS</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> GDPR y regulaciones locales</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Políticas y buenas prácticas</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Concienciación y capacitación</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> ISO 27001 / NIST / PCI-DSS</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> GDPR y regulaciones locales</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Políticas y buenas prácticas</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Concienciación y capacitación</li>
         </ul>
       </div>
 
       <!-- Servicios Especializados -->
-      <div style="background:var(--bg);padding:40px;transition:background .3s;border-top:1px solid rgba(255,59,92,.08);border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#0c1219'" onmouseleave="this.style.background='#070b10'">
+      <div style="background:#fafafa;padding:40px;transition:background .3s;border-top:1px solid rgba(255,59,92,.08);border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#f0f0f4'" onmouseleave="this.style.background='#fafafa'">
         <div style="font-size:28px;margin-bottom:12px;">🔬</div>
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:#ff3b5c;margin-bottom:10px;text-transform:uppercase;">ESPECIALIZADO</div>
-        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;">Servicios Especializados</h4>
-        <p style="font-size:13px;color:#7a8fa0;line-height:1.7;margin-bottom:16px;">Soluciones a medida para necesidades de seguridad complejas y entornos críticos.</p>
+        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#1a0a12;margin-bottom:12px;">Servicios Especializados</h4>
+        <p style="font-size:13px;color:#6a5060;line-height:1.7;margin-bottom:16px;">Soluciones a medida para necesidades de seguridad complejas y entornos críticos.</p>
         <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;">
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Forense digital e investigación</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Respuesta a incidentes (IR)</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Threat hunting proactivo</li>
-          <li style="font-family:var(--font-mono);font-size:11px;color:#7a8fa0;"><span style="color:#ff3b5c;">▸</span> Seguridad en cloud y OT/ICS</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Forense digital e investigación</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Respuesta a incidentes (IR)</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Threat hunting proactivo</li>
+          <li style="font-family:var(--font-mono);font-size:11px;color:#6a5060;"><span style="color:#ff3b5c;">▸</span> Seguridad en cloud y OT/ICS</li>
         </ul>
       </div>
 
       <!-- Certificaciones -->
-      <div style="background:var(--bg);padding:40px;transition:background .3s;border-top:1px solid rgba(255,59,92,.08);border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#0c1219'" onmouseleave="this.style.background='#070b10'">
+      <div style="background:#fafafa;padding:40px;transition:background .3s;border-top:1px solid rgba(255,59,92,.08);border-left:1px solid rgba(255,59,92,.08);" onmouseenter="this.style.background='#f0f0f4'" onmouseleave="this.style.background='#fafafa'">
         <div style="font-size:28px;margin-bottom:12px;">🏅</div>
         <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:3px;color:#ff3b5c;margin-bottom:10px;text-transform:uppercase;">CREDENCIALES</div>
-        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:var(--white);margin-bottom:12px;">Certificaciones</h4>
-        <p style="font-size:13px;color:#7a8fa0;line-height:1.7;margin-bottom:16px;">Nuestros profesionales cuentan con las certificaciones más reconocidas de la industria.</p>
+        <h4 style="font-family:var(--font-head);font-size:20px;font-weight:800;color:#1a0a12;margin-bottom:12px;">Certificaciones</h4>
+        <p style="font-size:13px;color:#6a5060;line-height:1.7;margin-bottom:16px;">Nuestros profesionales cuentan con las certificaciones más reconocidas de la industria.</p>
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
           <span style="font-family:var(--font-mono);font-size:9px;color:#ff3b5c;border:1px solid rgba(255,59,92,.3);padding:3px 7px;">OSCP</span>
           <span style="font-family:var(--font-mono);font-size:9px;color:#ff3b5c;border:1px solid rgba(255,59,92,.3);padding:3px 7px;">OSWE</span>
@@ -3427,7 +3429,7 @@ QH//2Q==" alt="ATENEA" style="height:80px;width:auto;" />
     <!-- Certifications image banner -->
     <div style="padding:60px;border-top:1px solid rgba(255,59,92,.12);">
       <p style="font-family:var(--font-mono);font-size:11px;letter-spacing:4px;color:#ff3b5c;text-transform:uppercase;margin-bottom:32px;text-align:center;">// NUESTRAS CERTIFICACIONES INTERNACIONALES</p>
-      <div style="border:1px solid rgba(255,59,92,.15);background:rgba(255,59,92,.02);padding:8px;position:relative;overflow:hidden;">
+      <div style="border:1px solid rgba(255,59,92,.15);background:#fff8f9;padding:8px;position:relative;overflow:hidden;">
         <img src="data:image/png;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdC
 IFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAA
 AADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlk
@@ -6646,7 +6648,7 @@ AAAAAAAAAAAAAAAAAAAAAAAAAB//2Q==" alt="Certificaciones internacionales de cibers
 <!-- Toast -->
 <div class="toast" id="toast">
   <span>✓</span>
-  <span>¡Mensaje enviado! Te contactamos pronto.</span>
+  <span class="toast-msg">¡Mensaje enviado! Te contactamos pronto.</span>
 </div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -6683,29 +6685,71 @@ function triggerReveal() {
 triggerReveal();
 
 // ── Form submit ──
-function submitForm() {
-  const name = document.getElementById('f-name').value;
-  const terms = document.getElementById('f-terms').checked;
+async function submitForm() {
+  const name    = document.getElementById('f-name').value.trim();
+  const terms   = document.getElementById('f-terms').checked;
+  const btn     = document.querySelector('.btn-submit');
 
+  // Validation
   if (!name) {
-    document.getElementById('f-name').style.borderColor = 'var(--red)';
+    document.getElementById('f-name').style.borderColor = '#d4337a';
+    document.getElementById('f-name').focus();
     return;
   }
   if (!terms) {
-    document.getElementById('f-terms').style.outline = '2px solid var(--red)';
+    document.getElementById('f-terms').style.outline = '2px solid #d4337a';
     return;
   }
 
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 4000);
+  // Collect data
+  const data = {
+    nombre:   name,
+    empresa:  document.getElementById('f-company').value,
+    telefono: document.getElementById('f-phone').value,
+    servicio: document.getElementById('f-service').value,
+    mensaje:  document.getElementById('f-message').value,
+  };
 
-  ['f-name','f-company','f-email','f-phone','f-message'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el){ el.value = ''; el.style.borderColor = ''; }
-  });
-  document.getElementById('f-service').selectedIndex = 0;
-  document.getElementById('f-terms').checked = false;
+  // Disable button while sending
+  btn.disabled = true;
+  btn.querySelector('span').textContent = 'ENVIANDO...';
+
+  try {
+    const res = await fetch('https://formspree.io/f/xojnbgqo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ ...data, _replyto: 'jose.sanchez@cata-rd.com' })
+    });
+
+    if (res.ok) {
+      // Success toast
+      const toast = document.getElementById('toast');
+      toast.querySelector('.toast-msg').textContent = '¡Mensaje enviado! Te contactamos pronto.';
+      toast.style.borderColor = 'rgba(212,51,122,.4)';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+
+      // Reset form
+      ['f-name','f-company','f-phone','f-message'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) { el.value = ''; el.style.borderColor = ''; }
+      });
+      document.getElementById('f-service').selectedIndex = 0;
+      document.getElementById('f-terms').checked = false;
+      document.getElementById('f-terms').style.outline = '';
+    } else {
+      throw new Error('Error al enviar');
+    }
+  } catch(e) {
+    const toast = document.getElementById('toast');
+    toast.querySelector('.toast-msg').textContent = 'Error al enviar. Intenta de nuevo.';
+    toast.style.borderColor = 'rgba(192,24,90,.4)';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 5000);
+  } finally {
+    btn.disabled = false;
+    btn.querySelector('span').textContent = 'ENVIAR MENSAJE →';
+  }
 }
 </script>
 </body>
