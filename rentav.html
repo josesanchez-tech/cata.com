@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scoring & CCI · SIPEN RD</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B3A6B;--navy2:#254e8e;--gold:#C9930A;--gold2:#F5C842;
+  --bg:#0d1829;--card:#142035;--card2:#1a2d4a;--text:#e8edf5;--muted:#7a90b0;
+  --ok:#2ECC71;--warn:#F39C12;--err:#E74C3C;--bd:rgba(255,255,255,0.08);
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
+  background-image:radial-gradient(ellipse at 20% 0%,rgba(27,58,107,.5) 0%,transparent 60%),
+                   radial-gradient(ellipse at 80% 100%,rgba(201,147,10,.15) 0%,transparent 60%)}
+
+/* HEADER */
+header{background:linear-gradient(135deg,var(--navy) 0%,#0d1829 100%);border-bottom:1px solid rgba(201,147,10,.3);
+  padding:16px 28px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{width:42px;height:42px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;font-size:19px;color:#fff;font-weight:900;flex-shrink:0}
+.h-title{font-family:'Playfair Display',serif;font-size:20px;color:#fff;font-weight:700}
+.h-sub{font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.05em;text-transform:uppercase}
+.h-badge{margin-left:auto;background:rgba(201,147,10,.2);border:1px solid rgba(201,147,10,.5);
+  color:var(--gold2);padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid var(--bd);background:rgba(0,0,0,.2);padding:0 28px}
+.tab-btn{padding:13px 22px;font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;
+  cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;font-family:'DM Sans',sans-serif}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--gold2);border-bottom-color:var(--gold)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* LAYOUT */
+.wrap{max-width:1240px;margin:0 auto;padding:24px 20px}
+.g2{display:grid;grid-template-columns:1fr 330px;gap:22px;align-items:start}
+.g2l{display:grid;grid-template-columns:370px 1fr;gap:20px;align-items:start}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden}
+.ch{padding:16px 22px;background:linear-gradient(90deg,rgba(27,58,107,.5) 0%,transparent 100%);
+  border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.ch .ico{font-size:19px}
+.ch h3{font-size:14px;font-weight:600;color:var(--text)}
+.ch .badge{margin-left:auto;background:rgba(201,147,10,.15);color:var(--gold2);
+  padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700}
+.cb{padding:22px}
+
+/* FIELDS */
+.slbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:12px;margin-top:20px;padding-bottom:5px;border-bottom:1px solid rgba(201,147,10,.2)}
+.slbl:first-child{margin-top:0}
+.f{margin-bottom:13px}
+.f label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.f input,.f select{width:100%;padding:9px 12px;background:rgba(255,255,255,.05);border:1px solid var(--bd);
+  border-radius:9px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;transition:border-color .2s;appearance:none}
+.f input:focus,.f select:focus{outline:none;border-color:rgba(201,147,10,.6);background:rgba(255,255,255,.08)}
+.f select option{background:#1a2d4a}
+.fr2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+
+/* SLIDERS */
+.sf{margin-bottom:16px}
+.sh{display:flex;justify-content:space-between;margin-bottom:6px}
+.sl{font-size:11px;color:var(--muted);font-weight:500}
+.sv{font-size:12px;color:var(--gold2);font-weight:600}
+input[type=range]{width:100%;height:5px;border-radius:3px;appearance:none;
+  background:linear-gradient(90deg,var(--gold) var(--pct,0%),rgba(255,255,255,.1) var(--pct,0%));cursor:pointer}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:15px;height:15px;border-radius:50%;
+  background:var(--gold);border:2px solid #fff;cursor:pointer;box-shadow:0 0 5px rgba(201,147,10,.5)}
+
+/* BUTTONS */
+.btn{padding:12px;background:linear-gradient(135deg,var(--gold) 0%,#a07408 100%);border:none;border-radius:11px;
+  color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:700;cursor:pointer;width:100%;
+  margin-top:8px;transition:transform .15s,box-shadow .15s;box-shadow:0 4px 18px rgba(201,147,10,.3)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(201,147,10,.4)}
+.btn-sm{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);color:var(--muted);
+  padding:7px 13px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap}
+.btn-sm:hover{background:rgba(255,255,255,.1);color:var(--text)}
+.btn-excel{background:linear-gradient(135deg,#217346 0%,#155c33 100%);border:none;color:#fff;
+  padding:9px 16px;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;
+  font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px;transition:opacity .2s;
+  box-shadow:0 3px 12px rgba(33,115,70,.4)}
+.btn-excel:hover{opacity:.88}
+.btn-del{background:none;border:none;color:var(--err);cursor:pointer;font-size:12px;
+  padding:2px 5px;border-radius:4px;opacity:.4;transition:opacity .2s}
+.btn-del:hover{opacity:1}
+.btn-add{width:100%;padding:8px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.14);
+  border-radius:7px;color:var(--muted);font-size:11px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;margin-top:7px;transition:all .2s}
+.btn-add:hover{background:rgba(255,255,255,.08);color:var(--text)}
+
+/* SCORE PANEL */
+.sp{background:var(--card);border:1px solid var(--bd);border-radius:14px;overflow:hidden;position:sticky;top:22px}
+.sp-top{padding:22px 18px;text-align:center;
+  background:linear-gradient(160deg,rgba(27,58,107,.6) 0%,rgba(13,24,41,.8) 100%);border-bottom:1px solid var(--bd)}
+.ring-wrap{position:relative;width:124px;height:124px;margin:0 auto 9px}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Playfair Display',serif;font-size:38px;font-weight:900;line-height:1}
+.seg-badge{display:inline-block;padding:5px 13px;border-radius:18px;font-size:11px;font-weight:700;
+  letter-spacing:.04em;margin-top:9px}
+.bdown{padding:14px 18px}
+.br{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.bn{font-size:10px;color:var(--muted);flex:1}
+.bw{width:65px;height:5px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.bb{height:100%;border-radius:3px;transition:width .6s ease}
+.bp{font-size:10px;color:var(--text);font-weight:600;min-width:30px;text-align:right}
+.cci-res{padding:13px 18px;border-top:1px solid var(--bd);background:rgba(201,147,10,.06)}
+.cci-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.cci-val{font-family:'Playfair Display',serif;font-size:21px;color:var(--gold2);font-weight:700}
+.cci-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.renta-box{padding:14px 18px;border-top:1px solid var(--bd);background:rgba(27,58,107,.3)}
+.renta-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+.rsc{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+.rs{background:rgba(255,255,255,.05);border-radius:7px;padding:7px;text-align:center;border:1px solid var(--bd)}
+.rs-n{font-size:9px;color:var(--muted);margin-bottom:2px}
+.rs-v{font-size:12px;font-weight:700;color:var(--gold2)}
+.rs-p{font-size:9px;color:var(--muted)}
+.strat{padding:14px 18px;border-top:1px solid var(--bd)}
+.strat-t{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:9px}
+.ss{display:flex;gap:7px;margin-bottom:6px;align-items:flex-start}
+.sn{width:18px;height:18px;border-radius:5px;background:rgba(201,147,10,.2);color:var(--gold2);
+  font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.st{font-size:10px;color:var(--text);line-height:1.5}
+.placeholder{text-align:center;padding:36px 18px;color:var(--muted);font-size:12px;line-height:1.8}
+
+/* CCI STATS */
+.stats4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px 18px}
+.stat-l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.stat-v{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--gold2)}
+.stat-s{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* RATES GRID */
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ri{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:7px;padding:9px 11px}
+.ri label{font-size:10px;color:var(--muted);display:block;margin-bottom:3px}
+.ri input{background:none;border:none;color:var(--gold2);font-size:15px;font-weight:700;
+  width:100%;font-family:'DM Sans',sans-serif}
+.ri input:focus{outline:none}
+.rtot{background:linear-gradient(90deg,rgba(201,147,10,.15),transparent);border:1px solid rgba(201,147,10,.3);
+  border-radius:7px;padding:9px 13px;margin-top:7px;display:flex;justify-content:space-between;align-items:center}
+.rtot-l{font-size:11px;color:var(--muted)}
+.rtot-v{font-size:17px;font-weight:700;color:var(--gold2)}
+
+/* EXCEL DROPZONE */
+.dropzone{border:2px dashed rgba(33,115,70,.5);border-radius:12px;padding:20px;
+  text-align:center;background:rgba(33,115,70,.06);cursor:pointer;transition:all .25s;
+  position:relative;margin-bottom:14px}
+.dropzone:hover,.dropzone.drag{border-color:#2ECC71;background:rgba(33,115,70,.12)}
+.dropzone .dz-icon{font-size:32px;margin-bottom:8px}
+.dropzone .dz-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.dropzone .dz-sub{font-size:11px;color:var(--muted);line-height:1.5}
+.dropzone .dz-hint{font-size:10px;color:var(--muted);margin-top:8px;padding:6px 10px;
+  background:rgba(255,255,255,.04);border-radius:6px;display:inline-block}
+#xl-input{display:none}
+.dz-progress{display:none;height:3px;background:rgba(255,255,255,.1);border-radius:2px;margin-top:10px;overflow:hidden}
+.dz-progress-bar{height:100%;background:var(--ok);width:0;transition:width .4s;border-radius:2px}
+.dz-result{display:none;margin-top:10px;padding:8px 12px;background:rgba(46,204,113,.1);
+  border:1px solid rgba(46,204,113,.3);border-radius:7px;font-size:11px;color:var(--ok);font-weight:600}
+.dz-error{display:none;margin-top:10px;padding:8px 12px;background:rgba(231,76,60,.1);
+  border:1px solid rgba(231,76,60,.3);border-radius:7px;font-size:11px;color:var(--err)}
+
+/* COLUMN MAP UI */
+.col-map{background:rgba(255,255,255,.03);border:1px solid var(--bd);border-radius:8px;
+  padding:12px 14px;margin-bottom:12px;display:none}
+.col-map.visible{display:block}
+.col-map-title{font-size:11px;color:var(--gold);font-weight:600;margin-bottom:10px;
+  text-transform:uppercase;letter-spacing:.08em}
+.cm-row{display:grid;grid-template-columns:120px 1fr;align-items:center;gap:8px;margin-bottom:8px}
+.cm-row label{font-size:11px;color:var(--muted)}
+.cm-row select{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);
+  border-radius:6px;color:var(--text);font-size:11px;padding:5px 8px;
+  font-family:'DM Sans',sans-serif;appearance:none}
+.cm-row select:focus{outline:none;border-color:rgba(201,147,10,.5)}
+
+/* TABLE */
+.tw{overflow-x:auto;border-radius:7px}
+.yt{width:100%;border-collapse:collapse;min-width:680px}
+.yt th{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+  padding:8px 9px;text-align:right;background:rgba(27,58,107,.4);border-bottom:1px solid var(--bd);white-space:nowrap}
+.yt th:first-child,.yt th:nth-child(2){text-align:center}
+.yt td{padding:6px 9px;text-align:right;font-size:12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
+.yt td:first-child{text-align:center;color:var(--muted);font-size:10px}
+.yt tr:hover td{background:rgba(255,255,255,.025)}
+.ti{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:5px;
+  color:var(--text);font-size:12px;padding:4px 7px;text-align:right;font-family:'DM Sans',sans-serif}
+.ti:focus{outline:none;border-color:rgba(201,147,10,.5)}
+.tc-yr{width:55px}.tc-ct{width:42px}.tc-sl{width:105px}.tc-roi{width:50px}
+.tm{color:var(--gold2);font-weight:600}
+.tci{color:var(--ok);font-weight:700}
+.tr-ok td{background:rgba(46,204,113,.03)}
+.yt tfoot td{font-weight:700;font-size:12px;background:rgba(27,58,107,.35);
+  border-top:2px solid rgba(201,147,10,.3);padding:9px}
+
+/* CHART */
+.chart{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px 22px;margin-top:18px}
+.chart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.chart-t{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.chart-v{font-size:13px;color:var(--gold2);font-weight:700}
+.bars{display:flex;align-items:flex-end;gap:3px;height:110px}
+.bw2{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;cursor:pointer;position:relative;transition:opacity .2s}
+.bar:hover{opacity:.8}
+.bar::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 5px);left:50%;transform:translateX(-50%);
+  background:#1a2d4a;border:1px solid var(--bd);padding:3px 7px;border-radius:5px;font-size:10px;
+  color:var(--text);white-space:nowrap;pointer-events:none;z-index:10;opacity:0;transition:opacity .15s}
+.bar:hover::after{opacity:1}
+.blbl{font-size:8px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+
+/* TRANSFER */
+.xfer{background:linear-gradient(90deg,rgba(46,204,113,.08),rgba(201,147,10,.08));
+  border:1px solid rgba(46,204,113,.3);border-radius:11px;padding:13px 16px;margin-top:18px;
+  display:none;align-items:center;gap:11px;flex-wrap:wrap}
+.xfer.show{display:flex}
+.xfer .xi{font-size:22px}
+.xfer .xt{flex:1}
+.xfer .xt strong{color:var(--ok);font-size:13px;display:block;margin-bottom:2px}
+.xfer .xt span{font-size:11px;color:var(--muted)}
+.btn-xfer{background:var(--ok);border:none;border-radius:7px;color:#fff;font-size:11px;
+  font-weight:700;padding:7px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:opacity .2s;white-space:nowrap}
+.btn-xfer:hover{opacity:.85}
+
+/* FORMULA BOX */
+.formula-box{background:rgba(27,58,107,.3);border:1px solid rgba(91,139,208,.25);
+  border-radius:8px;padding:10px 14px;margin-bottom:14px}
+.formula-box .ft{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+.formula-box .fv{font-size:12px;color:var(--gold2);font-family:'Courier New',monospace;font-weight:600}
+.formula-box .fd{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+.chip{display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,.05);
+  border:1px solid var(--bd);border-radius:18px;padding:3px 9px;font-size:10px;color:var(--muted);margin:0 3px 5px 0}
+.chip strong{color:var(--gold2)}
+
+.animated{animation:fu .35s ease}
+@keyframes fu{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+
+@media(max-width:960px){.g2,.g2l{grid-template-columns:1fr}.sp{position:static}.stats4{grid-template-columns:1fr 1fr}}
+@media(max-width:580px){.stats4{grid-template-columns:1fr}.tabs{padding:0 10px;overflow-x:auto}.tab-btn{padding:11px 13px;font-size:11px;white-space:nowrap}}
+
+/* ===== PRINT / PDF EXPORT ===== */
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  body { background: #fff !important; color: #111 !important; font-size: 11pt; }
+  header, .tabs, .dropzone, .col-map, .btn, .btn-sm, .btn-excel, .btn-add,
+  .btn-del, .btn-xfer, .btn-xfer, .xfer, #xl-input, .pdf-export-bar { display: none !important; }
+
+  /* Show only the active print section */
+  .print-section { display: none !important; }
+  .print-section.printing { display: block !important; }
+
+  /* SCORING PRINT */
+  .print-scoring .g2 { display: grid !important; grid-template-columns: 1fr 280pt !important; gap: 16pt; }
+  .print-scoring .card, .print-scoring .sp {
+    background: #fff !important; border: 1pt solid #ccc !important; border-radius: 6pt;
+    break-inside: avoid;
+  }
+  .print-scoring .ch { background: #1B3A6B !important; padding: 10pt 14pt; }
+  .print-scoring .ch h3 { color: #fff !important; font-size: 11pt; }
+  .print-scoring .slbl { color: #C9930A !important; border-color: #C9930A !important; font-size: 8pt; }
+  .print-scoring .f label { color: #555 !important; font-size: 8pt; }
+  .print-scoring .f input, .print-scoring .f select { border-color: #ddd !important; color: #111 !important; background: #f9f9f9 !important; font-size: 9pt; }
+  .print-scoring .sf { display: none !important; }
+  .print-scoring .sp-top { background: #1B3A6B !important; padding: 16pt; }
+  .print-scoring .ring-num { color: inherit !important; }
+  .print-scoring .cci-res { background: #fffbe6 !important; }
+  .print-scoring .cci-val { color: #C9930A !important; font-size: 16pt; }
+  .print-scoring .renta-box { background: #eef4ff !important; }
+  .print-scoring .rs-v { color: #C9930A !important; }
+  .print-scoring .bdown, .print-scoring .strat { background: #fff !important; }
+  .print-scoring .bb { print-color-adjust: exact; }
+
+  /* CCI PRINT */
+  .print-cci .stats4 { display: grid !important; grid-template-columns: repeat(4,1fr) !important; gap: 10pt; margin-bottom: 16pt; }
+  .print-cci .stat { background: #f0f4ff !important; border: 1pt solid #ccc !important; border-radius: 5pt; padding: 10pt; }
+  .print-cci .stat-v { color: #C9930A !important; font-size: 14pt; }
+  .print-cci .stat-l { color: #555 !important; font-size: 7pt; }
+  .print-cci .g2l { display: block !important; }
+  .print-cci .card { background: #fff !important; border: 1pt solid #ccc !important; margin-bottom: 12pt; break-inside: avoid; }
+  .print-cci .ch { background: #1B3A6B !important; padding: 8pt 12pt; }
+  .print-cci .ch h3 { color: #fff !important; font-size: 10pt; }
+  .print-cci .yt { font-size: 8pt; }
+  .print-cci .yt th { background: #1B3A6B !important; color: #fff !important; font-size: 7pt; padding: 5pt 6pt; }
+  .print-cci .yt td { padding: 4pt 6pt; border-bottom: 0.5pt solid #eee !important; }
+  .print-cci .yt tfoot td { background: #f5f5f5 !important; font-size: 8pt; }
+  .print-cci .tm { color: #C9930A !important; }
+  .print-cci .tci { color: #1a7a3a !important; }
+  .print-cci .ti { border: none !important; background: transparent !important; font-size: 8pt; color: #111 !important; }
+  .print-cci .chart { background: #f9f9f9 !important; border: 1pt solid #ddd !important; }
+  .print-cci .chart-t { color: #555 !important; }
+  .print-cci .blbl { color: #555 !important; }
+  .print-cci .formula-box { background: #eef4ff !important; border-color: #99b !important; }
+  .print-cci .fv { color: #1B3A6B !important; }
+  .print-cci .fd, .print-cci .ft { color: #444 !important; }
+  .print-cci .rates-hide { display: none !important; }
+
+  /* Print header */
+  .print-header { display: block !important; padding: 10pt 0 8pt; border-bottom: 2pt solid #C9930A; margin-bottom: 14pt; }
+  .print-header h1 { font-size: 16pt; color: #1B3A6B; font-family: 'Playfair Display', serif; }
+  .print-header .ph-meta { font-size: 8pt; color: #777; margin-top: 3pt; }
+
+  @page { margin: 15mm 12mm; size: A4; }
+}
+
+/* Hide print header in screen */
+.print-header { display: none; }
+
+/* PDF Export Bar */
+.pdf-export-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+  background: linear-gradient(90deg, #0d1829 0%, #142035 100%);
+  border-top: 1px solid rgba(201,147,10,.4);
+  padding: 10px 28px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.pdf-export-bar .peb-label { font-size: 11px; color: var(--muted); margin-right: 4px; }
+.btn-pdf {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 700;
+  transition: opacity .2s, transform .15s;
+}
+.btn-pdf:hover { opacity: .88; transform: translateY(-1px); }
+.btn-pdf.score { background: linear-gradient(135deg, #1B3A6B 0%, #254e8e 100%); color: #fff; box-shadow: 0 3px 12px rgba(27,58,107,.5); }
+.btn-pdf.cci   { background: linear-gradient(135deg, #C9930A 0%, #a07408 100%); color: #fff; box-shadow: 0 3px 12px rgba(201,147,10,.4); }
+.btn-pdf.both  { background: linear-gradient(135deg, #2ECC71 0%, #1a9e55 100%); color: #fff; box-shadow: 0 3px 12px rgba(46,204,113,.4); }
+/* Add bottom padding so content isn't hidden behind bar */
+body { padding-bottom: 60px; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">RV</div>
+  <div>
+    <div class="h-title">Scoring &amp; CCI · Renta Vitalicia</div>
+    <div class="h-sub">Modelo SIPEN · República Dominicana · Uso Interno</div>
+  </div>
+  <div class="h-badge">🔒 Confidencial</div>
+</header>
+
+<!-- PDF EXPORT BAR -->
+<div class="pdf-export-bar">
+  <span class="peb-label">📄 Exportar a PDF:</span>
+  <button class="btn-pdf score" onclick="exportPDF('scoring')">📋 Exportar Scoring</button>
+  <button class="btn-pdf cci"   onclick="exportPDF('cci')">📊 Exportar CCI</button>
+  <button class="btn-pdf both"  onclick="exportPDF('both')">📑 Exportar Todo</button>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('scoring',this)">👤 Scoring de Prospecto</button>
+  <button class="tab-btn" onclick="switchTab('cci',this)">📊 Calculadora CCI (SIPEN)</button>
+</div>
+
+<!-- ===================== TAB SCORING ===================== -->
+<div id="tab-scoring" class="tab-content active">
+<div class="print-section print-scoring" id="ps-scoring">
+<div class="print-header" id="ph-scoring"><h1>📋 Scoring de Prospecto · Renta Vitalicia</h1><div class="ph-meta">Uso Interno · SIPEN RD</div></div>
+<div class="wrap">
+<div class="g2">
+  <div class="card">
+    <div class="ch"><span class="ico">👤</span><h3>Datos del Prospecto</h3>
+      <span class="badge" id="cci-badge" style="display:none">✓ CCI importado</span></div>
+    <div class="cb">
+      <div class="slbl">Información Básica</div>
+      <div class="fr2">
+        <div class="f"><label>Nombre completo</label><input type="text" id="nombre" placeholder="Ej. Franklin González"/></div>
+        <div class="f"><label>Cédula</label><input type="text" id="cedula" placeholder="000-0000000-0"/></div>
+      </div>
+      <div class="fr2">
+        <div class="f"><label>Edad</label><input type="number" id="edad" value="62" min="55" max="90"/></div>
+        <div class="f"><label>Último salario (RD$)</label><input type="number" id="ult_sal" placeholder="0"/></div>
+      </div>
+      <div class="slbl">CCI / Fondo de Pensión</div>
+      <div class="f">
+        <label>CCI Acumulado (RD$) — <span style="color:var(--gold)">importable desde Calculadora CCI →</span></label>
+        <input type="number" id="cci_manual" placeholder="Ingrese o importe desde la Calculadora CCI"/>
+      </div>
+      <div class="slbl">Historial de Ingresos</div>
+      <div class="sf">
+        <div class="sh"><span class="sl">Salario mensual promedio histórico</span><span class="sv" id="sv-ing">RD$ 65,000 / mes</span></div>
+        <input type="range" id="sl-ing" min="500" max="1500000" value="65000" step="1000" oninput="slUp(this,'sv-ing','RD$ ','/ mes')"/>
+      </div>
+      <div class="fr2">
+        <div class="f"><label>Estabilidad de ingresos</label>
+          <select id="estabilidad">
+            <option value="alta">Alta – Empleado formal estable</option>
+            <option value="media">Media – Variaciones moderadas</option>
+            <option value="baja">Baja – Variable / informal</option>
+          </select></div>
+        <div class="f"><label>Años de historial</label>
+          <select id="historial">
+            <option value="12">12 años (completo)</option>
+            <option value="8">8-11 años</option>
+            <option value="5">5-7 años</option>
+            <option value="3">Menos de 5 años</option>
+          </select></div>
+      </div>
+      <div class="slbl">Patrimonio</div>
+      <div class="sf">
+        <div class="sh"><span class="sl">Activos totales estimados (RD$)</span><span class="sv" id="sv-act">RD$ 280,000</span></div>
+        <input type="range" id="sl-act" min="0" max="20000000" value="280000" step="50000" oninput="slUp(this,'sv-act','RD$ ','')"/>
+      </div>
+      <div class="slbl">Perfil Crediticio</div>
+      <div class="sf">
+        <div class="sh"><span class="sl">Nivel de endeudamiento (DTI %)</span><span class="sv" id="sv-dti">30%</span></div>
+        <input type="range" id="sl-dti" min="0" max="100" value="30" step="1" oninput="slUp(this,'sv-dti','','%')"/>
+      </div>
+      <div class="slbl">Salud y Familia</div>
+      <div class="fr2">
+        <div class="f"><label>Estado de salud</label>
+          <select id="salud">
+            <option value="buena">Sin condiciones reportadas</option>
+            <option value="cronica">Condiciones crónicas leves</option>
+            <option value="grave">Condiciones graves</option>
+          </select></div>
+        <div class="f"><label>Dependientes económicos</label>
+          <select id="dependientes">
+            <option value="0">Sin dependientes</option>
+            <option value="1">1-2 dependientes</option>
+            <option value="3">3 o más dependientes</option>
+          </select></div>
+      </div>
+      <button class="btn" onclick="calcScore()">⚡ Calcular Score y Estrategia de Venta</button>
+    </div>
+  </div>
+
+  <div class="sp" id="score-panel">
+    <div class="placeholder">
+      <div style="font-size:34px;margin-bottom:10px">🎯</div>
+      <strong style="color:var(--text)">Complete los datos</strong><br>
+      y presione <strong style="color:var(--gold)">Calcular Score</strong><br>para ver el perfil completo.<br><br>
+      <span style="font-size:10px">💡 Calcule el CCI exacto en<br><strong style="color:var(--gold2)">Calculadora CCI</strong> e impórtelo aquí.</span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div><!-- /print-section scoring -->
+
+<!-- ===================== TAB CCI ===================== -->
+<div id="tab-cci" class="tab-content">
+<div class="print-section print-cci" id="ps-cci">
+<div class="print-header" id="ph-cci"><h1>📊 Calculadora CCI · SIPEN República Dominicana</h1><div class="ph-meta">Uso Interno · SIPEN RD</div></div>
+<div class="wrap">
+
+  <!-- STATS -->
+  <div class="stats4">
+    <div class="stat"><div class="stat-l">CCI Acumulado Total</div><div class="stat-v" id="st-cci">RD$ —</div><div class="stat-s">Valor capitalizado del fondo</div></div>
+    <div class="stat"><div class="stat-l">Total Aportes Brutos</div><div class="stat-v" id="st-ap">RD$ —</div><div class="stat-s">Sin capitalización</div></div>
+    <div class="stat"><div class="stat-l">CCI Contrib. (rendimiento)</div><div class="stat-v" id="st-rend">RD$ —</div><div class="stat-s" id="st-mult">Aportes + Contrib. = CCI Total</div></div>
+    <div class="stat"><div class="stat-l">Cotizaciones / Años</div><div class="stat-v" id="st-cots">—</div><div class="stat-s" id="st-anos">— años registrados</div></div>
+  </div>
+
+  <div class="g2l">
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- Afiliado -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><span class="ico">🪪</span><h3>Datos del Afiliado</h3></div>
+        <div class="cb">
+          <div class="fr2">
+            <div class="f"><label>Cédula</label><input type="text" id="xc-ced" placeholder="3700292141" oninput="sync('xc-ced','cedula')"/></div>
+            <div class="f"><label>Nombre</label><input type="text" id="xc-nom" placeholder="Nombre completo" oninput="sync('xc-nom','nombre')"/></div>
+          </div>
+          <div class="fr2">
+            <div class="f"><label>Último salario (RD$)</label><input type="number" id="xc-sal" placeholder="834,250"/></div>
+            <div class="f"><label>Edad actual</label><input type="number" id="xc-edad" placeholder="62" min="18" max="90"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EXCEL IMPORT -->
+      <div class="card" style="margin-bottom:14px">
+        <div class="ch"><span class="ico">📥</span><h3>Importar Excel</h3><span class="badge">Nuevo</span></div>
+        <div class="cb">
+
+          <div class="formula-box">
+            <div class="ft">Fórmula CCI aplicada</div>
+            <div class="fv">CCI = Per.Rest. × (Aporte × ROI)</div>
+            <div class="fd">
+              Per.Rest. = Año actual − Año cotización<br>
+              Aporte = Sal.Mensual × Cots. × Tasa_total<br>
+              ROI = rendimiento anual del fondo (%)
+            </div>
+          </div>
+
+          <!-- DROPZONE -->
+          <div class="dropzone" id="dropzone"
+               onclick="document.getElementById('xl-input').click()"
+               ondragover="dzDrag(event,true)" ondragleave="dzDrag(event,false)" ondrop="dzDrop(event)">
+            <div class="dz-icon">🗂️</div>
+            <div class="dz-title">Arrastra tu archivo Excel aquí</div>
+            <div class="dz-sub">o haz clic para seleccionar<br><strong style="color:var(--gold2)">.xlsx / .xls / .csv</strong></div>
+            <div class="dz-hint">Columnas esperadas: <strong>Año · Cotizaciones · Salario Mensual</strong><br>(el mapeador detecta automáticamente)</div>
+            <div class="dz-progress" id="dz-prog"><div class="dz-progress-bar" id="dz-bar"></div></div>
+            <div class="dz-result" id="dz-ok"></div>
+            <div class="dz-error" id="dz-err"></div>
+          </div>
+          <input type="file" id="xl-input" accept=".xlsx,.xls,.csv" onchange="handleFile(this.files[0])"/>
+
+          <!-- COLUMN MAPPER -->
+          <div class="col-map" id="col-map">
+            <div class="col-map-title">🔧 Mapear columnas del Excel</div>
+            <div class="cm-row"><label>Columna → Año</label><select id="cm-year"></select></div>
+            <div class="cm-row"><label>Columna → Cotizaciones</label><select id="cm-cots"></select></div>
+            <div class="cm-row"><label>Columna → Sal. Mensual</label><select id="cm-sal"></select></div>
+            <div class="cm-row"><label>Columna → ROI % (opcional)</label><select id="cm-roi"><option value="">— Usar ROI por defecto —</option></select></div>
+            <button class="btn-excel" style="margin-top:10px;width:100%;justify-content:center" onclick="applyMapping()">
+              <span>✅</span> Aplicar y cargar historial
+            </button>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+            <button class="btn-excel" onclick="loadSample()"><span>📂</span>Cargar ejemplo (Franklin)</button>
+            <button class="btn-sm" onclick="downloadTemplate()">⬇ Plantilla Excel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RATES -->
+      <div class="card">
+        <div class="ch"><span class="ico">⚙️</span><h3>Tasas SIPEN / TSS</h3><span class="badge">Editable</span></div>
+        <div class="cb">
+          <div style="margin-bottom:10px">
+            <span class="chip">Personal <strong id="chip-p">8.40%</strong></span>
+            <span class="chip">Total <strong id="chip-t">9.97%</strong></span>
+          </div>
+          <div class="rg">
+            <div class="ri"><label>Cuota Personal</label><input type="number" id="rp" value="8.40" step="0.01" oninput="recalcRates()"/></div>
+            <div class="ri"><label>Discapacidad/Sobrev.</label><input type="number" id="rd" value="0.95" step="0.01" oninput="recalcRates()"/></div>
+            <div class="ri"><label>Solidaridad Social</label><input type="number" id="rs" value="0.40" step="0.01" oninput="recalcRates()"/></div>
+            <div class="ri"><label>Op. SIPEN</label><input type="number" id="rsi" value="0.07" step="0.01" oninput="recalcRates()"/></div>
+            <div class="ri"><label>Op. DIDA</label><input type="number" id="rdi" value="0.05" step="0.01" oninput="recalcRates()"/></div>
+            <div class="ri"><label>Op. TSS</label><input type="number" id="rt" value="0.10" step="0.01" oninput="recalcRates()"/></div>
+          </div>
+          <div class="rtot"><span class="rtot-l">Tasa Total de Cotización</span><span class="rtot-v" id="rtot-v">9.97%</span></div>
+          <div style="margin-top:14px">
+            <div class="sf">
+              <div class="sh"><span class="sl">ROI Anual por defecto</span><span class="sv" id="sv-roi">9.40%</span></div>
+              <input type="range" id="sl-roi" min="3" max="20" value="9.40" step="0.1" oninput="slUp(this,'sv-roi','','%');recalcAll()"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: TABLE -->
+    <div class="card">
+      <div class="ch"><span class="ico">📅</span><h3>Historial Anual de Cotizaciones</h3><span class="badge" id="row-badge">0 años</span></div>
+      <div class="cb" style="padding:14px">
+        <div class="tw">
+          <table class="yt">
+            <thead>
+              <tr>
+                <th>#</th><th>Año</th><th>Cots.</th><th>Sal. Mensual (RD$)</th>
+                <th>Total Anual</th><th>Aporte (tasa%)</th><th>ROI%</th>
+                <th>Per.Rest.</th><th>CCI Contrib.</th><th></th>
+              </tr>
+            </thead>
+            <tbody id="ytbody"></tbody>
+            <tfoot id="ytfoot"></tfoot>
+          </table>
+        </div>
+        <button class="btn-add" onclick="addRow()">＋ Agregar año</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHART -->
+  <div class="chart">
+    <div class="chart-hdr">
+      <span class="chart-t">📈 Contribución al CCI por Año</span>
+      <span class="chart-v" id="chart-total"></span>
+    </div>
+    <div class="bars" id="chart-bars"><div style="color:var(--muted);font-size:12px;padding:16px">Agrega filas para ver el gráfico</div></div>
+  </div>
+
+  <!-- TRANSFER BANNER -->
+  <div class="xfer" id="xfer-banner">
+    <div class="xi">✅</div>
+    <div class="xt"><strong id="xfer-msg">CCI listo para importar</strong><span>Transfiere el CCI calculado al módulo de Scoring del prospecto.</span></div>
+    <button class="btn-xfer" onclick="transferCCI()">Importar al Scoring →</button>
+  </div>
+
+</div>
+</div>
+</div><!-- /print-section cci -->
+
+<script>
+// ===== GLOBALS =====
+const NOW = new Date().getFullYear();
+let rows = [], rid = 0;
+let xlRaw = [], xlHeaders = [];
+
+// ===== UTILS =====
+const $ = id => document.getElementById(id);
+const fRD = n => 'RD$ ' + Math.round(n||0).toLocaleString('en-US');
+const fSh = n => { n=Math.round(n||0); return n>=1e6?'RD$ '+(n/1e6).toFixed(2)+'M':n>=1000?'RD$ '+(n/1000).toFixed(1)+'K':'RD$ '+n; };
+const fN  = n => Math.round(n||0).toLocaleString('en-US');
+function slUp(el,lid,pre,suf){
+  const v=parseFloat(el.value),mn=parseFloat(el.min),mx=parseFloat(el.max);
+  el.style.setProperty('--pct',((v-mn)/(mx-mn)*100)+'%');
+  $(lid).textContent=pre+(v>=1000?Math.round(v).toLocaleString('en-US'):v)+(suf?' '+suf:'');
+}
+document.querySelectorAll('input[type=range]').forEach(el=>{
+  const v=parseFloat(el.value),mn=parseFloat(el.min),mx=parseFloat(el.max);
+  el.style.setProperty('--pct',((v-mn)/(mx-mn)*100)+'%');
+});
+function switchTab(t,btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  $('tab-'+t).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+function sync(src,dst){ const s=$(src),d=$(dst); if(s&&d)d.value=s.value; }
+
+// ===== RATES =====
+function getTasa(){ return ['rp','rd','rs','rsi','rdi','rt'].reduce((s,id)=>s+(parseFloat($(id).value)||0),0)/100; }
+function getROI(){ return parseFloat($('sl-roi').value)/100; }
+function recalcRates(){
+  const t=getTasa()*100;
+  $('rtot-v').textContent=t.toFixed(2)+'%';
+  $('chip-t').textContent=t.toFixed(2)+'%';
+  $('chip-p').textContent=(parseFloat($('rp').value)||0).toFixed(2)+'%';
+  recalcAll();
+}
+
+// ===== TABLE =====
+const SAMPLE=[
+  {y:2005,c:11,s:65000},{y:2006,c:12,s:65000},{y:2007,c:11,s:65000},{y:2008,c:12,s:65000},
+  {y:2009,c:12,s:85000},{y:2010,c:12,s:85000},{y:2011,c:11,s:85000},{y:2012,c:12,s:85000},
+  {y:2013,c:12,s:85000},{y:2014,c:11,s:85000},{y:2015,c:11,s:85000},{y:2016,c:12,s:85000},
+  {y:2017,c:11,s:85000},{y:2018,c:12,s:95000},{y:2019,c:12,s:550000},{y:2020,c:12,s:475000},
+  {y:2021,c:11,s:650000},{y:2022,c:9,s:750000},{y:2023,c:12,s:820000},{y:2024,c:12,s:820000},
+  {y:2025,c:5,s:820000}
+];
+function loadSample(){
+  rows=[]; rid=0;
+  SAMPLE.forEach(d=>rows.push({id:rid++,year:d.y,cots:d.c,salary:d.s,roi:9.40}));
+  $('xc-ced').value='370-0292141-3'; $('xc-nom').value='FRANKLIN BIENVENIDO GONZALEZ VALERIO';
+  $('xc-sal').value=834250; $('xc-edad').value=62;
+  sync('xc-nom','nombre'); sync('xc-ced','cedula');
+  renderTable(); recalcAll();
+  showDzOk('Ejemplo cargado: 21 años · Franklin González');
+}
+function addRow(){
+  const lastY=rows.length>0?Math.max(...rows.map(r=>r.year)):NOW-1;
+  rows.push({id:rid++,year:lastY+1,cots:12,salary:0,roi:+(getROI()*100).toFixed(2)});
+  renderTable(); recalcAll();
+}
+function delRow(id){ rows=rows.filter(r=>r.id!==id); renderTable(); recalcAll(); }
+function onRC(id,field,val){ const r=rows.find(r=>r.id===id); if(r){r[field]=parseFloat(val)||0; recalcAll();} }
+
+function renderTable(){
+  const tb=$('ytbody'); tb.innerHTML='';
+  rows.forEach((row,idx)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
+      <td>${idx+1}</td>
+      <td><input class="ti tc-yr" type="number" value="${row.year}" onchange="onRC(${row.id},'year',this.value)"></td>
+      <td><input class="ti tc-ct" type="number" value="${row.cots}" min="1" max="12" onchange="onRC(${row.id},'cots',this.value)"></td>
+      <td><input class="ti tc-sl" type="number" value="${row.salary}" onchange="onRC(${row.id},'salary',this.value)"></td>
+      <td class="tm" id="ct-${row.id}">—</td>
+      <td class="tm" id="ca-${row.id}">—</td>
+      <td><input class="ti tc-roi" type="number" value="${row.roi}" step="0.1" onchange="onRC(${row.id},'roi',this.value)">%</td>
+      <td style="color:#5B8BD0;font-weight:600" id="cp-${row.id}">—</td>
+      <td class="tci" id="cc-${row.id}">—</td>
+      <td><button class="btn-del" onclick="delRow(${row.id})">✕</button></td>`;
+    tb.appendChild(tr);
+  });
+  $('row-badge').textContent=rows.length+' año'+(rows.length!==1?'s':'');
+}
+
+// ===== CORE FORMULA =====
+// CCI_contrib = Per_Restantes × (Aporte × ROI)
+// Per_Restantes = Año_actual - Año_cotizacion
+// Aporte = Sal_Mensual × Cotizaciones × Tasa_total
+function recalcAll(){
+  if(rows.length===0){
+    ['st-cci','st-ap','st-rend'].forEach(id=>$(id).textContent='RD$ —');
+    $('st-cots').textContent='—'; $('st-anos').textContent='— años'; $('st-mult').textContent='Multiplicador: —';
+    $('xfer-banner').classList.remove('show'); renderChart([]); return;
+  }
+  const tasa=getTasa();
+  const sorted=[...rows].sort((a,b)=>a.year-b.year);
+  let totAp=0, totCCI=0, totCots=0;
+  const chartData=[];
+
+  sorted.forEach(row=>{
+    const perRest = NOW - row.year;          // Año actual - Año cotización
+    const totalAnual = row.salary * row.cots;
+    const aporte = totalAnual * tasa;
+    const roi = (row.roi || getROI()*100) / 100;
+    const cciRow = perRest * (aporte * roi);  // FÓRMULA CORREGIDA
+
+    totAp += aporte; totCCI += cciRow; totCots += row.cots;
+    chartData.push({year:row.year, cciRow, perRest, aporte, roi:row.roi});
+
+    const s=(id,txt)=>{ const el=$(id); if(el)el.textContent=txt; };
+    s('ct-'+row.id,'RD$ '+fN(totalAnual));
+    s('ca-'+row.id,'RD$ '+fN(aporte));
+    s('cp-'+row.id, perRest > 0 ? perRest : '—');
+    s('cc-'+row.id, perRest > 0 ? 'RD$ '+fN(cciRow) : 'RD$ 0');
+  });
+
+  // CCI ACUMULADO TOTAL = Total Aportes + Total CCI Contrib.
+  const totCCIacum = totAp + totCCI;
+
+  // Footer
+  $('ytfoot').innerHTML=`<tr>
+    <td colspan="4" style="color:var(--muted);text-align:left;font-size:10px">
+      TOTALES · ${sorted.length} años · ${totCots} cotizaciones · Año actual: ${NOW}
+    </td>
+    <td></td><td class="tm">RD$ ${fN(totAp)}</td>
+    <td></td><td></td>
+    <td class="tci">RD$ ${fN(totCCI)}</td><td></td></tr>
+  <tr style="background:rgba(201,147,10,.1);border-top:2px solid rgba(201,147,10,.5)">
+    <td colspan="8" style="color:var(--gold);font-size:11px;text-align:left;padding:8px 9px;font-weight:700;letter-spacing:.04em">
+      CCI ACUMULADO TOTAL = Total Aportes + Total CCI Contrib.
+    </td>
+    <td class="tci" style="font-size:14px;color:var(--gold2);padding:8px 9px">RD$ ${fN(totCCIacum)}</td>
+    <td></td></tr>`;
+
+  $('st-cci').textContent=fSh(totCCIacum);
+  $('st-ap').textContent=fSh(totAp);
+  $('st-rend').textContent=fSh(totCCI);
+  $('st-mult').textContent='CCI Contrib.: '+fSh(totCCI);
+  $('st-cots').textContent=totCots;
+  $('st-anos').textContent=sorted.length+' años registrados';
+
+  window._CCI=totCCIacum; window._nom=$('xc-nom').value;
+  window._ced=$('xc-ced').value; window._sal=$('xc-sal').value; window._edad=$('xc-edad').value;
+
+  const xfer=$('xfer-banner');
+  xfer.classList.add('show');
+  $('xfer-msg').textContent='CCI Acumulado: '+fSh(totCCIacum)+' (Aportes '+fSh(totAp)+' + Contrib. '+fSh(totCCI)+')';
+  renderChart(chartData);
+}
+
+// ===== CHART =====
+function renderChart(data){
+  const wrap=$('chart-bars'), lbl=$('chart-total');
+  if(!data||!data.length){wrap.innerHTML='<div style="color:var(--muted);font-size:12px;padding:16px">Agrega filas para ver el gráfico</div>';if(lbl)lbl.textContent='';return;}
+  const mx=Math.max(...data.map(d=>d.cciRow),1);
+  if(lbl)lbl.textContent='Total: '+fSh(data.reduce((s,d)=>s+d.cciRow,0));
+  wrap.innerHTML=data.map(d=>{
+    const h=Math.max(2,(d.cciRow/mx)*105);
+    const col=d.cciRow>mx*.65?'#F5C842':d.cciRow>mx*.3?'#C9930A':'#5B8BD0';
+    const tip=`${d.year}: ${fSh(d.cciRow)} | Per.Rest:${d.perRest} | Aporte:RD$ ${fN(d.aporte)}`;
+    return`<div class="bw2"><div class="bar" style="height:${h}px;background:${col}" data-tip="${tip}"></div><div class="blbl">'${String(d.year).slice(2)}</div></div>`;
+  }).join('');
+}
+
+// ===== TRANSFER =====
+function transferCCI(){
+  if(!window._CCI)return;
+  $('cci_manual').value=Math.round(window._CCI);
+  if(window._nom)$('nombre').value=window._nom;
+  if(window._ced)$('cedula').value=window._ced;
+  if(window._sal)$('ult_sal').value=window._sal;
+  if(window._edad)$('edad').value=window._edad;
+  $('cci-badge').style.display='inline-block';
+  switchTab('scoring',document.querySelector('.tab-btn'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== EXCEL IMPORT =====
+function dzDrag(e,on){ e.preventDefault(); $('dropzone').classList[on?'add':'remove']('drag'); }
+function dzDrop(e){ e.preventDefault(); $('dropzone').classList.remove('drag'); const f=e.dataTransfer.files[0]; if(f)handleFile(f); }
+
+function showDzOk(msg){ $('dz-ok').textContent='✅ '+msg; $('dz-ok').style.display='block'; $('dz-err').style.display='none'; }
+function showDzErr(msg){ $('dz-err').textContent='❌ '+msg; $('dz-err').style.display='block'; $('dz-ok').style.display='none'; }
+function dzProgress(pct){ $('dz-prog').style.display='block'; $('dz-bar').style.width=pct+'%'; }
+
+function handleFile(file){
+  if(!file)return;
+  $('dz-ok').style.display='none'; $('dz-err').style.display='none';
+  const ext=file.name.split('.').pop().toLowerCase();
+  if(!['xlsx','xls','csv'].includes(ext)){ showDzErr('Formato no soportado. Use .xlsx, .xls o .csv'); return; }
+  dzProgress(30);
+  const reader=new FileReader();
+  reader.onload=e=>{
+    dzProgress(70);
+    try{
+      let wb;
+      if(ext==='csv'){
+        wb=XLSX.read(e.target.result,{type:'string'});
+      } else {
+        wb=XLSX.read(e.target.result,{type:'array'});
+      }
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      if(!data||data.length<2){ showDzErr('El archivo está vacío o no tiene datos.'); dzProgress(0); return; }
+
+      // Extract headers (first non-empty row)
+      let headerRow=0;
+      for(let i=0;i<Math.min(5,data.length);i++){
+        if(data[i].some(c=>c!==''&&c!==null)){headerRow=i;break;}
+      }
+      xlHeaders=data[headerRow].map((h,i)=>String(h||'Columna '+(i+1)).trim());
+      xlRaw=data.slice(headerRow+1).filter(r=>r.some(c=>c!==''&&c!==null));
+      dzProgress(100);
+      showDzOk(`Archivo cargado: ${xlRaw.length} filas · ${xlHeaders.length} columnas`);
+      buildColMapper();
+      autoMap();
+    }catch(err){
+      showDzErr('Error al leer el archivo: '+err.message);
+      dzProgress(0);
+    }
+  };
+  reader.onerror=()=>showDzErr('No se pudo leer el archivo.');
+  if(ext==='csv') reader.readAsText(file);
+  else reader.readAsArrayBuffer(file);
+}
+
+function buildColMapper(){
+  const cm=$('col-map'); cm.classList.add('visible');
+  const selIds=['cm-year','cm-cots','cm-sal','cm-roi'];
+  selIds.forEach(sid=>{
+    const sel=$(sid); sel.innerHTML='';
+    if(sid==='cm-roi') sel.innerHTML='<option value="">— Usar ROI por defecto —</option>';
+    xlHeaders.forEach((h,i)=>{
+      const opt=document.createElement('option');
+      opt.value=i; opt.textContent=h;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+// Auto-detect columns by common header names
+function autoMap(){
+  const patterns={
+    year:[/^(año|year|anio|period|periodo)/i],
+    cots:[/^(cot|cotiz|cant|num|#)/i],
+    sal:[/^(sal|ingr|sueldo|wage|mensual)/i],
+    roi:[/^(roi|rend|rate|tasa|yield)/i]
+  };
+  const maps={year:null,cots:null,sal:null,roi:null};
+  xlHeaders.forEach((h,i)=>{
+    for(const[k,pats] of Object.entries(patterns)){
+      if(maps[k]===null && pats.some(p=>p.test(h))) maps[k]=i;
+    }
+  });
+  if(maps.year!==null) $('cm-year').value=maps.year;
+  if(maps.cots!==null) $('cm-cots').value=maps.cots;
+  if(maps.sal!==null)  $('cm-sal').value=maps.sal;
+  if(maps.roi!==null)  $('cm-roi').value=maps.roi;
+}
+
+function applyMapping(){
+  const yc=parseInt($('cm-year').value), cc=parseInt($('cm-cots').value),
+        sc=parseInt($('cm-sal').value), rc=$('cm-roi').value;
+  if(isNaN(yc)||isNaN(cc)||isNaN(sc)){ showDzErr('Asigna al menos las columnas: Año, Cotizaciones y Salario.'); return; }
+
+  rows=[]; rid=0;
+  let imported=0;
+  xlRaw.forEach(row=>{
+    const yr=parseNum(row[yc]), ct=parseNum(row[cc]), sl=parseNum(row[sc]);
+    if(!yr&&!ct&&!sl)return; // skip empty rows
+    const roi=rc!==''&&row[rc]!==''?parseNum(row[rc]):+(getROI()*100).toFixed(2);
+    rows.push({id:rid++, year:yr||0, cots:Math.min(12,ct||12), salary:sl||0, roi:roi||9.40});
+    imported++;
+  });
+
+  renderTable(); recalcAll();
+  showDzOk(`✅ ${imported} filas importadas correctamente`);
+  $('col-map').classList.remove('visible');
+}
+
+function parseNum(val){
+  if(val===''||val===null||val===undefined)return 0;
+  const s=String(val).replace(/[^0-9.\-]/g,'');
+  return parseFloat(s)||0;
+}
+
+// ===== DOWNLOAD TEMPLATE =====
+function downloadTemplate(){
+  const ws=XLSX.utils.aoa_to_sheet([
+    ['AÑO','CANTIDAD_COTIZACIONES','SALARIO_MENSUAL','ROI_PORCENTAJE'],
+    [2005,11,65000,9.40],[2006,12,65000,9.40],[2007,11,65000,9.40],
+    [2008,12,65000,9.40],[2009,12,85000,9.40],[2010,12,85000,9.40],
+    ['','','',''],
+    ['-- Reemplaza con tus propios datos --','','',''],
+  ]);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Historial_CCI');
+  XLSX.writeFile(wb,'plantilla_historial_cci.xlsx');
+}
+
+// ===== SCORING =====
+function calcScore(){
+  const edad=parseInt($('edad').value)||62;
+  const ingreso=parseInt($('sl-ing').value);
+  const estabilidad=$('estabilidad').value;
+  const activos=parseInt($('sl-act').value);
+  const dti=parseInt($('sl-dti').value);
+  const salud=$('salud').value;
+  const dep=$('dependientes').value;
+  const hist=parseInt($('historial').value);
+  const nombre=$('nombre').value||'Prospecto';
+  const cciM=parseFloat($('cci_manual').value)||0;
+
+  const sc={};
+  sc.edad=edad>=66?15:edad>=61?10:edad>=55?8:0;
+
+  let cci=cciM, cciSrc='Importado desde Calculadora CCI';
+  if(!cci){
+    const aj=hist===12?1:hist===8?.88:hist===5?.75:.6;
+    cci=ingreso*getTasa()*(hist*12)*Math.pow(1+getROI(),hist*.5)*aj*.85;
+    cciSrc='Estimado por historial de ingresos';
+  }
+
+  sc.cci=cci>8e6?25:cci>3e6?20:cci>1e6?15:cci>300000?10:5;
+  sc.estab=estabilidad==='alta'?20:estabilidad==='media'?12:5;
+  sc.activos=activos>10e6?15:activos>2e6?10:5;
+  sc.dti=dti<20?10:dti<40?8:dti<60?5:0;
+  sc.salud=salud==='buena'?10:salud==='cronica'?5:0;
+  sc.dep=dep==='0'?5:dep==='1'?3:1;
+
+  const total=Object.values(sc).reduce((a,b)=>a+b,0);
+  let seg,sc_color,sc_bg,steps,ciclo;
+  if(total>=85){
+    seg='🔥 PREMIUM';sc_color='#F5C842';sc_bg='rgba(201,147,10,.2)';ciclo='0-7 días';
+    steps=['Llamada de apertura HOY – máxima prioridad','Propuesta personalizada lista en 24h','Reunión presencial o videollamada día 3','Aplicar cierre de "Decisión Inversa"','Firma antes del día 7'];
+  }else if(total>=65){
+    seg='✅ CALIFICADO';sc_color='#2ECC71';sc_bg='rgba(46,204,113,.15)';ciclo='0-30 días';
+    steps=['Llamada de diagnóstico en próximas 48h','Enviar análisis del "Gap de Ingresos"','Reunión de propuesta en semana 2','Involucrar cónyuge/heredero en reunión','Técnica del "Escenario Futuro"'];
+  }else if(total>=45){
+    seg='⚠️ POTENCIAL';sc_color='#F39C12';sc_bg='rgba(243,156,18,.15)';ciclo='30-90 días';
+    steps=['Enviar contenido educativo (email/WhatsApp)','Invitar a webinar de planificación del retiro','Diagnóstico financiero gratuito mes 2','Propuesta simplificada en mes 3','Revisar perfil cada 6 meses'];
+  }else{
+    seg='❌ NO CALIFICA';sc_color='#E74C3C';sc_bg='rgba(231,76,60,.15)';ciclo='No aplicar';
+    steps=['Excluir del pipeline activo','Evaluar producto alternativo (seguro de vida)','Re-evaluación en 18-24 meses','Si deuda alta: referir a asesoría','Nurturing pasivo'];
+  }
+
+  const fr=edad>=70?.0072:edad>=65?.0065:.0058;
+  const r1=Math.round(cci*.6*fr),r2=Math.round(cci*.8*fr),r3=Math.round(cci*fr);
+  const maxes={edad:15,cci:25,estab:20,activos:15,dti:10,salud:10,dep:5};
+  const lbls={edad:'Edad',cci:'CCI / Fondo',estab:'Estabilidad',activos:'Activos',dti:'Deuda (DTI)',salud:'Salud',dep:'Dependientes'};
+  const bcols={edad:'#5B8BD0',cci:'#C9930A',estab:'#2ECC71',activos:'#9B59B6',dti:'#E74C3C',salud:'#1ABC9C',dep:'#F39C12'};
+  const rv=52, circ=2*Math.PI*rv, dash=(total/100)*circ;
+  const snc=total>=85?'#F5C842':total>=65?'#2ECC71':total>=45?'#F39C12':'#E74C3C';
+
+  let bHTML='';
+  for(const[k,v] of Object.entries(sc)){
+    bHTML+=`<div class="br"><span class="bn">${lbls[k]}</span>
+      <div class="bw"><div class="bb" style="width:${v/maxes[k]*100}%;background:${bcols[k]}"></div></div>
+      <span class="bp">${v}/${maxes[k]}</span></div>`;
+  }
+  const sHTML=steps.map((s,i)=>`<div class="ss"><div class="sn">${i+1}</div><div class="st">${s}</div></div>`).join('');
+
+  $('score-panel').innerHTML=`
+    <div class="sp-top">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:6px;letter-spacing:.06em;text-transform:uppercase">${nombre}</div>
+      <div class="ring-wrap">
+        <svg width="124" height="124" viewBox="0 0 124 124">
+          <circle cx="62" cy="62" r="${rv}" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="10"/>
+          <circle cx="62" cy="62" r="${rv}" fill="none" stroke="${snc}" stroke-width="10"
+            stroke-dasharray="${dash.toFixed(1)} ${circ.toFixed(1)}" stroke-linecap="round" style="transition:stroke-dasharray .8s ease"/>
+        </svg>
+        <div class="ring-num" style="color:${snc}">${total}</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted)">Score / 100</div>
+      <div class="seg-badge" style="color:${sc_color};background:${sc_bg};border:1px solid ${sc_color}40">${seg}</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:8px">⏱ Ciclo: <strong style="color:var(--text)">${ciclo}</strong></div>
+    </div>
+    <div class="cci-res"><div class="cci-lbl">CCI / Fondo de Pensión</div>
+      <div class="cci-val">${fSh(cci)}</div><div class="cci-sub">${cciSrc}</div></div>
+    <div class="renta-box"><div class="renta-lbl">Renta Mensual Estimada (RD$)</div>
+      <div class="rsc">
+        <div class="rs"><div class="rs-n">Conserv.</div><div class="rs-v">${fSh(r1)}</div><div class="rs-p">60%</div></div>
+        <div class="rs" style="border-color:rgba(201,147,10,.4);background:rgba(201,147,10,.08)">
+          <div class="rs-n">Base ⭐</div><div class="rs-v">${fSh(r2)}</div><div class="rs-p">80%</div></div>
+        <div class="rs"><div class="rs-n">Premium</div><div class="rs-v">${fSh(r3)}</div><div class="rs-p">100%</div></div>
+      </div></div>
+    <div class="bdown">
+      <div style="font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:9px">Desglose del Score</div>
+      ${bHTML}</div>
+    <div class="strat"><div class="strat-t">Estrategia Recomendada</div>${sHTML}</div>`;
+
+  $('score-panel').classList.add('animated');
+  setTimeout(()=>$('score-panel').classList.remove('animated'),400);
+}
+
+// ===== PDF EXPORT =====
+function exportPDF(mode) {
+  // Update print header dates
+  const d = new Date().toLocaleDateString('es-DO', {year:'numeric',month:'long',day:'numeric'});
+  const nom = $('nombre') && $('nombre').value ? $('nombre').value : ($('xc-nom') && $('xc-nom').value ? $('xc-nom').value : '—');
+  const ced = $('cedula') && $('cedula').value ? $('cedula').value : ($('xc-ced') && $('xc-ced').value ? $('xc-ced').value : '—');
+  const meta = `${nom} · Cédula: ${ced} · ${d} · Uso Interno`;
+  
+  const phS = $('ph-scoring'); if(phS) phS.querySelector('.ph-meta').textContent = meta;
+  const phC = $('ph-cci');     if(phC) phC.querySelector('.ph-meta').textContent = meta;
+
+  // Remove previous printing classes
+  document.querySelectorAll('.print-section').forEach(el => el.classList.remove('printing'));
+
+  if (mode === 'scoring' || mode === 'both') {
+    const ps = $('ps-scoring'); if(ps) ps.classList.add('printing');
+  }
+  if (mode === 'cci' || mode === 'both') {
+    const pc = $('ps-cci'); if(pc) pc.classList.add('printing');
+  }
+
+  // Give browser a tick to apply classes, then print
+  setTimeout(() => {
+    window.print();
+    // After print dialog closes, restore
+    setTimeout(() => {
+      document.querySelectorAll('.print-section').forEach(el => el.classList.remove('printing'));
+    }, 1000);
+  }, 80);
+}
+
+</script>
+</body>
+</html>
