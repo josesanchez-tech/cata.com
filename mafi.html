@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAFI — Maestro de Análisis Financiero</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0b0f;
+    --paper: #f5f2ec;
+    --gold: #b8922a;
+    --gold-light: #d4aa4e;
+    --gold-pale: #f0e4c4;
+    --charcoal: #1e2028;
+    --muted: #6b6a65;
+    --line: rgba(184,146,42,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── INTRO SCREEN ── */
+  #intro {
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1rem;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  #intro.hidden { opacity: 0; visibility: hidden; }
+  .intro-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(5rem, 15vw, 10rem);
+    letter-spacing: -0.04em;
+    color: var(--gold);
+    line-height: 1;
+    animation: pulse-in 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .intro-line {
+    width: 0; height: 1px;
+    background: var(--gold);
+    animation: expand-line 1s 0.6s ease forwards;
+  }
+  .intro-sub {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fade-in 0.8s 1s ease forwards;
+  }
+
+  @keyframes pulse-in {
+    0% { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes expand-line {
+    to { width: 300px; }
+  }
+  @keyframes fade-in {
+    to { opacity: 1; }
+  }
+
+  /* ── MAIN LAYOUT ── */
+  main { opacity: 0; transition: opacity 1s ease; }
+  main.visible { opacity: 1; }
+
+  section {
+    min-height: 100vh;
+    padding: clamp(4rem, 8vw, 8rem) clamp(2rem, 8vw, 10rem);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    padding: 1.5rem clamp(2rem, 8vw, 10rem);
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(10,11,15,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(4px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: -0.02em;
+  }
+  .nav-links {
+    display: flex; gap: 2.5rem;
+    list-style: none;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .nav-links li { cursor: pointer; transition: color 0.2s; }
+  .nav-links li:hover { color: var(--gold); }
+
+  /* ── HERO ── */
+  #hero {
+    background: var(--ink);
+    overflow: hidden;
+  }
+  .hero-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: slide-up 0.8s 2.2s ease forwards;
+  }
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    max-width: 14ch;
+    opacity: 0;
+    animation: slide-up 0.8s 2.4s ease forwards;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero-divider {
+    width: 0; height: 1px;
+    background: var(--line);
+    margin: 2.5rem 0;
+    opacity: 0;
+    animation: grow-line 0.8s 2.6s ease forwards;
+  }
+  @keyframes grow-line { to { width: 120px; opacity: 1; } }
+
+  .hero-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245,242,236,0.72);
+    max-width: 50ch;
+    opacity: 0;
+    animation: slide-up 0.8s 2.7s ease forwards;
+  }
+
+  .hero-cta-row {
+    margin-top: 3rem;
+    display: flex; gap: 1.5rem; align-items: center;
+    opacity: 0;
+    animation: slide-up 0.8s 3s ease forwards;
+  }
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 1rem 2.5rem;
+    border: none; cursor: pointer;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none; border: none; cursor: pointer;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--paper); }
+
+  /* floating grid bg */
+  .hero-grid {
+    position: absolute;
+    right: -5%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45vw; height: 80vh;
+    opacity: 0.06;
+    background-image:
+      linear-gradient(var(--gold) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: fade-in 1s 3s ease forwards;
+    pointer-events: none;
+  }
+
+  @keyframes slide-up {
+    from { transform: translateY(24px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* ── DEFINITION SECTION ── */
+  #definicion {
+    background: #0e1016;
+    border-top: 1px solid var(--line);
+  }
+  .section-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .definition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 2rem;
+  }
+  .definition-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .definition-left h2 span { color: var(--gold); font-style: italic; }
+  .definition-right {
+    padding-top: 0.5rem;
+  }
+  .definition-right p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 1.8vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(245,242,236,0.75);
+    margin-bottom: 1.5rem;
+  }
+  .acronym-table {
+    margin-top: 2rem;
+    border-top: 1px solid var(--line);
+    padding-top: 2rem;
+  }
+  .acronym-row {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgba(184,146,42,0.1);
+  }
+  .letter {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--gold);
+  }
+  .word {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  /* ── PILLARS ── */
+  #pilares {
+    background: var(--ink);
+    border-top: 1px solid var(--line);
+  }
+  .pillars-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+  .pillars-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    max-width: 20ch;
+  }
+  .pillars-header h2 em { font-style: italic; color: var(--gold-light); }
+  .pillars-count {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .pillar-card {
+    background: #0e1016;
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .pillar-card:hover { background: #12141b; }
+  .pillar-card:hover::before { transform: scaleX(1); }
+  .pillar-num {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .pillar-icon {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+    opacity: 0.9;
+  }
+  .pillar-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.8rem;
+    color: var(--paper);
+  }
+  .pillar-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(245,242,236,0.6);
+  }
+
+  /* ── DIFFERENTIATORS ── */
+  #diferenciadores {
+    background: #0e1016;
+    border-top: 1px solid var(--line);
+  }
+  .diff-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+  .diff-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.2;
+    position: sticky;
+    top: 8rem;
+  }
+  .diff-left h2 em { font-style: italic; color: var(--gold-light); }
+  .diff-items { display: flex; flex-direction: column; gap: 0; }
+  .diff-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .diff-item:hover .diff-number { color: var(--gold); }
+  .diff-item:hover .diff-item-title { color: var(--gold-light); }
+  .diff-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(184,146,42,0.4);
+    padding-top: 0.25rem;
+    transition: color 0.3s;
+  }
+  .diff-content {}
+  .diff-item-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+    transition: color 0.3s;
+  }
+  .diff-item-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(245,242,236,0.6);
+  }
+
+  /* ── AUDIENCES ── */
+  #audiencias {
+    background: var(--ink);
+    border-top: 1px solid var(--line);
+  }
+  .audience-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+  .audience-intro h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+  }
+  .audience-intro h2 em { font-style: italic; color: var(--gold-light); }
+  .audience-intro p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(245,242,236,0.65);
+  }
+  .audience-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+  .audience-card {
+    background: #0e1016;
+    padding: 2.5rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .audience-card:hover { background: #141620; }
+  .audience-badge {
+    display: inline-block;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(184,146,42,0.35);
+    padding: 0.3rem 0.7rem;
+    margin-bottom: 1.2rem;
+  }
+  .audience-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .audience-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(245,242,236,0.6);
+    margin-bottom: 1.5rem;
+  }
+  .use-cases {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .use-cases li {
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .use-cases li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* ── CLOSING ── */
+  #cierre {
+    background: var(--charcoal);
+    border-top: 1px solid var(--line);
+    text-align: center;
+    align-items: center;
+  }
+  .close-eyebrow {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+  }
+  .close-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 7vw, 6rem);
+    font-weight: 300;
+    line-height: 1.1;
+    max-width: 18ch;
+    margin: 0 auto 1rem;
+  }
+  .close-headline em { font-style: italic; color: var(--gold-light); }
+  .close-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: rgba(245,242,236,0.6);
+    max-width: 40ch;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+  .close-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 6rem;
+    color: var(--gold);
+    letter-spacing: -0.04em;
+    opacity: 0.12;
+    position: absolute;
+    bottom: -1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .close-tagline {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 3rem;
+  }
+
+  /* ── CONTACTO ── */
+  #contacto {
+    background: var(--ink);
+    border-top: 1px solid var(--line);
+  }
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 6rem;
+    align-items: start;
+  }
+  .contact-left h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+  .contact-left h2 em { font-style: italic; color: var(--gold-light); }
+  .contact-left p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    line-height: 1.75;
+    color: rgba(245,242,236,0.65);
+    margin-bottom: 2.5rem;
+  }
+  .contact-email-block {
+    border: 1px solid var(--line);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    transition: border-color 0.3s;
+  }
+  .contact-email-block:hover { border-color: var(--gold); }
+  .email-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+  }
+  .email-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.3rem;
+  }
+  .email-address {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--gold-light);
+    word-break: break-all;
+  }
+
+  /* contact form */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .field label {
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    background: #0e1016;
+    border: 1px solid rgba(184,146,42,0.2);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.25s;
+    resize: none;
+    appearance: none;
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: rgba(107,106,101,0.6); }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus { border-color: var(--gold); }
+  .field select option { background: #0e1016; }
+  .form-submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
+  .form-note {
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    max-width: 24ch;
+    line-height: 1.5;
+  }
+  .btn-send {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--ink);
+    padding: 1rem 2.5rem;
+    border: none;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.2s;
+    flex-shrink: 0;
+  }
+  .btn-send:hover { background: var(--gold-light); transform: translateY(-1px); }
+  .success-msg {
+    display: none;
+    background: rgba(184,146,42,0.1);
+    border: 1px solid var(--gold);
+    padding: 1.2rem 1.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    color: var(--gold-light);
+    text-align: center;
+  }
+
+  /* ── SCROLL REVEALS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .definition-grid,
+    .diff-layout,
+    .audience-intro,
+    .pillars-grid,
+    .audience-cards { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-grid { display: none; }
+    .pillars-grid { gap: 1px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="intro">
+  <div class="intro-logo">MAFI</div>
+  <div class="intro-line"></div>
+  <div class="intro-sub">Maestro de Análisis Financiero</div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MAFI</div>
+  <ul class="nav-links">
+    <li onclick="document.getElementById('definicion').scrollIntoView({behavior:'smooth'})">Definición</li>
+    <li onclick="document.getElementById('pilares').scrollIntoView({behavior:'smooth'})">Pilares</li>
+    <li onclick="document.getElementById('diferenciadores').scrollIntoView({behavior:'smooth'})">Diferenciadores</li>
+    <li onclick="document.getElementById('audiencias').scrollIntoView({behavior:'smooth'})">Audiencia</li>
+    <li onclick="document.getElementById('contacto').scrollIntoView({behavior:'smooth'})">Contacto</li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<main id="main">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-eyebrow">Solución de Inteligencia Financiera</div>
+    <h1 class="hero-headline">
+      Decisiones de riesgo con <em>inteligencia total</em>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-body">
+      MAFI conjuga datos crediticios y socioeconómicos en una sola plataforma,
+      dando a instituciones financieras y equipos de riesgo la claridad que necesitan
+      para aprobar, escalar y proteger con confianza.
+    </p>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="document.getElementById('definicion').scrollIntoView({behavior:'smooth'})">Conocer MAFI</button>
+      <button class="btn-ghost" onclick="document.getElementById('pilares').scrollIntoView({behavior:'smooth'})">Ver pilares →</button>
+    </div>
+  </section>
+
+  <!-- DEFINICIÓN -->
+  <section id="definicion">
+    <div class="section-label reveal">01 — Definición</div>
+    <div class="definition-grid">
+      <div class="definition-left reveal">
+        <h2><span>MAFI</span><br>Maestro de Análisis Financiero</h2>
+        <div class="acronym-table" style="margin-top:2.5rem;">
+          <div class="acronym-row">
+            <div class="letter">M</div>
+            <div class="word">Maestro</div>
+          </div>
+          <div class="acronym-row">
+            <div class="letter">A</div>
+            <div class="word">Análisis</div>
+          </div>
+          <div class="acronym-row">
+            <div class="letter">F</div>
+            <div class="word">Financiero</div>
+          </div>
+          <div class="acronym-row">
+            <div class="letter">I</div>
+            <div class="word">Individual &amp; Institucional</div>
+          </div>
+        </div>
+      </div>
+      <div class="definition-right reveal">
+        <p>
+          MAFI es una solución de inteligencia de riesgo que <strong style="color:var(--gold-light);font-weight:400;">conjuga data crediticia
+          con data socioeconómica</strong> para ofrecer una visión integral del sujeto de crédito,
+          ya sea un individuo o una empresa.
+        </p>
+        <p>
+          A diferencia de los modelos de scoring tradicionales que operan en silos,
+          MAFI cruza señales financieras formales con variables de contexto:
+          zona geográfica, densidad económica, historial de comportamiento sectorial
+          y patrones macroeconómicos regionales.
+        </p>
+        <p>
+          El resultado: decisiones de riesgo y crédito más precisas, equitativas y
+          fundamentadas — reduciendo la mora, ampliando el acceso financiero y
+          fortaleciendo los portafolios de quienes lo adoptan.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILARES -->
+  <section id="pilares">
+    <div class="pillars-header reveal">
+      <h2>Los tres pilares de <em>MAFI</em></h2>
+      <div class="pillars-count">03 pilares fundacionales</div>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card reveal">
+        <div class="pillar-num">01</div>
+        <div class="pillar-icon">📊</div>
+        <div class="pillar-title">DATA CREDITICIA</div>
+        <p class="pillar-desc">
+          Integración con burós de crédito, registros de deuda, historial de pagos,
+          capacidad de endeudamiento y comportamiento ante obligaciones financieras
+          previas. La base cuantitativa del análisis.
+        </p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-num">02</div>
+        <div class="pillar-icon">🌐</div>
+        <div class="pillar-title">DATA SOCIOECONÓMICA</div>
+        <p class="pillar-desc">
+          Variables de contexto: nivel socioeconómico, actividad económica de la zona,
+          índices de desarrollo humano, sector de empleo, composición del hogar
+          y movilidad patrimonial. El entorno que no miente.
+        </p>
+      </div>
+      <div class="pillar-card reveal">
+        <div class="pillar-num">03</div>
+        <div class="pillar-icon">⚖️</div>
+        <div class="pillar-title">MOTOR DE DECISIÓN</div>
+        <p class="pillar-desc">
+          Algoritmos de scoring combinado, modelos predictivos de mora y metodologías
+          de segmentación de riesgo que transforman los datos en recomendaciones
+          accionables, trazables y auditables.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIADORES -->
+  <section id="diferenciadores">
+    <div class="diff-layout">
+      <div class="diff-left reveal">
+        <h2>¿Por qué MAFI <em>es diferente</em>?</h2>
+      </div>
+      <div class="diff-items">
+        <div class="diff-item reveal">
+          <div class="diff-number">01</div>
+          <div class="diff-content">
+            <div class="diff-item-title">VISIÓN 360° DEL SUJETO</div>
+            <p class="diff-item-desc">
+              No evalúa solo el historial crediticio. MAFI construye un perfil completo que
+              incluye el entorno económico, el sector de actividad y la trayectoria de vida
+              financiera, dando contexto a cada número.
+            </p>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-number">02</div>
+          <div class="diff-content">
+            <div class="diff-item-title">COBERTURA DUAL: PERSONAS Y EMPRESAS</div>
+            <p class="diff-item-desc">
+              Un solo motor analítico adaptado para evaluar individuos — consumidores,
+              emprendedores, empleados — y personas jurídicas, desde microempresas
+              hasta corporaciones medianas.
+            </p>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-number">03</div>
+          <div class="diff-content">
+            <div class="diff-item-title">REDUCCIÓN DE SESGO EN EL SCORING</div>
+            <p class="diff-item-desc">
+              Al incorporar contexto socioeconómico, MAFI corrige el sesgo de los modelos
+              tradicionales que penalizan a sujetos con historial delgado pero con sólidos
+              fundamentos de pago.
+            </p>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-number">04</div>
+          <div class="diff-content">
+            <div class="diff-item-title">DECISIONES AUDITABLES</div>
+            <p class="diff-item-desc">
+              Cada recomendación generada por MAFI es trazable: la institución sabe
+              exactamente qué variables impulsaron el resultado, facilitando
+              compliance regulatorio y explicabilidad al cliente.
+            </p>
+          </div>
+        </div>
+        <div class="diff-item reveal">
+          <div class="diff-number">05</div>
+          <div class="diff-content">
+            <div class="diff-item-title">INTEGRACIÓN ÁGIL</div>
+            <p class="diff-item-desc">
+              Diseñado para integrarse mediante API con los sistemas de originación,
+              CRM y core bancario existentes, sin requerir una transformación
+              tecnológica completa.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIENCIAS -->
+  <section id="audiencias">
+    <div class="audience-intro">
+      <div class="reveal">
+        <div class="section-label">04 — Para quién</div>
+        <h2>MAFI habla el idioma de quienes <em>deciden</em></h2>
+      </div>
+      <div class="reveal">
+        <p>
+          Desde el analista de riesgo que necesita profundidad hasta el director
+          financiero que requiere velocidad, MAFI está construido para escalar
+          con cada nivel de la organización.
+        </p>
+      </div>
+    </div>
+    <div class="audience-cards">
+      <div class="audience-card reveal">
+        <div class="audience-badge">Banca &amp; Financieras</div>
+        <div class="audience-title">Instituciones de Crédito</div>
+        <p class="audience-desc">
+          Optimiza la originación de crédito, reduce la mora
+          y mejora el ROI de los portafolios de préstamo
+          con scoring enriquecido.
+        </p>
+        <ul class="use-cases">
+          <li>Crédito de consumo y personal</li>
+          <li>Microfinanzas y fintech</li>
+          <li>Crédito hipotecario y vehicular</li>
+          <li>Líneas de capital de trabajo</li>
+        </ul>
+      </div>
+      <div class="audience-card reveal">
+        <div class="audience-badge">Empresas B2B</div>
+        <div class="audience-title">Crédito Comercial &amp; Proveedores</div>
+        <p class="audience-desc">
+          Evalúa el riesgo de clientes y socios comerciales antes de
+          extender crédito, con datos que van más allá del
+          balance financiero declarado.
+        </p>
+        <ul class="use-cases">
+          <li>Evaluación de contrapartes</li>
+          <li>Crédito a distribuidores y retailers</li>
+          <li>Due diligence de clientes clave</li>
+          <li>Gestión de cuentas por cobrar</li>
+        </ul>
+      </div>
+      <div class="audience-card reveal">
+        <div class="audience-badge">Seguros &amp; Garantías</div>
+        <div class="audience-title">Aseguradoras y Fondos de Garantía</div>
+        <p class="audience-desc">
+          Mejora la suscripción de pólizas financieras y garantías
+          con perfiles de riesgo más completos y predictivos.
+        </p>
+        <ul class="use-cases">
+          <li>Seguros de vida con prima variable</li>
+          <li>Garantías de arrendamiento</li>
+          <li>Suscripción de fianzas</li>
+          <li>Fondos de garantía sectorial</li>
+        </ul>
+      </div>
+      <div class="audience-card reveal">
+        <div class="audience-badge">Gobierno &amp; Reguladores</div>
+        <div class="audience-title">Sector Público e Inclusión</div>
+        <p class="audience-desc">
+          Apoya programas de inclusión financiera y políticas de crédito
+          subsidiado, identificando poblaciones sub-atendidas con
+          potencial real de pago.
+        </p>
+        <ul class="use-cases">
+          <li>Programas de bancarización</li>
+          <li>Crédito rural y agrícola</li>
+          <li>Subsidios habitacionales</li>
+          <li>Política pública de acceso al crédito</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="section-label reveal">06 — Contacto</div>
+    <div class="contact-layout">
+
+      <div class="contact-left reveal">
+        <h2>Solicite información sobre <em>MAFI</em></h2>
+        <p>
+          ¿Desea conocer cómo MAFI puede integrarse en su organización?
+          Complete el formulario y nuestro equipo le responderá a la brevedad
+          con información detallada, demos y propuestas adaptadas a sus necesidades.
+        </p>
+        <div class="contact-email-block">
+          <div class="email-icon">✉</div>
+          <div>
+            <div class="email-label">Correo de contacto</div>
+            <div class="email-address">jose.sanchez@cata-rd.com</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-right reveal">
+        <div class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label>Nombre completo</label>
+              <input type="text" id="f-nombre" placeholder="Ej. María Rodríguez">
+            </div>
+            <div class="field">
+              <label>Organización</label>
+              <input type="text" id="f-org" placeholder="Empresa o institución">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Correo electrónico</label>
+              <input type="email" id="f-email" placeholder="correo@dominio.com">
+            </div>
+            <div class="field">
+              <label>Teléfono (opcional)</label>
+              <input type="tel" id="f-tel" placeholder="+1 (809) 000-0000">
+            </div>
+          </div>
+          <div class="field">
+            <label>Tipo de organización</label>
+            <select id="f-tipo">
+              <option value="" disabled selected>Seleccione una opción</option>
+              <option>Banco o institución financiera</option>
+              <option>Fintech / Microfinanzas</option>
+              <option>Empresa comercial (crédito B2B)</option>
+              <option>Aseguradora o fondo de garantía</option>
+              <option>Entidad gubernamental</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Mensaje / Consulta específica</label>
+            <textarea id="f-msg" rows="4" placeholder="Cuéntenos sobre su caso de uso, el tamaño de su portafolio, o las preguntas que desea resolver con MAFI..."></textarea>
+          </div>
+          <div class="form-submit">
+            <div class="form-note">
+              Su solicitud se enviará directamente a nuestro equipo vía correo electrónico.
+            </div>
+            <button class="btn-send" onclick="enviarSolicitud()">Enviar solicitud →</button>
+          </div>
+        </div>
+        <div class="success-msg" id="successMsg">
+          ✓ &nbsp; Su solicitud ha sido enviada exitosamente.<br>
+          Le responderemos a la brevedad en <strong>jose.sanchez@cata-rd.com</strong>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section id="cierre">
+    <div class="close-eyebrow reveal">La inteligencia financiera que su negocio merece</div>
+    <h2 class="close-headline reveal">
+      Datos que convergen. Decisiones que <em>transforman.</em>
+    </h2>
+    <p class="close-sub reveal">
+      MAFI no es solo una herramienta de scoring. Es la plataforma que redefine
+      cómo las organizaciones entienden, evalúan y extienden el crédito en
+      mercados emergentes y de alta complejidad.
+    </p>
+    <div class="close-tagline reveal">
+      Maestro de Análisis Financiero &nbsp;·&nbsp; Data Crediticia + Socioeconómica &nbsp;·&nbsp; Riesgo &amp; Crédito
+    </div>
+    <div class="close-logo">MAFI</div>
+  </section>
+
+</main>
+
+<script>
+  // Intro → Main transition
+  setTimeout(() => {
+    document.getElementById('intro').classList.add('hidden');
+    setTimeout(() => {
+      document.getElementById('main').classList.add('visible');
+    }, 400);
+  }, 2600);
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in-view'), 0);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Contacto → mailto
+  function enviarSolicitud() {
+    const nombre = document.getElementById('f-nombre').value.trim();
+    const org    = document.getElementById('f-org').value.trim();
+    const email  = document.getElementById('f-email').value.trim();
+    const tel    = document.getElementById('f-tel').value.trim();
+    const tipo   = document.getElementById('f-tipo').value;
+    const msg    = document.getElementById('f-msg').value.trim();
+
+    if (!nombre || !email) {
+      alert('Por favor complete al menos su nombre y correo electrónico.');
+      return;
+    }
+
+    const subject = encodeURIComponent(`Solicitud de información MAFI — ${org || nombre}`);
+    const body = encodeURIComponent(
+`Solicitud de información — MAFI
+
+Nombre: ${nombre}
+Organización: ${org || 'No especificada'}
+Correo: ${email}
+Teléfono: ${tel || 'No especificado'}
+Tipo de organización: ${tipo || 'No especificado'}
+
+Mensaje:
+${msg || 'Sin mensaje adicional.'}
+
+---
+Enviado desde la página de presentación de MAFI.`
+    );
+
+    window.location.href = `mailto:jose.sanchez@cata-rd.com?subject=${subject}&body=${body}`;
+
+    document.getElementById('contactForm').style.display = 'none';
+    const s = document.getElementById('successMsg');
+    s.style.display = 'block';
+    setTimeout(() => { s.style.display = 'none'; document.getElementById('contactForm').style.display = 'flex'; }, 6000);
+  }
+
+</script>
+</body>
+</html>
