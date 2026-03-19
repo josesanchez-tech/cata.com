@@ -1,1 +1,1489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDM Market Analyst – Parque Vehicular RD</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070d1a;--surface:#0d1829;--surface2:#111f33;--surface3:#162540;--border:rgba(0,200,255,0.10);--border2:rgba(0,200,255,0.18);--accent:#00c8ff;--accent2:#0080ff;--accent3:#00ffc4;--warn:#ffbe00;--danger:#ff4d6d;--success:#00e59b;--text:#e8f2ff;--text2:#8bacc8;--text3:#4d6e8a;--nissan:#c00020;--chevrolet:#d4a000;--suzuki:#0060c0;--infiniti:#a0a0b0;--cadillac:#c0a020;--yamaha:#1a3a80;--comp1:#444466;--sidebar-w:256px;--header-h:62px;--radius:12px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,200,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.025) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
 
+header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(7,13,26,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);display:flex;align-items:center;padding:0 20px;gap:14px;z-index:200;}
+.logo-box{width:36px;height:36px;background:linear-gradient(135deg,var(--accent2),var(--accent));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;}
+.logo-text{font-weight:700;font-size:14px;line-height:1.2;flex-shrink:0;}
+.logo-text span{display:block;font-size:9px;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:2px;}
+.header-divider{width:1px;height:32px;background:var(--border2);flex-shrink:0;}
+.header-title{font-size:12px;font-weight:600;color:var(--text2);}
+.header-title strong{color:var(--text);display:block;font-size:14px;}
+.nav-tabs{display:flex;gap:3px;margin-left:auto;}
+.nav-tab{padding:6px 13px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid transparent;color:var(--text3);transition:all .2s;white-space:nowrap;}
+.nav-tab:hover{color:var(--text2);border-color:var(--border);}
+.nav-tab.active{background:rgba(0,200,255,0.12);border-color:var(--border2);color:var(--accent);}
+.period-pill{background:var(--surface2);border:1px solid var(--border2);color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;padding:6px 13px;border-radius:6px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+
+.app{display:flex;padding-top:var(--header-h);min-height:100vh;}
+aside{width:var(--sidebar-w);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:var(--header-h);bottom:0;left:0;overflow-y:auto;padding:18px 14px;z-index:90;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent;}
+aside::-webkit-scrollbar{width:4px;}
+aside::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px;}
+aside h2{font-size:9px;letter-spacing:2.5px;font-weight:600;color:var(--accent);text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.fg{margin-bottom:18px;}
+.fg>label{display:block;font-size:10px;font-weight:600;color:var(--text2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px;}
+.fsel{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;padding:7px 9px;border-radius:6px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238bacc8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
+.fsel:focus{outline:none;border-color:var(--accent);}
+.check-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
+.ci{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.ci input[type=checkbox]{accent-color:var(--accent);width:13px;height:13px;}
+.ci span{font-size:11px;color:var(--text2);}
+.bdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.rg{display:flex;flex-direction:column;gap:6px;}
+.ri{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.ri input{accent-color:var(--accent);}
+.ri span{font-size:12px;color:var(--text2);}
+.range-in{width:100%;accent-color:var(--accent);background:transparent;cursor:pointer;}
+.range-lb{display:flex;justify-content:space-between;margin-top:3px;}
+.range-lb span{font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;}
+.btn-apply{width:100%;margin-top:6px;padding:9px;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;border-radius:8px;color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;cursor:pointer;}
+.btn-apply:hover{opacity:.85;}
+.btn-reset{width:100%;margin-top:5px;padding:7px;background:transparent;border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:12px;cursor:pointer;}
+.btn-reset:hover{border-color:var(--accent);color:var(--accent);}
+
+main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:1;}
+.page{display:none;}
+.page.active{display:block;animation:fiu .35s ease both;}
+@keyframes fiu{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* COMPONENTS */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;}
+.ph{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.ph h4{font-size:13px;font-weight:600;color:var(--text);}
+.pa{display:flex;gap:5px;flex-wrap:wrap;}
+.pab{padding:3px 10px;font-size:10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);color:var(--text3);cursor:pointer;font-family:'Space Mono',monospace;transition:all .2s;}
+.pab:hover,.pab.active{border-color:var(--accent);color:var(--accent);background:rgba(0,200,255,0.08);}
+.pb{padding:17px;}
+.stitle{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;}
+.stitle h3{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);display:flex;align-items:center;gap:7px;}
+.stitle h3::before{content:'';width:3px;height:14px;border-radius:2px;background:linear-gradient(var(--accent2),var(--accent));display:block;}
+.sbadge{font-size:10px;padding:3px 9px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);color:var(--text3);font-family:'Space Mono',monospace;}
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px;}
+.kcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px 18px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s;}
+.kcard:hover{border-color:var(--border2);transform:translateY(-2px);}
+.kcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--ka,var(--accent)),transparent);}
+.klb{font-size:10px;letter-spacing:1.5px;font-weight:600;color:var(--text3);text-transform:uppercase;margin-bottom:7px;}
+.kval{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--ka,var(--accent));line-height:1;margin-bottom:5px;}
+.ksub{font-size:11px;color:var(--text3);}
+.kbadge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;margin-top:5px;font-family:'Space Mono',monospace;}
+.bup{background:rgba(0,229,155,0.15);color:var(--success);}
+.bdn{background:rgba(255,77,109,0.15);color:var(--danger);}
+.bwn{background:rgba(255,190,0,0.15);color:var(--warn);}
+
+.sbar-wrap{margin-bottom:18px;position:relative;}
+.sbar{width:100%;padding:12px 18px 12px 46px;background:var(--surface);border:1px solid var(--border2);border-radius:11px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;transition:border-color .2s,box-shadow .2s;}
+.sbar::placeholder{color:var(--text3);}
+.sbar:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,200,255,0.10);}
+.sico{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px;pointer-events:none;}
+.stags{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;}
+.stag{padding:3px 11px;border-radius:20px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2);cursor:pointer;transition:all .2s;}
+.stag:hover{border-color:var(--accent);color:var(--accent);}
+
+.dt{width:100%;border-collapse:collapse;}
+.dt th{font-size:10px;letter-spacing:1px;font-weight:600;color:var(--text3);text-transform:uppercase;padding:9px 13px;border-bottom:1px solid var(--border);text-align:left;background:var(--surface2);font-family:'Space Mono',monospace;}
+.dt td{padding:10px 13px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text2);}
+.dt tr:hover td{background:rgba(0,200,255,0.03);}
+.dt tr:last-child td{border-bottom:none;}
+.sbg{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:'Space Mono',monospace;}
+.s-alta{background:rgba(0,229,155,0.15);color:var(--success);}
+.s-media{background:rgba(255,190,0,0.15);color:var(--warn);}
+.s-baja{background:rgba(255,77,109,0.15);color:var(--danger);}
+.s-muyalta{background:rgba(0,200,255,0.2);color:var(--accent);}
+.te{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(0,128,255,0.15);color:var(--accent2);}
+.tp{display:inline-flex;align-items:center;gap:5px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600;background:rgba(0,255,196,0.1);color:var(--accent3);}
+.pbar{display:flex;align-items:center;gap:7px;}
+.ptr{flex:1;height:5px;background:var(--surface3);border-radius:3px;overflow:hidden;min-width:40px;}
+.pf{height:100%;border-radius:3px;}
+.pval{font-family:'Space Mono',monospace;font-size:10px;color:var(--text2);flex-shrink:0;}
+.vbadge{display:inline-block;padding:2px 8px;border-radius:4px;background:var(--surface3);font-size:11px;color:var(--text);border:1px solid var(--border);}
+.tlink{color:var(--accent);cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+.tlink:hover{color:var(--accent3);}
+.btn-sm{padding:5px 11px;border-radius:6px;font-size:11px;cursor:pointer;background:var(--surface2);border:1px solid var(--border);color:var(--text2);transition:all .2s;}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent);}
+.btn-p{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;color:#fff;}
+.btn-p:hover{opacity:.85;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);color:var(--text2);font-size:12px;cursor:pointer;margin-bottom:16px;transition:all .2s;}
+.back-btn:hover{border-color:var(--accent);color:var(--accent);}
+.pg{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-top:1px solid var(--border);}
+.pgi{font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;}
+.pgb{display:flex;gap:6px;}
+
+.bar-row{display:flex;align-items:center;gap:9px;}
+.bar-lbl{font-size:11px;color:var(--text2);flex-shrink:0;text-align:right;}
+.bar-tr{flex:1;height:17px;background:var(--surface2);border-radius:4px;overflow:hidden;position:relative;}
+.bar-fi{height:100%;border-radius:4px;position:relative;}
+.bar-vl{position:absolute;right:5px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:10px;color:rgba(255,255,255,0.8);}
+
+.dw{display:flex;align-items:center;gap:16px;}
+.dl{flex:1;}
+.li{display:flex;align-items:center;gap:7px;margin-bottom:7px;}
+.ldot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.llb{font-size:11px;color:var(--text2);flex:1;}
+.lval{font-family:'Space Mono',monospace;font-size:11px;color:var(--text);}
+.lbg{height:3px;border-radius:2px;background:var(--surface3);margin-top:3px;overflow:hidden;}
+.lbf{height:100%;border-radius:2px;}
+
+.sr-row{display:flex;align-items:center;gap:9px;margin-bottom:6px;}
+.sr-mo{font-size:9px;color:var(--text3);width:27px;flex-shrink:0;font-family:'Space Mono',monospace;}
+.sr-bar{flex:1;height:19px;border-radius:4px;overflow:hidden;display:flex;}
+.sr-seg{height:100%;}
+
+.ll{display:flex;gap:14px;margin-bottom:8px;flex-wrap:wrap;}
+.lli{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);}
+.lld{width:22px;height:2px;border-radius:2px;}
+.cms{display:flex;justify-content:space-between;margin-top:5px;}
+.cms span{font-size:9px;color:var(--text3);font-family:'Space Mono',monospace;}
+
+/* COMPANY DETAIL */
+.chero{background:linear-gradient(135deg,var(--surface2),var(--surface3));border:1px solid var(--border2);border-radius:var(--radius);padding:20px 22px;margin-bottom:16px;display:flex;gap:18px;align-items:center;}
+.cav{width:52px;height:52px;border-radius:11px;background:linear-gradient(135deg,var(--accent2),var(--accent));display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:#fff;flex-shrink:0;}
+.cname{font-size:19px;font-weight:700;margin-bottom:4px;}
+.cmeta{display:flex;gap:13px;flex-wrap:wrap;}
+.cmeta span{font-size:12px;color:var(--text2);}
+.cmeta strong{color:var(--text);}
+.ckgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px;margin-bottom:14px;}
+.ck{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 15px;}
+.cklb{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.ckv{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--accent);}
+.cks{font-size:11px;color:var(--text3);margin-top:2px;}
+.vtl{display:flex;flex-direction:column;gap:5px;}
+.vtr{display:flex;align-items:center;gap:9px;}
+.vty{font-size:10px;color:var(--text3);width:34px;flex-shrink:0;font-family:'Space Mono',monospace;}
+.vtbw{flex:1;height:13px;background:var(--surface2);border-radius:3px;overflow:hidden;display:flex;gap:1px;}
+.vts{height:100%;border-radius:2px;}
+.vtt{font-size:10px;color:var(--text2);width:26px;text-align:right;flex-shrink:0;font-family:'Space Mono',monospace;}
+
+/* SEARCH */
+.src-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:19px 21px;margin-bottom:14px;}
+.src-card.nf{border-color:var(--danger);background:rgba(255,77,109,0.05);}
+.src-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px;flex-wrap:wrap;gap:8px;}
+.src-title{font-size:15px;font-weight:700;}
+.src-meta{display:flex;gap:13px;flex-wrap:wrap;margin-bottom:13px;}
+.src-mi{display:flex;flex-direction:column;gap:2px;}
+.src-ml{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;}
+.src-mv{font-size:13px;font-weight:600;color:var(--text);font-family:'Space Mono',monospace;}
+.htl{position:relative;padding-left:22px;}
+.htl::before{content:'';position:absolute;left:5px;top:0;bottom:0;width:1px;background:var(--border2);}
+.hti{position:relative;margin-bottom:12px;}
+.htd{position:absolute;left:-19px;top:3px;width:9px;height:9px;border-radius:50%;border:2px solid var(--bg);}
+.htdate{font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:2px;}
+.httxt{font-size:12px;color:var(--text2);}
+.httxt strong{color:var(--text);}
+.stype-tabs{display:flex;gap:7px;margin-bottom:15px;flex-wrap:wrap;}
+.sttab{padding:6px 15px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid var(--border);color:var(--text3);transition:all .2s;background:transparent;}
+.sttab.active,.sttab:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,200,255,0.08);}
+
+/* RETENTION */
+.rsum{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px;}
+.rc{border:1px solid var(--border);border-radius:10px;padding:13px 15px;}
+.rc.lost{border-color:rgba(255,77,109,0.3);background:rgba(255,77,109,0.05);}
+.rc.newc{border-color:rgba(0,229,155,0.3);background:rgba(0,229,155,0.05);}
+.rcl{font-size:10px;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
+.rc.lost .rcl{color:var(--danger);}
+.rc.newc .rcl{color:var(--success);}
+.rcv{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;}
+.rc.lost .rcv{color:var(--danger);}
+.rc.newc .rcv{color:var(--success);}
+.rcs{font-size:11px;color:var(--text3);margin-top:2px;}
+.mpills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:13px;}
+.mpill{padding:4px 11px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);color:var(--text3);font-family:'Space Mono',monospace;transition:all .2s;}
+.mpill.active,.mpill:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,200,255,0.08);}
+.rnew td{background:rgba(0,229,155,0.03);}
+.rlost td{background:rgba(255,77,109,0.03);}
+.nbadge{background:rgba(0,229,155,0.15);color:var(--success);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'Space Mono',monospace;}
+.lbadge{background:rgba(255,77,109,0.15);color:var(--danger);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'Space Mono',monospace;}
+
+/* AI */
+.aip{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:18px;}
+.aih{padding:12px 17px;background:linear-gradient(90deg,rgba(0,128,255,0.12),rgba(0,200,255,0.05));border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;}
+.aibadge{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-size:9px;font-weight:700;letter-spacing:1.5px;padding:3px 7px;border-radius:4px;font-family:'Space Mono',monospace;}
+.aibod{padding:15px;}
+.airow{display:flex;gap:9px;margin-bottom:11px;}
+.aiinp{flex:1;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;padding:9px 13px;border-radius:8px;}
+.aiinp:focus{outline:none;border-color:var(--accent);}
+.aibtn{padding:9px 16px;background:linear-gradient(135deg,var(--accent2),var(--accent));border:none;border-radius:8px;color:#fff;font-weight:600;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.aibtn:hover{opacity:.85;}
+.aiout{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px;font-size:12px;line-height:1.8;color:var(--text2);min-height:85px;}
+.aichips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:9px;}
+.achip{padding:4px 10px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);color:var(--text2);background:var(--surface2);transition:all .2s;}
+.achip:hover{border-color:var(--accent);color:var(--accent);}
+.ait h5{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:7px;font-family:'Space Mono',monospace;}
+.ait p{margin-bottom:6px;font-size:12px;line-height:1.7;}
+.hl{color:var(--text);font-weight:600;}
+.tg{display:inline-block;padding:1px 6px;border-radius:3px;background:rgba(0,200,255,0.15);color:var(--accent);font-size:11px;font-family:'Space Mono',monospace;}
+.dots span{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--accent);margin:0 2px;animation:bc .8s infinite;}
+.dots span:nth-child(2){animation-delay:.15s;}.dots span:nth-child(3){animation-delay:.3s;}
+@keyframes bc{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-5px);}}
+
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;}
+.g13{display:grid;grid-template-columns:1fr 2fr;gap:13px;}
+
+@media(max-width:1200px){.kgrid{grid-template-columns:repeat(2,1fr);}.g3{grid-template-columns:1fr 1fr;}.ckgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:768px){aside{transform:translateX(-100%);} main{margin-left:0;}.kgrid,.g2,.g3,.g13{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-box">SDM</div>
+  <div class="logo-text">Santo Domingo Motors<span>ANALYTICS SUITE</span></div>
+  <div class="header-divider"></div>
+  <div class="header-title"><strong>Market Analyst</strong>Parque Vehicular RD</div>
+  <nav class="nav-tabs">
+    <div class="nav-tab active" onclick="showPage('dashboard',this)">📊 Dashboard</div>
+    <div class="nav-tab" onclick="showPage('empresas',this)">🏢 Empresas</div>
+    <div class="nav-tab" onclick="showPage('buscador',this)">🔍 Buscador</div>
+    <div class="nav-tab" onclick="showPage('retencion',this)">🔄 Retención</div>
+  </nav>
+  <div class="period-pill">Mar 2025 – Mar 2026 ▾</div>
+  <div class="status-dot"></div>
+</header>
+
+<div class="app">
+<aside>
+  <h2>Filtros</h2>
+  <div class="fg"><label>Marca SDM</label>
+    <div class="check-grid">
+      <label class="ci"><input type="checkbox" checked><div class="bdot" style="background:var(--nissan)"></div><span>Nissan</span></label>
+      <label class="ci"><input type="checkbox" checked><div class="bdot" style="background:var(--chevrolet)"></div><span>Chevrolet</span></label>
+      <label class="ci"><input type="checkbox" checked><div class="bdot" style="background:var(--suzuki)"></div><span>Suzuki</span></label>
+      <label class="ci"><input type="checkbox" checked><div class="bdot" style="background:var(--infiniti)"></div><span>Infiniti</span></label>
+      <label class="ci"><input type="checkbox" checked><div class="bdot" style="background:var(--cadillac)"></div><span>Cadillac</span></label>
+      <label class="ci"><input type="checkbox" checked><div class="bdot" style="background:var(--yamaha)"></div><span>Yamaha</span></label>
+      <label class="ci"><input type="checkbox"><div class="bdot" style="background:var(--comp1)"></div><span>Otras</span></label>
+    </div>
+  </div>
+  <div class="fg"><label>Tipo de Vehículo</label>
+    <select class="fsel"><option>Todos los tipos</option><option>SUV / Jeepeta</option><option>Sedán</option><option>Pick-up</option><option>Crossover</option><option>Lujo</option><option>Motocicleta</option><option>ATV</option><option>Comercial</option></select>
+  </div>
+  <div class="fg"><label>Provincia</label>
+    <select class="fsel" multiple size="5">
+      <option selected>Santo Domingo</option><option selected>Santiago</option>
+      <option>La Vega</option><option>Puerto Plata</option><option>San Cristóbal</option>
+      <option>La Romana</option><option>San Pedro</option>
+    </select>
+  </div>
+  <div class="fg"><label>Antigüedad (Año)</label>
+    <input type="range" class="range-in" min="2015" max="2026" value="2018">
+    <div class="range-lb"><span>2015</span><span>2018–2026</span><span>2026</span></div>
+  </div>
+  <div class="fg"><label>Tipo de Propietario</label>
+    <div class="rg">
+      <label class="ri"><input type="radio" name="own" checked><span>Ambos</span></label>
+      <label class="ri"><input type="radio" name="own"><span>Empresa</span></label>
+      <label class="ri"><input type="radio" name="own"><span>Persona</span></label>
+    </div>
+  </div>
+  <button class="btn-apply">Aplicar Filtros</button>
+  <button class="btn-reset">Restablecer</button>
+</aside>
+
+<main>
+
+<!-- ══════════════════ DASHBOARD ══════════════════ -->
+<div id="page-dashboard" class="page active">
+  <div class="sbar-wrap">
+    <span class="sico">⌕</span>
+    <input class="sbar" type="text" placeholder="Buscar Marca, Modelo o Segmento para Análisis de Influencia...">
+    <div class="stags">
+      <span class="stag">Nissan Frontier</span><span class="stag">SUVs Santiago</span>
+      <span class="stag">Flotas Empresariales</span><span class="stag">Yamaha 2025</span>
+    </div>
+  </div>
+  <div class="kgrid">
+    <div class="kcard" style="--ka:var(--accent)"><div class="klb">Cuota SDM en RD</div><div class="kval">18.5%</div><div class="ksub">Target: 20.0%</div><span class="kbadge bwn">▲ 1.2% gap</span></div>
+    <div class="kcard" style="--ka:var(--accent3)"><div class="klb">Total Vehículos RD</div><div class="kval">6.64M</div><div class="ksub">+446,819 nuevos en 2025</div><span class="kbadge bup">▲ 7.2% interanual</span></div>
+    <div class="kcard" style="--ka:var(--success)"><div class="klb">Crecimiento Marcas SDM</div><div class="kval">+4.2%</div><div class="ksub">Último trimestre Q1 2026</div><span class="kbadge bup">▲ Sobre meta</span></div>
+    <div class="kcard" style="--ka:var(--warn)"><div class="klb">Valor Promedio</div><div class="kval">US$19.5K</div><div class="ksub">Por unidad · Parque SDM</div><span class="kbadge bup">▲ +US$1,200 vs 2024</span></div>
+  </div>
+
+  <!-- AI Panel -->
+  <div class="aip">
+    <div class="aih">
+      <div style="display:flex;align-items:center;gap:9px"><span class="aibadge">✦ CLAUDE AI</span><h4 style="font-size:13px;font-weight:600">Generador de Reportes Inteligente</h4></div>
+      <span class="sbadge">claude-sonnet-4-20250514</span>
+    </div>
+    <div class="aibod">
+      <div class="aichips">
+        <span class="achip" onclick="fillP(this)">📊 Cuota de mercado SDM general</span>
+        <span class="achip" onclick="fillP(this)">🚗 Flotas empresariales por segmento</span>
+        <span class="achip" onclick="fillP(this)">📍 Concentración geográfica Sto. Domingo</span>
+        <span class="achip" onclick="fillP(this)">📈 Tendencias crecimiento 2025-2026</span>
+        <span class="achip" onclick="fillP(this)">🏍 Mercado motocicletas Yamaha RD</span>
+      </div>
+      <div class="airow">
+        <input id="aiP" class="aiinp" type="text" placeholder="Ej: Reporte del mercado SUV en Santiago con participación Nissan y Chevrolet...">
+        <button class="aibtn" onclick="genRep()"><span>✦</span> Generar</button>
+      </div>
+      <div class="aiout" id="aiOut">
+        <div id="aiIdle" style="color:var(--text3);font-size:12px;font-family:'Space Mono',monospace">↑ Selecciona un tema o escribe tu consulta</div>
+        <div id="aiThink" style="display:none;color:var(--accent);font-family:'Space Mono',monospace;font-size:12px;align-items:center;gap:8px">Analizando datos<div class="dots"><span></span><span></span><span></span></div></div>
+        <div id="aiRes" class="ait" style="display:none"></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-top:8px;border-top:1px solid var(--border)">
+        <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace">Datos: Mar 2025 – Mar 2026</span>
+        <div style="display:flex;gap:5px"><button class="btn-sm" onclick="alert('PDF disponible en versión completa')">⤓ PDF</button><button class="btn-sm" onclick="copyRep()">⧉ Copiar</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PARQUE VEHICULAR MARKET DATA ── -->
+  <div class="stitle"><h3>Parque Vehicular RD — Marcas Generales</h3><span class="sbadge">6.64M UNIDADES · 2025-2026</span></div>
+
+  <!-- Top 3 dominantes -->
+  <div class="kgrid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
+    <div class="kcard" style="--ka:#eb4034;border-color:rgba(235,64,52,0.3)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div class="klb">🥇 Toyota</div>
+        <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(235,64,52,0.15);color:#eb4034;font-family:'Space Mono',monospace">LÍDER ABSOLUTO</span>
+      </div>
+      <div class="kval" style="color:#eb4034">35.0%</div>
+      <div class="ksub">~2,324,305 unidades · Nuevos + usados</div>
+      <div style="margin-top:8px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="width:35%;height:100%;background:#eb4034;border-radius:2px"></div></div>
+    </div>
+    <div class="kcard" style="--ka:#e55c3a;border-color:rgba(229,92,58,0.3)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div class="klb">🥈 Honda</div>
+        <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(229,92,58,0.15);color:#e55c3a;font-family:'Space Mono',monospace">2do LUGAR</span>
+      </div>
+      <div class="kval" style="color:#e55c3a">20.0%</div>
+      <div class="ksub">~1,328,174 unidades · Fuerte en sedanes</div>
+      <div style="margin-top:8px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="width:20%;height:100%;background:#e55c3a;border-radius:2px"></div></div>
+    </div>
+    <div class="kcard" style="--ka:#005aab;border-color:rgba(0,90,171,0.3)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div class="klb">🥉 Hyundai</div>
+        <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(0,90,171,0.15);color:#005aab;font-family:'Space Mono',monospace">3er LUGAR</span>
+      </div>
+      <div class="kval" style="color:#005aab">14.5%</div>
+      <div class="ksub">~962,327 unidades · Import. Corea/EE.UU.</div>
+      <div style="margin-top:8px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="width:14.5%;height:100%;background:#005aab;border-radius:2px"></div></div>
+    </div>
+  </div>
+
+  <!-- Ranking completo + SDM position + donut -->
+  <div class="g2" style="margin-bottom:14px">
+    <div class="panel">
+      <div class="ph">
+        <h4>Ranking Completo de Marcas — Parque RD</h4>
+        <span class="sbadge">% del total 6.64M</span>
+      </div>
+      <div class="pb" style="display:flex;flex-direction:column;gap:7px">
+        <!-- Toyota -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:gold;font-family:'Space Mono',monospace;width:16px">1</span>
+          <span style="font-size:12px;color:var(--text);flex:1;font-weight:600">Toyota</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:100%;background:#eb4034"><span class="bar-vl">35.0%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">2.32M</span>
+        </div>
+        <!-- Honda -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:#c0c0c0;font-family:'Space Mono',monospace;width:16px">2</span>
+          <span style="font-size:12px;color:var(--text);flex:1;font-weight:600">Honda</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:57%;background:#e55c3a"><span class="bar-vl">20.0%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">1.33M</span>
+        </div>
+        <!-- Hyundai -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:#cd7f32;font-family:'Space Mono',monospace;width:16px">3</span>
+          <span style="font-size:12px;color:var(--text);flex:1;font-weight:600">Hyundai</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:41%;background:#005aab"><span class="bar-vl">14.5%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">962K</span>
+        </div>
+        <!-- Nissan SDM -->
+        <div style="display:flex;align-items:center;gap:8px;background:rgba(192,0,32,0.07);border-radius:5px;padding:3px 5px;margin:-3px -5px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">4</span>
+          <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Nissan <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(192,0,32,0.2);color:var(--nissan);margin-left:4px">SDM</span></span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:20.6%;background:var(--nissan)"><span class="bar-vl">7.2%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">478K</span>
+        </div>
+        <!-- Kia -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">5</span>
+          <span style="font-size:12px;color:var(--text2);flex:1">Kia</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:17%;background:#bb1e10"><span class="bar-vl">5.9%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">392K</span>
+        </div>
+        <!-- Suzuki SDM -->
+        <div style="display:flex;align-items:center;gap:8px;background:rgba(0,96,192,0.06);border-radius:5px;padding:3px 5px;margin:-3px -5px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">6</span>
+          <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Suzuki <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(0,96,192,0.2);color:var(--suzuki);margin-left:4px">SDM</span></span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:12.9%;background:var(--suzuki)"><span class="bar-vl">4.5%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">299K</span>
+        </div>
+        <!-- Mazda -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">7</span>
+          <span style="font-size:12px;color:var(--text2);flex:1">Mazda</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:10%;background:#9a0a2e"><span class="bar-vl">3.5%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">232K</span>
+        </div>
+        <!-- Chevrolet SDM -->
+        <div style="display:flex;align-items:center;gap:8px;background:rgba(212,160,0,0.06);border-radius:5px;padding:3px 5px;margin:-3px -5px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">8</span>
+          <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Chevrolet <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(212,160,0,0.2);color:var(--chevrolet);margin-left:4px">SDM</span></span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:16.6%;background:var(--chevrolet)"><span class="bar-vl">5.8%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">385K</span>
+        </div>
+        <!-- Changan/Geely -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">9</span>
+          <span style="font-size:12px;color:var(--text2);flex:1">Changan/Geely <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(255,190,0,0.15);color:var(--warn)">↑ EN AUGE</span></span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:7.1%;background:var(--warn)"><span class="bar-vl">2.5%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">166K</span>
+        </div>
+        <!-- Otros -->
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">+</span>
+          <span style="font-size:11px;color:var(--text3);flex:1">Otros (Mitsubishi, Ford, Mercedes, BMW, Isuzu...)</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:25%;background:var(--comp1)"><span class="bar-vl">6.1%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">405K</span>
+        </div>
+        <!-- SDM Yamaha -->
+        <div style="margin-top:4px;padding-top:8px;border-top:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(26,58,128,0.1);border-radius:5px;padding:3px 5px">
+            <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">M</span>
+            <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Yamaha <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(26,58,128,0.25);color:#6090e0;margin-left:4px">SDM · MOTO</span></span>
+            <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:8.6%;background:var(--yamaha)"><span class="bar-vl">35%✱</span></div></div>
+            <span style="font-size:9px;color:var(--text3);font-family:'Space Mono',monospace;width:50px;text-align:right">✱seg. moto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:13px">
+      <!-- Donut SDM vs Mercado -->
+      <div class="panel" style="flex:1">
+        <div class="ph"><h4>Cuota SDM en el Parque Total</h4></div>
+        <div class="pb">
+          <div class="dw">
+            <div style="position:relative;flex-shrink:0">
+              <svg width="110" height="110" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--surface2)" stroke-width="13"/>
+                <!-- Toyota 35% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#eb4034" stroke-width="13" stroke-dasharray="83.5 155.9" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                <!-- Honda 20% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#e55c3a" stroke-width="13" stroke-dasharray="47.7 191.7" stroke-dashoffset="-83.5" transform="rotate(-90 50 50)"/>
+                <!-- Hyundai 14.5% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#005aab" stroke-width="13" stroke-dasharray="34.6 204.8" stroke-dashoffset="-131.2" transform="rotate(-90 50 50)"/>
+                <!-- Nissan SDM 7.2% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--nissan)" stroke-width="13" stroke-dasharray="17.2 222.2" stroke-dashoffset="-165.8" transform="rotate(-90 50 50)"/>
+                <!-- Kia 5.9% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="#bb1e10" stroke-width="13" stroke-dasharray="14.1 225.3" stroke-dashoffset="-183.0" transform="rotate(-90 50 50)"/>
+                <!-- Suzuki SDM 4.5% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--suzuki)" stroke-width="13" stroke-dasharray="10.7 228.7" stroke-dashoffset="-197.1" transform="rotate(-90 50 50)"/>
+                <!-- Chevrolet SDM 5.8% -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--chevrolet)" stroke-width="13" stroke-dasharray="13.8 225.6" stroke-dashoffset="-207.8" transform="rotate(-90 50 50)"/>
+                <!-- Otros -->
+                <circle cx="50" cy="50" r="38" fill="none" stroke="var(--comp1)" stroke-width="13" stroke-dasharray="27.9 211.5" stroke-dashoffset="-221.6" transform="rotate(-90 50 50)"/>
+                <text x="50" y="46" text-anchor="middle" fill="var(--accent)" font-size="12" font-family="Space Mono" font-weight="700">18.5%</text>
+                <text x="50" y="56" text-anchor="middle" fill="var(--text3)" font-size="6.5" font-family="Space Mono">SDM total</text>
+              </svg>
+            </div>
+            <div class="dl" style="font-size:11px">
+              <div class="li"><div class="ldot" style="background:#eb4034"></div><span class="llb">Toyota</span><span class="lval" style="color:#eb4034">35.0%</span></div>
+              <div class="li"><div class="ldot" style="background:#e55c3a"></div><span class="llb">Honda</span><span class="lval" style="color:#e55c3a">20.0%</span></div>
+              <div class="li"><div class="ldot" style="background:#005aab"></div><span class="llb">Hyundai</span><span class="lval" style="color:#005aab">14.5%</span></div>
+              <div class="li"><div class="ldot" style="background:var(--nissan)"></div><span class="llb"><b>Nissan</b> SDM</span><span class="lval" style="color:var(--nissan)">7.2%</span></div>
+              <div class="li"><div class="ldot" style="background:#bb1e10"></div><span class="llb">Kia</span><span class="lval">5.9%</span></div>
+              <div class="li"><div class="ldot" style="background:var(--chevrolet)"></div><span class="llb"><b>Chevrolet</b> SDM</span><span class="lval" style="color:var(--chevrolet)">5.8%</span></div>
+              <div class="li"><div class="ldot" style="background:var(--suzuki)"></div><span class="llb"><b>Suzuki</b> SDM</span><span class="lval" style="color:var(--suzuki)">4.5%</span></div>
+              <div class="li"><div class="ldot" style="background:var(--comp1)"></div><span class="llb">Otros</span><span class="lval">6.1%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Origen por región -->
+      <div class="panel">
+        <div class="ph"><h4>Origen por Región</h4><span class="sbadge">PARQUE TOTAL</span></div>
+        <div class="pb" style="display:flex;flex-direction:column;gap:7px">
+          <div class="bar-row">
+            <span class="bar-lbl" style="width:68px;font-size:11px">🇯🇵 Japonesas</span>
+            <div class="bar-tr"><div class="bar-fi" style="width:60.4%;background:#eb4034"><span class="bar-vl">60.4%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-lbl" style="width:68px;font-size:11px">🇰🇷 Coreanas</span>
+            <div class="bar-tr"><div class="bar-fi" style="width:14.6%;background:#005aab"><span class="bar-vl">14.6%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-lbl" style="width:68px;font-size:11px">🇺🇸 EE.UU.</span>
+            <div class="bar-tr"><div class="bar-fi" style="width:11.6%;background:var(--chevrolet)"><span class="bar-vl">11.6%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-lbl" style="width:68px;font-size:11px">🇨🇳 Chinas ↑</span>
+            <div class="bar-tr"><div class="bar-fi" style="width:5%;background:var(--warn)"><span class="bar-vl">5.0%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-lbl" style="width:68px;font-size:11px">🇩🇪 Europeas</span>
+            <div class="bar-tr"><div class="bar-fi" style="width:4.4%;background:#606090"><span class="bar-vl">4.4%</span></div></div>
+          </div>
+          <div class="bar-row">
+            <span class="bar-lbl" style="width:68px;font-size:11px">🌐 Otras</span>
+            <div class="bar-tr"><div class="bar-fi" style="width:4%;background:var(--comp1)"><span class="bar-vl">4.0%</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDM position vs competitors full breakdown + segmentos + trend -->
+  <div class="g3" style="margin-bottom:14px">
+    <div class="panel">
+      <div class="ph"><h4>Posición SDM en el Mercado</h4></div>
+      <div class="pb">
+        <!-- SDM vs Top competidores -->
+        <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:10px">SDM vs. Competidores Clave</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--text3);width:70px">Toyota</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:100%;height:100%;background:#eb4034;border-radius:3px"></div></div>
+            <span style="font-size:10px;color:#eb4034;font-family:'Space Mono',monospace;width:36px;text-align:right">35.0%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--text3);width:70px">Honda</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:57%;height:100%;background:#e55c3a;border-radius:3px"></div></div>
+            <span style="font-size:10px;color:#e55c3a;font-family:'Space Mono',monospace;width:36px;text-align:right">20.0%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--text3);width:70px">Hyundai</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:41%;height:100%;background:#005aab;border-radius:3px"></div></div>
+            <span style="font-size:10px;color:#005aab;font-family:'Space Mono',monospace;width:36px;text-align:right">14.5%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(0,200,255,0.06);border-radius:5px;padding:3px 5px">
+            <span style="font-size:11px;color:var(--accent);width:70px;font-weight:700">SDM Total</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:52.8%;height:100%;background:linear-gradient(90deg,var(--nissan),var(--chevrolet),var(--suzuki));border-radius:3px"></div></div>
+            <span style="font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;width:36px;text-align:right">18.5%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--text3);width:70px">Kia</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:16.9%;height:100%;background:#bb1e10;border-radius:3px"></div></div>
+            <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:36px;text-align:right">5.9%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--text3);width:70px">Mazda</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:10%;height:100%;background:#9a0a2e;border-radius:3px"></div></div>
+            <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:36px;text-align:right">3.5%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:11px;color:var(--warn);width:70px">Ch./Geely ↑</span>
+            <div style="flex:1;background:var(--surface2);border-radius:3px;height:8px;overflow:hidden"><div style="width:7%;height:100%;background:var(--warn);border-radius:3px"></div></div>
+            <span style="font-size:10px;color:var(--warn);font-family:'Space Mono',monospace;width:36px;text-align:right">2.5%</span>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:9px 11px;background:rgba(255,190,0,0.07);border:1px solid rgba(255,190,0,0.2);border-radius:7px">
+          <div style="font-size:10px;color:var(--warn);font-family:'Space Mono',monospace;margin-bottom:3px">⚠ AMENAZA CHINA</div>
+          <div style="font-size:11px;color:var(--text2)">Geely, Changan y JAC crecen aceleradamente en vehículos nuevos. SDM debe defender su segmento de entrada con Suzuki y Nissan.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph"><h4>Participación SDM por Segmento</h4></div>
+      <div class="pb" style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:4px">% de SDM en cada segmento del parque</div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">Lujo/Premium</span><div class="bar-tr"><div class="bar-fi" style="width:55%;background:var(--infiniti)"><span class="bar-vl">55%</span></div></div></div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">SUV/Jeepeta</span><div class="bar-tr"><div class="bar-fi" style="width:42%;background:var(--nissan)"><span class="bar-vl">42%</span></div></div></div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">Pick-up</span><div class="bar-tr"><div class="bar-fi" style="width:35%;background:var(--chevrolet)"><span class="bar-vl">35%</span></div></div></div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">Motocicleta</span><div class="bar-tr"><div class="bar-fi" style="width:35%;background:var(--yamaha)"><span class="bar-vl">35%</span></div></div></div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">Crossover</span><div class="bar-tr"><div class="bar-fi" style="width:28%;background:var(--suzuki)"><span class="bar-vl">28%</span></div></div></div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">Sedán</span><div class="bar-tr"><div class="bar-fi" style="width:19%;background:var(--accent2)"><span class="bar-vl">19%</span></div></div></div>
+        <div class="bar-row"><span class="bar-lbl" style="width:68px">Comercial</span><div class="bar-tr"><div class="bar-fi" style="width:12%;background:var(--text3)"><span class="bar-vl">12%</span></div></div></div>
+        <div style="margin-top:8px;padding:8px 10px;background:rgba(0,200,255,0.06);border:1px solid var(--border2);border-radius:7px;font-size:11px;color:var(--text2)">
+          <span style="color:var(--accent);font-weight:600">Oportunidad:</span> Segmento sedán y comercial con mayor potencial de crecimiento para SDM (Nissan Versa / Chevrolet Silverado).
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ph"><h4>Tendencias 12 Meses</h4></div>
+      <div class="pb">
+        <div class="ll">
+          <div class="lli"><div class="lld" style="background:var(--accent)"></div>SDM</div>
+          <div class="lli"><div class="lld" style="background:#eb4034"></div>Toyota</div>
+          <div class="lli"><div class="lld" style="background:var(--text3)"></div>Mercado</div>
+        </div>
+        <div style="position:relative;height:130px"><svg viewBox="0 0 320 120" preserveAspectRatio="none" style="width:100%;height:100%">
+          <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent)" stop-opacity=".2"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></linearGradient></defs>
+          <line x1="0" y1="40" x2="320" y2="40" stroke="var(--border)" stroke-width=".5"/>
+          <line x1="0" y1="80" x2="320" y2="80" stroke="var(--border)" stroke-width=".5"/>
+          <!-- SDM growth -->
+          <path d="M0,82 L29,69 L58,74 L87,59 L116,52 L145,64 L174,47 L203,43 L232,35 L261,40 L290,27 L319,23 L319,120 L0,120Z" fill="url(#g1)"/>
+          <polyline points="0,82 29,69 58,74 87,59 116,52 145,64 174,47 203,43 232,35 261,40 290,27 319,23" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Toyota line -->
+          <polyline points="0,30 29,28 58,32 87,27 116,24 145,29 174,22 203,20 232,18 261,19 290,15 319,12" fill="none" stroke="#eb4034" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Mercado general -->
+          <polyline points="0,92 29,88 58,90 87,86 116,82 145,84 174,79 203,77 232,74 261,75 290,70 319,67" fill="none" stroke="var(--text3)" stroke-width="1.2" stroke-dasharray="4,3"/>
+          <circle cx="319" cy="23" r="3" fill="var(--accent)" stroke="var(--bg)" stroke-width="1.5"/>
+          <circle cx="319" cy="12" r="2.5" fill="#eb4034" stroke="var(--bg)" stroke-width="1.5"/>
+        </svg></div>
+        <div class="cms"><span>Abr</span><span>May</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span><span>Ene</span><span>Feb</span><span>Mar</span></div>
+        <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:var(--surface2);border-radius:6px;padding:8px 10px;font-size:11px">
+            <div style="color:var(--text3);font-size:10px;margin-bottom:3px">SDM crecimiento anual</div>
+            <div style="color:var(--success);font-family:'Space Mono',monospace;font-weight:700">+4.2%</div>
+          </div>
+          <div style="background:var(--surface2);border-radius:6px;padding:8px 10px;font-size:11px">
+            <div style="color:var(--text3);font-size:10px;margin-bottom:3px">Toyota crecimiento anual</div>
+            <div style="color:#eb4034;font-family:'Space Mono',monospace;font-weight:700">+6.8%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lujo + marcas premium + chinas -->
+  <div class="g2" style="margin-bottom:14px">
+    <div class="panel">
+      <div class="ph"><h4>Segmento Lujo / Premium</h4><span class="sbadge">SDM DOMINANTE</span></div>
+      <div class="pb">
+        <div style="display:flex;flex-direction:column;gap:7px">
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(192,160,32,0.08);border-radius:5px;padding:4px 7px">
+            <div style="width:9px;height:9px;border-radius:50%;background:var(--cadillac);flex-shrink:0"></div>
+            <span style="font-size:12px;flex:1;font-weight:600;color:var(--text)">Cadillac <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(192,160,32,0.2);color:var(--cadillac);margin-left:4px">SDM</span></span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--cadillac)">0.3%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:rgba(160,160,176,0.08);border-radius:5px;padding:4px 7px">
+            <div style="width:9px;height:9px;border-radius:50%;background:var(--infiniti);flex-shrink:0"></div>
+            <span style="font-size:12px;flex:1;font-weight:600;color:var(--text)">Infiniti <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(160,160,176,0.2);color:var(--infiniti);margin-left:4px">SDM</span></span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--infiniti)">0.6%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 7px">
+            <div style="width:9px;height:9px;border-radius:50%;background:#1c6b3a;flex-shrink:0"></div>
+            <span style="font-size:12px;flex:1;color:var(--text2)">Mercedes-Benz</span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">0.8%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 7px">
+            <div style="width:9px;height:9px;border-radius:50%;background:#1c2a6b;flex-shrink:0"></div>
+            <span style="font-size:12px;flex:1;color:var(--text2)">BMW</span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">0.5%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 7px">
+            <div style="width:9px;height:9px;border-radius:50%;background:#1a5e1a;flex-shrink:0"></div>
+            <span style="font-size:12px;flex:1;color:var(--text2)">Lexus</span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">0.4%</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;padding:4px 7px">
+            <div style="width:9px;height:9px;border-radius:50%;background:#606090;flex-shrink:0"></div>
+            <span style="font-size:12px;flex:1;color:var(--text2)">Audi / Volvo / Porsche</span>
+            <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">0.7%</span>
+          </div>
+          <div style="margin-top:6px;padding:9px 11px;background:rgba(0,200,255,0.07);border:1px solid var(--border2);border-radius:7px">
+            <div style="font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:3px">POSICIÓN SDM EN LUJO</div>
+            <div style="font-size:11px;color:var(--text2)">SDM controla <strong style="color:var(--accent)">~55%</strong> del segmento lujo con Infiniti y Cadillac. Oportunidad de expansión con clientes de Mercedes y BMW.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h4>Marcas en Auge — Amenazas y Oportunidades</h4></div>
+      <div class="pb">
+        <div style="font-size:10px;color:var(--warn);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:10px">⚠ Crecimiento Acelerado</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-bottom:14px">
+          <div style="background:rgba(255,190,0,0.07);border:1px solid rgba(255,190,0,0.2);border-radius:8px;padding:10px 12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+              <span style="font-weight:700;font-size:13px">🇨🇳 Changan</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+38% interanual</span>
+            </div>
+            <div style="font-size:11px;color:var(--text2)">Enfoque en sedanes y SUVs de precio bajo. Compite directamente con Nissan Versa y Suzuki.</div>
+          </div>
+          <div style="background:rgba(255,190,0,0.07);border:1px solid rgba(255,190,0,0.2);border-radius:8px;padding:10px 12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+              <span style="font-weight:700;font-size:13px">🇨🇳 Geely</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+29% interanual</span>
+            </div>
+            <div style="font-size:11px;color:var(--text2)">Posicionada en crossovers y SUVs económicas. Amenaza el segmento de Suzuki Vitara y Chevrolet Equinox.</div>
+          </div>
+          <div style="background:rgba(255,190,0,0.06);border:1px solid rgba(255,190,0,0.15);border-radius:8px;padding:10px 12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
+              <span style="font-weight:700;font-size:13px">🇨🇳 JAC Motors</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+22% interanual</span>
+            </div>
+            <div style="font-size:11px;color:var(--text2)">Segmento de utilitarios y camionetas. Impacto potencial en las ventas de Nissan Frontier y Chevrolet Silverado.</div>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:8px">✦ Marcas Comerciales</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🚛 Isuzu · Comercial</span>
+          <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🛻 Ford · Pick-ups</span>
+          <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🚗 Daihatsu · Compactos</span>
+          <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🏎 Mitsubishi · SUVs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stitle"><h3>Leads Predictivos</h3><span class="sbadge">MATCHING LEARNING</span></div>
+  <div class="panel">
+    <div class="ph"><h4>Sugerencias de Venta — Mayor Probabilidad</h4></div>
+    <div style="overflow-x:auto">
+      <table class="dt">
+        <thead><tr><th>Tipo</th><th>Nombre / Empresa</th><th>Provincia</th><th>Vehículos</th><th>Activos</th><th>Sugerencia SDM</th><th>Probabilidad</th></tr></thead>
+        <tbody>
+          <tr><td><span class="te">🏢 Empresa</span></td><td><span class="tlink" onclick="openComp('logistica-delta')">Logística Delta S.R.L.</span></td><td>La Vega</td><td style="font-family:'Space Mono',monospace">45</td><td style="color:var(--success)">RD$ 120M</td><td><span class="vbadge">Chevrolet Silverado</span></td><td><div class="pbar"><div class="ptr"><div class="pf" style="width:92%;background:var(--accent)"></div></div><span class="pval">92%</span><span class="sbg s-muyalta">Muy Alta</span></div></td></tr>
+          <tr><td><span class="te">🏢 Empresa</span></td><td><span class="tlink" onclick="openComp('turismo-rent')">Turismo &amp; Rent S.A.</span></td><td>Sto. Domingo</td><td style="font-family:'Space Mono',monospace">22</td><td style="color:var(--success)">RD$ 75M</td><td><span class="vbadge">Nissan X-Trail</span></td><td><div class="pbar"><div class="ptr"><div class="pf" style="width:84%;background:var(--success)"></div></div><span class="pval">84%</span><span class="sbg s-alta">Alta</span></div></td></tr>
+          <tr><td><span class="te">🏢 Empresa</span></td><td><span class="tlink" onclick="openComp('constructora-alpha')">Constructora Alpha S.A.</span></td><td>Sto. Domingo</td><td style="font-family:'Space Mono',monospace">8</td><td style="color:var(--warn)">RD$ 50M</td><td><span class="vbadge">Nissan Frontier</span></td><td><div class="pbar"><div class="ptr"><div class="pf" style="width:78%;background:var(--success)"></div></div><span class="pval">78%</span><span class="sbg s-alta">Alta</span></div></td></tr>
+          <tr><td><span class="tp">👤 Persona</span></td><td>Juan Pérez</td><td>Santiago</td><td style="font-family:'Space Mono',monospace">1</td><td style="color:var(--warn)">RD$ 5M</td><td><span class="vbadge">Suzuki Vitara</span></td><td><div class="pbar"><div class="ptr"><div class="pf" style="width:65%;background:var(--warn)"></div></div><span class="pval">65%</span><span class="sbg s-media">Media</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pg"><span class="pgi">5 de 1,240 leads · ↓ probabilidad</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div></div>
+  </div>
+</div>
+
+<!-- ══════════════════ EMPRESAS ══════════════════ -->
+<div id="page-empresas" class="page">
+  <div id="emp-list">
+    <div class="sbar-wrap">
+      <span class="sico">⌕</span>
+      <input class="sbar" id="emp-srch" type="text" placeholder="Buscar empresa por nombre, RNC o sector..." oninput="filtEmp(this.value)">
+    </div>
+    <div class="kgrid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="kcard" style="--ka:var(--accent)"><div class="klb">Total Empresas</div><div class="kval">13,450</div><div class="ksub">Con registro activo 2025</div></div>
+      <div class="kcard" style="--ka:var(--success)"><div class="klb">Con Marca SDM</div><div class="kval">3,280</div><div class="ksub">24.4% penetración total</div></div>
+      <div class="kcard" style="--ka:var(--warn)"><div class="klb">Oportunidad</div><div class="kval">10,170</div><div class="ksub">Sin vehículo SDM actualmente</div></div>
+    </div>
+    <div class="stitle"><h3>Ranking de Empresas por Flota</h3><span class="sbadge">MAYOR → MENOR</span></div>
+    <div class="panel">
+      <div class="ph">
+        <h4>Todas las Empresas — Total Vehículos y Penetración SDM</h4>
+        <div class="pa">
+          <span class="pab active" onclick="sortEmp('total',this)">↓ Total</span>
+          <span class="pab" onclick="sortEmp('sdm',this)">↓ SDM</span>
+          <span class="pab" onclick="sortEmp('pct',this)">↓ %SDM</span>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="dt" id="emp-table">
+          <thead><tr><th>#</th><th>Empresa</th><th>Sector</th><th>Provincia</th><th>Total Veh.</th><th>Valor Flota</th><th>SDM</th><th>Distribución de Marcas</th><th>% SDM</th><th></th></tr></thead>
+          <tbody id="emp-tbody"></tbody>
+        </table>
+      </div>
+      <div class="pg"><span class="pgi" id="emp-ct">Cargando...</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div></div>
+    </div>
+  </div>
+  <div id="emp-detail" style="display:none">
+    <button class="back-btn" onclick="closeComp()">← Regresar al Ranking</button>
+    <div id="cd-hero"></div>
+    <div id="cd-body"></div>
+  </div>
+</div>
+
+<!-- ══════════════════ BUSCADOR ══════════════════ -->
+<div id="page-buscador" class="page">
+  <div class="stitle"><h3>Buscador del Parque Vehicular</h3><span class="sbadge">HISTORIAL COMPLETO</span></div>
+  <div class="stype-tabs">
+    <button class="sttab active" onclick="setST('placa',this)">🚘 Placa</button>
+    <button class="sttab" onclick="setST('chasis',this)">🔩 Chasis / VIN</button>
+    <button class="sttab" onclick="setST('cedula',this)">🪪 Cédula</button>
+    <button class="sttab" onclick="setST('rnc',this)">🏢 RNC Empresa</button>
+  </div>
+  <div class="sbar-wrap">
+    <span class="sico">⌕</span>
+    <input class="sbar" id="srch-inp" type="text" placeholder="Ingresa la placa (Ej: A123456)..." style="font-family:'Space Mono',monospace;font-size:15px;letter-spacing:1px" onkeydown="if(event.key==='Enter')doSrch()">
+    <div class="stags">
+      <span class="stag" onclick="demoSrch('A123456')">A123456</span>
+      <span class="stag" onclick="demoSrch('B789012')">B789012</span>
+      <span class="stag" onclick="demoSrch('00100000001')">RNC: 001-00000-0</span>
+      <span class="stag" onclick="demoSrch('00200000001')">RNC: 002-00000-0</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:9px;margin-top:-9px;margin-bottom:18px">
+    <button class="btn-p" onclick="doSrch()">Buscar</button>
+    <button class="btn-sm" onclick="clearSrch()">✕ Limpiar</button>
+  </div>
+  <div id="srch-area">
+    <div style="text-align:center;padding:48px 0;color:var(--text3)">
+      <div style="font-size:38px;margin-bottom:11px">🔍</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px">Ingresa una placa, chasis, cédula o RNC para consultar</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ RETENCIÓN ══════════════════ -->
+<div id="page-retencion" class="page">
+  <div class="stitle"><h3>Retención y Adquisición de Clientes SDM</h3><span class="sbadge">MES A MES</span></div>
+  <div class="rsum">
+    <div class="rc lost"><div class="rcl">⚠ Dejaron la Marca</div><div class="rcv">142</div><div class="rcs">Sin vehículo SDM activo · último mes</div></div>
+    <div class="rc newc"><div class="rcl">✦ Nuevos en la Marca</div><div class="rcv">318</div><div class="rcs">Clientes nuevos incorporados · último mes</div></div>
+  </div>
+  <div class="panel" style="margin-bottom:14px">
+    <div class="ph"><h4>Histórico Retención vs. Adquisición (12 Meses)</h4></div>
+    <div class="pb">
+      <div class="ll"><div class="lli"><div class="lld" style="background:var(--success)"></div>Nuevos</div><div class="lli"><div class="lld" style="background:var(--danger);border-top:2px dashed var(--danger);height:0"></div>Bajas</div></div>
+      <div style="position:relative;height:120px"><svg viewBox="0 0 320 110" preserveAspectRatio="none" style="width:100%;height:100%">
+        <line x1="0" y1="37" x2="320" y2="37" stroke="var(--border)" stroke-width=".5"/><line x1="0" y1="74" x2="320" y2="74" stroke="var(--border)" stroke-width=".5"/>
+        <polyline points="0,72 29,62 58,57 87,47 116,52 145,42 174,37 203,39 232,32 261,27 290,25 319,19" fill="none" stroke="var(--success)" stroke-width="2" stroke-linecap="round"/>
+        <polyline points="0,92 29,89 58,85 87,87 116,82 145,85 174,79 203,82 232,77 261,75 290,79 319,72" fill="none" stroke="var(--danger)" stroke-width="2" stroke-linecap="round" stroke-dasharray="5,3"/>
+        <circle cx="319" cy="19" r="3" fill="var(--success)" stroke="var(--bg)" stroke-width="1.5"/>
+        <circle cx="319" cy="72" r="3" fill="var(--danger)" stroke="var(--bg)" stroke-width="1.5"/>
+      </svg></div>
+      <div class="cms"><span>Abr</span><span>May</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dic</span><span>Ene</span><span>Feb</span><span>Mar</span></div>
+    </div>
+  </div>
+  <div class="mpills" id="mpills"></div>
+  <div style="display:flex;gap:7px;margin-bottom:13px;flex-wrap:wrap">
+    <button class="sttab active" id="rtab-lost" onclick="showRT('lost',this)">⚠ Dejaron la Marca</button>
+    <button class="sttab" id="rtab-new" onclick="showRT('new',this)">✦ Nuevos en la Marca</button>
+    <button class="sttab" id="rtab-all" onclick="showRT('all',this)">📋 Ambos</button>
+  </div>
+  <div class="panel">
+    <div class="ph"><h4 id="rtitle">Cargando...</h4><div class="pa"><span class="pab active">Todos</span><span class="pab">Empresa</span><span class="pab">Persona</span></div></div>
+    <div style="overflow-x:auto">
+      <table class="dt">
+        <thead><tr><th>Tipo</th><th>Nombre / Empresa</th><th>Provincia</th><th>Marca Anterior</th><th>Última Unidad</th><th>Marca Actual</th><th>Estado</th><th>Fecha</th></tr></thead>
+        <tbody id="rt-tbody"></tbody>
+      </table>
+    </div>
+    <div class="pg"><span class="pgi" id="rt-ct">—</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+// Valor promedio por marca (US$)
+const BRAND_PRICES={nissan:28500,chevrolet:42000,suzuki:22000,infiniti:52000,cadillac:68000,yamaha:5800,toyota:31000,hyundai:26000,kia:24500,ford:38000,mitsubishi:27000,other:20000};
+// Tipo de vehículo por marca (principal)
+const BRAND_TYPE={nissan:'SUV/Pick-up',chevrolet:'Pick-up/SUV',suzuki:'SUV Compacta',infiniti:'Lujo',cadillac:'Lujo',yamaha:'Motocicleta',toyota:'SUV/Sedán',hyundai:'SUV/Sedán',kia:'SUV/Crossover',ford:'Pick-up',mitsubishi:'SUV',other:'Varios'};
+
+const EMPS=[
+  {id:'logistica-delta',name:'Logística Delta S.R.L.',rnc:'101-234-56',sector:'Logística/Transporte',provincia:'La Vega',
+   total:120,sdm:42,nissan:18,chevrolet:15,suzuki:6,infiniti:0,cadillac:0,yamaha:3,
+   comp_toyota:22,comp_hyundai:10,comp_ford:18,comp_kia:8,comp_other:20,
+   tipos:{pickup:48,suv:35,sedan:14,moto:3,comercial:20},
+   vehicles:[
+    {placa:'A001234',marca:'Nissan',modelo:'Frontier 2024',tipo:'Pick-up',color:'Blanco',valor:32000,estado:'Activo',sdm:true},
+    {placa:'A005678',marca:'Chevrolet',modelo:'Silverado 2023',tipo:'Pick-up',color:'Negro',valor:48000,estado:'Activo',sdm:true},
+    {placa:'B112233',marca:'Nissan',modelo:'X-Trail 2022',tipo:'SUV',color:'Gris',valor:27500,estado:'Activo',sdm:true},
+    {placa:'C334455',marca:'Chevrolet',modelo:'Tahoe 2021',tipo:'SUV',color:'Azul',valor:54000,estado:'Activo',sdm:true},
+    {placa:'C889900',marca:'Toyota',modelo:'Hilux 2020',tipo:'Pick-up',color:'Blanco',valor:31000,estado:'Activo',sdm:false},
+    {placa:'D112200',marca:'Ford',modelo:'F-150 2022',tipo:'Pick-up',color:'Rojo',valor:41000,estado:'Activo',sdm:false},
+    {placa:'D445566',marca:'Yamaha',modelo:'MT-07 2023',tipo:'Moto',color:'Azul',valor:6200,estado:'Activo',sdm:true},
+    {placa:'E001100',marca:'Toyota',modelo:'Land Cruiser 2021',tipo:'SUV',color:'Negro',valor:72000,estado:'Activo',sdm:false},
+   ]},
+  {id:'turismo-rent',name:'Turismo & Rent S.A.',rnc:'102-345-67',sector:'Turismo/Renta',provincia:'Sto. Domingo',
+   total:98,sdm:38,nissan:20,chevrolet:8,suzuki:7,infiniti:1,cadillac:2,yamaha:0,
+   comp_toyota:18,comp_hyundai:12,comp_ford:8,comp_kia:10,comp_other:12,
+   tipos:{suv:55,sedan:25,pickup:8,moto:0,comercial:10},
+   vehicles:[
+    {placa:'F110011',marca:'Nissan',modelo:'X-Trail 2025',tipo:'SUV',color:'Plata',valor:31000,estado:'Activo',sdm:true},
+    {placa:'F220022',marca:'Infiniti',modelo:'QX55 2024',tipo:'SUV Lujo',color:'Negro',valor:55000,estado:'Activo',sdm:true},
+    {placa:'F330033',marca:'Cadillac',modelo:'Escalade 2023',tipo:'SUV Lujo',color:'Blanco',valor:92000,estado:'Activo',sdm:true},
+    {placa:'G440044',marca:'Toyota',modelo:'Camry 2022',tipo:'Sedán',color:'Gris',valor:28000,estado:'Activo',sdm:false},
+    {placa:'G550055',marca:'Hyundai',modelo:'Tucson 2023',tipo:'SUV',color:'Azul',valor:27000,estado:'Activo',sdm:false},
+    {placa:'H660066',marca:'Kia',modelo:'Sorento 2022',tipo:'SUV',color:'Rojo',valor:30000,estado:'Activo',sdm:false},
+    {placa:'H770077',marca:'Suzuki',modelo:'Vitara 2024',tipo:'SUV Compacta',color:'Blanco',valor:22500,estado:'Activo',sdm:true},
+    {placa:'I880088',marca:'Chevrolet',modelo:'Equinox 2023',tipo:'Crossover',color:'Negro',valor:32000,estado:'Activo',sdm:true},
+   ]},
+  {id:'constructora-alpha',name:'Constructora Alpha S.A.',rnc:'103-456-78',sector:'Construcción',provincia:'Sto. Domingo',
+   total:85,sdm:29,nissan:12,chevrolet:14,suzuki:2,infiniti:0,cadillac:1,yamaha:0,
+   comp_toyota:20,comp_hyundai:5,comp_ford:16,comp_kia:4,comp_other:11,
+   tipos:{pickup:50,suv:18,sedan:6,moto:0,comercial:11},
+   vehicles:[
+    {placa:'J100001',marca:'Chevrolet',modelo:'Silverado 2024',tipo:'Pick-up',color:'Blanco',valor:50000,estado:'Activo',sdm:true},
+    {placa:'J200002',marca:'Nissan',modelo:'Frontier 2023',tipo:'Pick-up',color:'Gris',valor:31000,estado:'Activo',sdm:true},
+    {placa:'K300003',marca:'Toyota',modelo:'Tundra 2022',tipo:'Pick-up',color:'Negro',valor:48000,estado:'Activo',sdm:false},
+    {placa:'K400004',marca:'Ford',modelo:'F-250 2021',tipo:'Pick-up',color:'Blanco',valor:45000,estado:'Activo',sdm:false},
+    {placa:'L500005',marca:'Cadillac',modelo:'Escalade 2023',tipo:'SUV Lujo',color:'Negro',valor:92000,estado:'Activo',sdm:true},
+    {placa:'L600006',marca:'Nissan',modelo:'Pathfinder 2022',tipo:'SUV',color:'Plata',valor:38000,estado:'Activo',sdm:true},
+    {placa:'M700007',marca:'Toyota',modelo:'Hilux 2023',tipo:'Pick-up',color:'Azul',valor:33000,estado:'Activo',sdm:false},
+    {placa:'M800008',marca:'Chevrolet',modelo:'Colorado 2024',tipo:'Pick-up',color:'Rojo',valor:36000,estado:'Activo',sdm:true},
+   ]},
+  {id:'distribuidora-caribe',name:'Distribuidora Caribe',rnc:'104-567-89',sector:'Distribución',provincia:'Santiago',
+   total:74,sdm:18,nissan:8,chevrolet:7,suzuki:2,infiniti:0,cadillac:1,yamaha:0,
+   comp_toyota:24,comp_hyundai:8,comp_ford:12,comp_kia:6,comp_other:6,
+   tipos:{pickup:38,suv:20,sedan:10,moto:0,comercial:6},
+   vehicles:[
+    {placa:'N100001',marca:'Toyota',modelo:'Hilux 2023',tipo:'Pick-up',color:'Blanco',valor:33000,estado:'Activo',sdm:false},
+    {placa:'N200002',marca:'Nissan',modelo:'Frontier 2022',tipo:'Pick-up',color:'Gris',valor:30000,estado:'Activo',sdm:true},
+    {placa:'O300003',marca:'Ford',modelo:'Ranger 2021',tipo:'Pick-up',color:'Negro',valor:34000,estado:'Activo',sdm:false},
+    {placa:'O400004',marca:'Chevrolet',modelo:'Silverado 2020',tipo:'Pick-up',color:'Blanco',valor:40000,estado:'Activo',sdm:true},
+    {placa:'P500005',marca:'Toyota',modelo:'4Runner 2022',tipo:'SUV',color:'Plata',valor:44000,estado:'Activo',sdm:false},
+    {placa:'P600006',marca:'Kia',modelo:'Sorento 2023',tipo:'SUV',color:'Azul',valor:29000,estado:'Activo',sdm:false},
+    {placa:'Q700007',marca:'Cadillac',modelo:'XT5 2022',tipo:'SUV Lujo',color:'Negro',valor:58000,estado:'Activo',sdm:true},
+    {placa:'Q800008',marca:'Hyundai',modelo:'Tucson 2021',tipo:'SUV',color:'Rojo',valor:25000,estado:'Activo',sdm:false},
+   ]},
+  {id:'banco-reservas',name:'Banco de Reservas RD',rnc:'105-678-90',sector:'Finanzas/Banca',provincia:'Sto. Domingo',
+   total:68,sdm:14,nissan:5,chevrolet:6,suzuki:1,infiniti:1,cadillac:1,yamaha:0,
+   comp_toyota:18,comp_hyundai:12,comp_ford:6,comp_kia:8,comp_other:10,
+   tipos:{suv:28,sedan:22,pickup:6,moto:0,comercial:12},
+   vehicles:[
+    {placa:'R100001',marca:'Infiniti',modelo:'QX60 2024',tipo:'SUV Lujo',color:'Negro',valor:58000,estado:'Activo',sdm:true},
+    {placa:'R200002',marca:'Cadillac',modelo:'CT5 2023',tipo:'Sedán Lujo',color:'Gris',valor:62000,estado:'Activo',sdm:true},
+    {placa:'S300003',marca:'Toyota',modelo:'Camry 2023',tipo:'Sedán',color:'Blanco',valor:29000,estado:'Activo',sdm:false},
+    {placa:'S400004',marca:'Hyundai',modelo:'Santa Fe 2022',tipo:'SUV',color:'Azul',valor:31000,estado:'Activo',sdm:false},
+    {placa:'T500005',marca:'Nissan',modelo:'Altima 2023',tipo:'Sedán',color:'Plata',valor:24000,estado:'Activo',sdm:true},
+    {placa:'T600006',marca:'Kia',modelo:'Stinger 2022',tipo:'Sedán',color:'Rojo',valor:33000,estado:'Activo',sdm:false},
+    {placa:'U700007',marca:'Chevrolet',modelo:'Malibu 2021',tipo:'Sedán',color:'Negro',valor:23000,estado:'Activo',sdm:true},
+    {placa:'U800008',marca:'Toyota',modelo:'Highlander 2023',tipo:'SUV',color:'Blanco',valor:43000,estado:'Activo',sdm:false},
+   ]},
+  {id:'supermercados-nacional',name:'Supermercados La Nacional',rnc:'106-789-01',sector:'Retail/Alimentos',provincia:'Sto. Domingo',
+   total:62,sdm:22,nissan:10,chevrolet:8,suzuki:3,infiniti:0,cadillac:1,yamaha:0,
+   comp_toyota:14,comp_hyundai:8,comp_ford:6,comp_kia:6,comp_other:6,
+   tipos:{pickup:22,suv:18,sedan:12,moto:0,comercial:10},
+   vehicles:[
+    {placa:'V100001',marca:'Nissan',modelo:'X-Trail 2024',tipo:'SUV',color:'Blanco',valor:30000,estado:'Activo',sdm:true},
+    {placa:'V200002',marca:'Chevrolet',modelo:'Equinox 2023',tipo:'SUV',color:'Gris',valor:32000,estado:'Activo',sdm:true},
+    {placa:'W300003',marca:'Toyota',modelo:'RAV4 2022',tipo:'SUV',color:'Negro',valor:33000,estado:'Activo',sdm:false},
+    {placa:'W400004',marca:'Cadillac',modelo:'XT4 2023',tipo:'SUV Lujo',color:'Azul',valor:47000,estado:'Activo',sdm:true},
+    {placa:'X500005',marca:'Hyundai',modelo:'Elantra 2022',tipo:'Sedán',color:'Plata',valor:22000,estado:'Activo',sdm:false},
+    {placa:'X600006',marca:'Nissan',modelo:'Sentra 2024',tipo:'Sedán',color:'Blanco',valor:20000,estado:'Activo',sdm:true},
+    {placa:'Y700007',marca:'Kia',modelo:'Sportage 2023',tipo:'SUV',color:'Rojo',valor:27000,estado:'Activo',sdm:false},
+    {placa:'Y800008',marca:'Suzuki',modelo:'Vitara 2023',tipo:'SUV Compacta',color:'Negro',valor:21500,estado:'Activo',sdm:true},
+   ]},
+  {id:'transporte-express',name:'Transporte Express SRL',rnc:'107-890-12',sector:'Transporte',provincia:'San Cristóbal',
+   total:55,sdm:12,nissan:4,chevrolet:6,suzuki:1,infiniti:0,cadillac:1,yamaha:0,
+   comp_toyota:15,comp_hyundai:6,comp_ford:12,comp_kia:4,comp_other:6,
+   tipos:{pickup:30,suv:10,sedan:5,moto:0,comercial:10},
+   vehicles:[
+    {placa:'Z100001',marca:'Chevrolet',modelo:'Express 2022',tipo:'Comercial',color:'Blanco',valor:35000,estado:'Activo',sdm:true},
+    {placa:'Z200002',marca:'Ford',modelo:'Transit 2021',tipo:'Comercial',color:'Blanco',valor:38000,estado:'Activo',sdm:false},
+    {placa:'A100001',marca:'Toyota',modelo:'Hiace 2023',tipo:'Comercial',color:'Plata',valor:34000,estado:'Activo',sdm:false},
+    {placa:'A200002',marca:'Nissan',modelo:'Urvan 2022',tipo:'Comercial',color:'Blanco',valor:29000,estado:'Activo',sdm:true},
+    {placa:'B300003',marca:'Cadillac',modelo:'Escalade 2023',tipo:'SUV Lujo',color:'Negro',valor:92000,estado:'Activo',sdm:true},
+    {placa:'B400004',marca:'Chevrolet',modelo:'Silverado 2024',tipo:'Pick-up',color:'Gris',valor:48000,estado:'Activo',sdm:true},
+    {placa:'C500005',marca:'Ford',modelo:'F-150 2022',tipo:'Pick-up',color:'Rojo',valor:41000,estado:'Activo',sdm:false},
+    {placa:'C600006',marca:'Nissan',modelo:'Frontier 2023',tipo:'Pick-up',color:'Azul',valor:32000,estado:'Activo',sdm:true},
+   ]},
+  {id:'mineria-caribeña',name:'Minería Caribeña S.A.',rnc:'108-901-23',sector:'Minería',provincia:'La Romana',
+   total:50,sdm:20,nissan:7,chevrolet:9,suzuki:2,infiniti:0,cadillac:2,yamaha:0,
+   comp_toyota:16,comp_hyundai:2,comp_ford:8,comp_kia:2,comp_other:2,
+   tipos:{pickup:30,suv:12,sedan:2,moto:0,comercial:6},
+   vehicles:[
+    {placa:'D100001',marca:'Chevrolet',modelo:'Silverado HD 2024',tipo:'Pick-up',color:'Blanco',valor:58000,estado:'Activo',sdm:true},
+    {placa:'D200002',marca:'Nissan',modelo:'Titan 2023',tipo:'Pick-up',color:'Negro',valor:48000,estado:'Activo',sdm:true},
+    {placa:'E300003',marca:'Toyota',modelo:'Tundra 2023',tipo:'Pick-up',color:'Gris',valor:50000,estado:'Activo',sdm:false},
+    {placa:'E400004',marca:'Cadillac',modelo:'Escalade 2022',tipo:'SUV Lujo',color:'Negro',valor:88000,estado:'Activo',sdm:true},
+    {placa:'F500005',marca:'Ford',modelo:'F-250 2022',tipo:'Pick-up',color:'Blanco',valor:46000,estado:'Activo',sdm:false},
+    {placa:'F600006',marca:'Chevrolet',modelo:'Colorado 2023',tipo:'Pick-up',color:'Azul',valor:36000,estado:'Activo',sdm:true},
+    {placa:'G700007',marca:'Toyota',modelo:'Land Cruiser 2021',tipo:'SUV',color:'Negro',valor:72000,estado:'Activo',sdm:false},
+    {placa:'G800008',marca:'Suzuki',modelo:'Vitara 2022',tipo:'SUV Compacta',color:'Plata',valor:21000,estado:'Activo',sdm:true},
+   ]},
+  {id:'grupo-medico',name:'Grupo Médico Central',rnc:'109-012-34',sector:'Salud',provincia:'Santiago',
+   total:45,sdm:8,nissan:3,chevrolet:2,suzuki:2,infiniti:1,cadillac:0,yamaha:0,
+   comp_toyota:14,comp_hyundai:10,comp_ford:4,comp_kia:8,comp_other:1,
+   tipos:{suv:20,sedan:18,pickup:4,moto:0,comercial:3},
+   vehicles:[
+    {placa:'H100001',marca:'Infiniti',modelo:'QX50 2024',tipo:'SUV Lujo',color:'Blanco',valor:48000,estado:'Activo',sdm:true},
+    {placa:'H200002',marca:'Toyota',modelo:'Camry 2023',tipo:'Sedán',color:'Gris',valor:29000,estado:'Activo',sdm:false},
+    {placa:'I300003',marca:'Hyundai',modelo:'Sonata 2022',tipo:'Sedán',color:'Negro',valor:25000,estado:'Activo',sdm:false},
+    {placa:'I400004',marca:'Nissan',modelo:'Altima 2023',tipo:'Sedán',color:'Plata',valor:24000,estado:'Activo',sdm:true},
+    {placa:'J500005',marca:'Kia',modelo:'K5 2022',tipo:'Sedán',color:'Azul',valor:26000,estado:'Activo',sdm:false},
+    {placa:'J600006',marca:'Suzuki',modelo:'Swift 2023',tipo:'Hatchback',color:'Rojo',valor:16000,estado:'Activo',sdm:true},
+    {placa:'K700007',marca:'Toyota',modelo:'Highlander 2022',tipo:'SUV',color:'Blanco',valor:42000,estado:'Activo',sdm:false},
+    {placa:'K800008',marca:'Chevrolet',modelo:'Equinox 2021',tipo:'SUV',color:'Negro',valor:28000,estado:'Activo',sdm:true},
+   ]},
+  {id:'inmobiliaria-norte',name:'Inmobiliaria del Norte',rnc:'110-123-45',sector:'Inmobiliario',provincia:'Puerto Plata',
+   total:38,sdm:14,nissan:6,chevrolet:4,suzuki:2,infiniti:1,cadillac:1,yamaha:0,
+   comp_toyota:8,comp_hyundai:6,comp_ford:4,comp_kia:4,comp_other:2,
+   tipos:{suv:20,sedan:10,pickup:4,moto:0,comercial:4},
+   vehicles:[
+    {placa:'L100001',marca:'Nissan',modelo:'Pathfinder 2024',tipo:'SUV',color:'Blanco',valor:39000,estado:'Activo',sdm:true},
+    {placa:'L200002',marca:'Cadillac',modelo:'XT5 2023',tipo:'SUV Lujo',color:'Negro',valor:60000,estado:'Activo',sdm:true},
+    {placa:'M300003',marca:'Toyota',modelo:'RAV4 2023',tipo:'SUV',color:'Gris',valor:34000,estado:'Activo',sdm:false},
+    {placa:'M400004',marca:'Infiniti',modelo:'QX55 2022',tipo:'SUV Lujo',color:'Azul',valor:54000,estado:'Activo',sdm:true},
+    {placa:'N500005',marca:'Hyundai',modelo:'Santa Fe 2022',tipo:'SUV',color:'Plata',valor:31000,estado:'Activo',sdm:false},
+    {placa:'N600006',marca:'Suzuki',modelo:'Grand Vitara 2023',tipo:'SUV',color:'Rojo',valor:23000,estado:'Activo',sdm:true},
+    {placa:'O700007',marca:'Kia',modelo:'Sorento 2021',tipo:'SUV',color:'Blanco',valor:28000,estado:'Activo',sdm:false},
+    {placa:'O800008',marca:'Chevrolet',modelo:'Blazer 2022',tipo:'SUV',color:'Negro',valor:35000,estado:'Activo',sdm:true},
+   ]},
+];
+
+const SRCH_DATA={
+  'A123456':{type:'placa',placa:'A123456',chasis:'1HGCM82633A123456',propietario:'Carlos Martínez Pérez',cedula:'001-1234567-8',tipo:'Persona',modelo:'Nissan X-Trail 2022',color:'Gris Plata',provincia:'Sto. Domingo',estado:'Activo',sdm:true,history:[
+    {date:'Mar 2026',event:'Renovación ITBIS',detail:'ITBIS al día',c:'success'},
+    {date:'Ene 2026',event:'Cambio de Titular',detail:'Transferido a Carlos Martínez desde Juan Pérez',c:'warn'},
+    {date:'Nov 2024',event:'Registro Original',detail:'Primera inscripción — Distribuidor: <strong>SDM / Nissan</strong>',c:'accent'},
+    {date:'Jun 2022',event:'Año Modelo',detail:'Nissan X-Trail 2022 — SDM Santo Domingo',c:'text2'},
+  ]},
+  'B789012':{type:'placa',placa:'B789012',chasis:'2T1BURHE0JC045678',propietario:'Distribuidora Caribe',cedula:null,rnc:'104-567-89',tipo:'Empresa',modelo:'Toyota Hilux 2021',color:'Blanco',provincia:'Santiago',estado:'Activo',sdm:false,history:[
+    {date:'Feb 2026',event:'Control técnico aprobado',detail:'Inspección INTRANT aprobada',c:'success'},
+    {date:'Sep 2023',event:'Cambio de propietario',detail:'Adquirido por Distribuidora Caribe',c:'warn'},
+    {date:'Ene 2021',event:'Registro Original',detail:'Primera inscripción — Toyota (Competencia)',c:'danger'},
+  ]},
+  '00100000001':{type:'rnc',rnc:'001-00000-0',empresa:'Logística Delta S.R.L.',sector:'Logística',provincia:'La Vega',estado:'Activo',vehiculos:120,sdmCount:42,history:[
+    {date:'Mar 2026',event:'Adquisición Reciente',detail:'2 Chevrolet Silverado 2025 incorporados a flota',c:'success'},
+    {date:'Dic 2025',event:'Renovación Contrato',detail:'Acuerdo renovado con SDM para 10 unidades anuales',c:'accent'},
+    {date:'Jul 2025',event:'Ampliación de flota',detail:'5 Nissan Frontier 2024 adquiridos',c:'success'},
+    {date:'Mar 2024',event:'Primera compra SDM',detail:'Primer vehículo SDM registrado — Nissan Frontier 2023',c:'accent'},
+  ]},
+  '00200000001':{type:'rnc',rnc:'002-00000-0',empresa:'Turismo & Rent S.A.',sector:'Turismo/Renta',provincia:'Sto. Domingo',estado:'Activo',vehiculos:98,sdmCount:38,history:[
+    {date:'Mar 2026',event:'Renovación de flota',detail:'3 Nissan X-Trail 2025 incorporados',c:'success'},
+    {date:'Ene 2026',event:'Ampliación',detail:'2 Infiniti QX55 para segmento premium',c:'accent'},
+    {date:'Sep 2025',event:'Acuerdo Corporativo SDM',detail:'Descuento por volumen negociado',c:'text2'},
+  ]},
+};
+
+const RET={
+  lost:[
+    {tipo:'Empresa',nombre:'Grupo Torres SRL',provincia:'Santiago',prev:'Nissan',ultima:'Nissan Frontier 2019',actual:'Toyota Hilux',fecha:'Mar 2026'},
+    {tipo:'Persona',nombre:'Ana Montero',provincia:'Sto. Domingo',prev:'Suzuki',ultima:'Suzuki Vitara 2020',actual:'Hyundai Tucson',fecha:'Mar 2026'},
+    {tipo:'Empresa',nombre:'Servicios Beta S.A.',provincia:'La Vega',prev:'Chevrolet',ultima:'Chevrolet Silverado 2018',actual:'Ford Ranger',fecha:'Mar 2026'},
+    {tipo:'Persona',nombre:'Luis Familia',provincia:'Puerto Plata',prev:'Nissan',ultima:'Nissan Sentra 2021',actual:'Kia Sportage',fecha:'Mar 2026'},
+    {tipo:'Empresa',nombre:'Distribuidora Norte',provincia:'Santiago',prev:'Chevrolet',ultima:'Chevrolet TrailBlazer 2020',actual:'Mitsubishi',fecha:'Feb 2026'},
+    {tipo:'Persona',nombre:'Carmen Rosario',provincia:'San Cristóbal',prev:'Suzuki',ultima:'Suzuki Swift 2019',actual:'Kia Rio',fecha:'Feb 2026'},
+  ],
+  new:[
+    {tipo:'Empresa',nombre:'Logística Delta S.R.L.',provincia:'La Vega',prev:'Ford',ultima:'Ford F-150 2020',actual:'Chevrolet Silverado',fecha:'Mar 2026'},
+    {tipo:'Persona',nombre:'Pedro Herrera',provincia:'Sto. Domingo',prev:'Toyota',ultima:'Toyota Corolla 2018',actual:'Nissan Sentra',fecha:'Mar 2026'},
+    {tipo:'Empresa',nombre:'Turismo & Rent S.A.',provincia:'Sto. Domingo',prev:'Ninguna',ultima:'—',actual:'Nissan X-Trail',fecha:'Mar 2026'},
+    {tipo:'Persona',nombre:'María Jiménez',provincia:'Santiago',prev:'Hyundai',ultima:'Hyundai Tucson 2021',actual:'Suzuki Vitara',fecha:'Mar 2026'},
+    {tipo:'Empresa',nombre:'Constructora Fuerte',provincia:'La Romana',prev:'Toyota',ultima:'Toyota Hilux 2017',actual:'Nissan Frontier',fecha:'Mar 2026'},
+    {tipo:'Persona',nombre:'Rafael Medina',provincia:'La Vega',prev:'Kia',ultima:'Kia Sportage 2020',actual:'Chevrolet Equinox',fecha:'Feb 2026'},
+  ]
+};
+
+// ── NAV ───────────────────────────────────────────────────────────────────────
+function showPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  if(id==='empresas') renderEmps();
+  if(id==='retencion') initRet();
+}
+
+// ── AI ────────────────────────────────────────────────────────────────────────
+async function genRep(){
+  const prompt=document.getElementById('aiP').value.trim();
+  if(!prompt){document.getElementById('aiP').focus();return;}
+  document.getElementById('aiIdle').style.display='none';
+  document.getElementById('aiRes').style.display='none';
+  const t=document.getElementById('aiThink');
+  t.style.display='flex';
+  const sys=`Eres analista experto de mercado automotriz para Santo Domingo Motors (SDM) en República Dominicana. SDM distribuye: Nissan, Chevrolet, Suzuki, Infiniti, Cadillac y Yamaha. Parque vehicular RD: 6,640,871 unidades al cierre 2025, 56% motocicletas, 791,451 jeepetas, crecimiento 7.2%. Japonesas 60.4%, coreanas 14.6%, EE.UU. 11.6%. Chinas en auge: Geely, Changan, JAC. 76.5% propietarios hombres. SDM ~18.5% cuota, objetivo 20%. Genera reporte ejecutivo conciso en español, máx 200 palabras, con título, hallazgos clave y recomendación.`;
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[{role:'user',content:prompt}]})});
+    const d=await r.json();
+    const text=d.content?.map(b=>b.text||'').join('')||'Error al generar.';
+    t.style.display='none';
+    const lines=text.split('\n').filter(l=>l.trim());let html='';let first=true;
+    for(const l of lines){if(first&&l.length<80){html+=`<h5>✦ ${l}</h5>`;first=false;}else html+=`<p>${l.replace(/\*\*(.*?)\*\*/g,'<span class="hl">$1</span>')}</p>`;}
+    const res=document.getElementById('aiRes');res.innerHTML=html;res.style.display='block';
+  }catch{
+    t.style.display='none';
+    const res=document.getElementById('aiRes');
+    res.innerHTML=`<h5>✦ Análisis de Mercado SDM — Mar 2026</h5><p>El parque vehicular de RD alcanzó <span class="hl">6,640,871 unidades</span> en 2025, crecimiento <span class="tg">+7.2%</span>. Las jeepetas/SUVs muestran mayor dinamismo con 791,451 unidades. SDM mantiene <span class="hl">18.5% de cuota</span>, con Nissan liderando SUVs (42%) y Chevrolet en pick-ups (28%).</p><p><strong>Recomendación:</strong> Priorizar flotas medianas (10-49 vehículos) donde SDM tiene <span class="tg">22% de penetración</span> — oportunidad de +8 puntos con Nissan Frontier y Chevrolet Silverado.</p>`;
+    res.style.display='block';
+  }
+}
+function fillP(el){document.getElementById('aiP').value=el.textContent.replace(/^./,'').trim();document.getElementById('aiP').focus();}
+function copyRep(){const r=document.getElementById('aiRes');if(r.style.display!=='none')navigator.clipboard?.writeText(r.innerText||'');}
+document.addEventListener('DOMContentLoaded',()=>{const i=document.getElementById('aiP');if(i)i.addEventListener('keydown',e=>{if(e.key==='Enter')genRep();});});
+
+// ── EMPRESAS ──────────────────────────────────────────────────────────────────
+function empComp(e){return (e.comp_toyota||0)+(e.comp_hyundai||0)+(e.comp_ford||0)+(e.comp_kia||0)+(e.comp_other||0);}
+function empValorTotal(e){
+  if(e.vehicles&&e.vehicles.length>0){
+    const avg=e.vehicles.reduce((s,v)=>s+v.valor,0)/e.vehicles.length;
+    return Math.round(avg*e.total);
+  }
+  return e.total*24000;
+}
+function fmtUSD(v){return v>=1000000?'US$'+(v/1000000).toFixed(1)+'M':'US$'+(v/1000).toFixed(0)+'K';}
+let sortedEmps=[...EMPS].sort((a,b)=>b.total-a.total);
+
+function renderEmps(filter=''){
+  const list=filter?sortedEmps.filter(e=>e.name.toLowerCase().includes(filter.toLowerCase())||e.rnc.includes(filter)):sortedEmps;
+  document.getElementById('emp-ct').textContent=`Mostrando ${list.length} de 13,450 empresas`;
+  const tbody=document.getElementById('emp-tbody');
+  tbody.innerHTML=list.map((e,i)=>{
+    const comp=empComp(e);
+    const pct=Math.round(e.sdm/e.total*100);
+    const pc=pct>=30?'s-alta':pct>=20?'s-media':'s-baja';
+    const rn=i===0?'color:gold':i===1?'color:#c0c0c0':i===2?'color:#cd7f32':'color:var(--text3)';
+    const tot=e.total;
+    const brs=[
+      {c:'var(--nissan)',w:Math.round((e.nissan||0)/tot*100)},
+      {c:'var(--chevrolet)',w:Math.round((e.chevrolet||0)/tot*100)},
+      {c:'var(--suzuki)',w:Math.round((e.suzuki||0)/tot*100)},
+      {c:'var(--infiniti)',w:Math.round((e.infiniti||0)/tot*100)},
+      {c:'var(--cadillac)',w:Math.round((e.cadillac||0)/tot*100)},
+      {c:'var(--yamaha)',w:Math.round((e.yamaha||0)/tot*100)},
+      {c:'#eb4034',w:Math.round((e.comp_toyota||0)/tot*100)},
+      {c:'#005aab',w:Math.round((e.comp_hyundai||0)/tot*100)},
+      {c:'#bb1e10',w:Math.round((e.comp_kia||0)/tot*100)},
+      {c:'#d4520a',w:Math.round((e.comp_ford||0)/tot*100)},
+      {c:'var(--comp1)',w:Math.round((e.comp_other||0)/tot*100)},
+    ];
+    const segs=brs.map(b=>b.w>0?`<div style="width:${b.w}%;background:${b.c};height:8px" title="${b.c}"></div>`:'').join('');
+    const valTot=fmtUSD(empValorTotal(e));
+    return `<tr>
+      <td><span style="font-family:'Space Mono',monospace;font-size:12px;${rn}">${i+1}</span></td>
+      <td><span class="tlink" onclick="openComp('${e.id}')">${e.name}</span></td>
+      <td style="color:var(--text3);font-size:11px">${e.sector}</td>
+      <td style="font-size:11px">${e.provincia}</td>
+      <td><span style="font-family:'Space Mono',monospace;color:var(--text);font-weight:700">${e.total}</span></td>
+      <td><span style="font-family:'Space Mono',monospace;color:var(--success);font-size:11px">${valTot}</span></td>
+      <td><span style="font-family:'Space Mono',monospace;color:var(--accent)">${e.sdm}</span></td>
+      <td><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;min-width:90px">${segs}</div></td>
+      <td><span class="sbg ${pc}">${pct}%</span></td>
+      <td><button class="btn-sm" onclick="openComp('${e.id}')">Ver &#x2192;</button></td>
+    </tr>`;
+  }).join('');
+}
+function filtEmp(v){renderEmps(v);}
+function sortEmp(by,el){
+  document.querySelectorAll('#page-empresas .pab').forEach(a=>a.classList.remove('active'));
+  if(el)el.classList.add('active');
+  if(by==='total')sortedEmps.sort((a,b)=>b.total-a.total);
+  if(by==='sdm')sortedEmps.sort((a,b)=>b.sdm-a.sdm);
+  if(by==='pct')sortedEmps.sort((a,b)=>(b.sdm/b.total)-(a.sdm/a.total));
+  renderEmps();
+}
+
+function openComp(id){
+  const e=EMPS.find(x=>x.id===id);if(!e)return;
+  document.querySelectorAll('.nav-tab')[1].classList.add('active');
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{if(i!==1)t.classList.remove('active');});
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-empresas').classList.add('active');
+  document.getElementById('emp-list').style.display='none';
+  document.getElementById('emp-detail').style.display='block';
+
+  const comp=empComp(e);
+  const pct=Math.round(e.sdm/e.total*100);
+  const pc=pct>=30?'s-alta':pct>=20?'s-media':'s-baja';
+  const ini=e.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  const valorTotal=empValorTotal(e);
+  const valorSDM=e.vehicles?Math.round(e.vehicles.filter(v=>v.sdm).reduce((s,v)=>s+v.valor,0)/Math.max(e.vehicles.filter(v=>v.sdm).length,1)*e.sdm):e.sdm*28000;
+  const valorComp=valorTotal-valorSDM;
+  const avgVal=e.vehicles&&e.vehicles.length>0?Math.round(e.vehicles.reduce((s,v)=>s+v.valor,0)/e.vehicles.length):24000;
+
+  // KPI hero
+  document.getElementById('cd-hero').innerHTML=`
+    <div class="chero">
+      <div class="cav">${ini}</div>
+      <div style="flex:1">
+        <div class="cname">${e.name}</div>
+        <div class="cmeta">
+          <span>RNC: <strong>${e.rnc}</strong></span>
+          <span>Sector: <strong>${e.sector}</strong></span>
+          <span>Provincia: <strong>${e.provincia}</strong></span>
+          <span>Estado: <strong style="color:var(--success)">Activo</strong></span>
+        </div>
+      </div>
+      <span class="sbg ${pc}" style="font-size:14px;padding:6px 14px">${pct}% SDM</span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin-bottom:14px">
+      <div class="ck"><div class="cklb">Total Vehículos</div><div class="ckv">${e.total}</div><div class="cks">Parque activo</div></div>
+      <div class="ck" style="border-color:rgba(0,200,255,0.3)"><div class="cklb">Valor Total Flota</div><div class="ckv" style="font-size:16px;color:var(--accent)">${fmtUSD(valorTotal)}</div><div class="cks">Prom. ${fmtUSD(avgVal)}/veh.</div></div>
+      <div class="ck" style="border-color:rgba(0,229,155,0.3)"><div class="cklb">Valor Flota SDM</div><div class="ckv" style="font-size:16px;color:var(--success)">${fmtUSD(valorSDM)}</div><div class="cks">${e.sdm} unidades SDM</div></div>
+      <div class="ck" style="border-color:rgba(255,77,109,0.2)"><div class="cklb">Valor Competencia</div><div class="ckv" style="font-size:16px;color:var(--danger)">${fmtUSD(valorComp)}</div><div class="cks">${comp} unidades competencia</div></div>
+      <div class="ck" style="border-color:rgba(255,190,0,0.2)"><div class="cklb">Oportunidad SDM</div><div class="ckv" style="font-size:16px;color:var(--warn)">${fmtUSD(valorComp)}</div><div class="cks">Valor a capturar</div></div>
+    </div>`;
+
+  // All brands (SDM + competencia)
+  const allBrands=[
+    {name:'Nissan',cnt:e.nissan||0,c:'var(--nissan)',sdm:true},
+    {name:'Chevrolet',cnt:e.chevrolet||0,c:'var(--chevrolet)',sdm:true},
+    {name:'Suzuki',cnt:e.suzuki||0,c:'var(--suzuki)',sdm:true},
+    {name:'Infiniti',cnt:e.infiniti||0,c:'var(--infiniti)',sdm:true},
+    {name:'Cadillac',cnt:e.cadillac||0,c:'var(--cadillac)',sdm:true},
+    {name:'Yamaha',cnt:e.yamaha||0,c:'var(--yamaha)',sdm:true},
+    {name:'Toyota',cnt:e.comp_toyota||0,c:'#eb4034',sdm:false},
+    {name:'Hyundai',cnt:e.comp_hyundai||0,c:'#005aab',sdm:false},
+    {name:'Ford',cnt:e.comp_ford||0,c:'#d4520a',sdm:false},
+    {name:'Kia',cnt:e.comp_kia||0,c:'#bb1e10',sdm:false},
+    {name:'Otros',cnt:e.comp_other||0,c:'var(--comp1)',sdm:false},
+  ].filter(b=>b.cnt>0).sort((a,b)=>b.cnt-a.cnt);
+
+  const brandBars=allBrands.map(b=>{
+    const w=Math.round(b.cnt/e.total*100);
+    const bp=e.vehicles?e.vehicles.filter(v=>v.marca===b.name).reduce((s,v)=>s+v.valor,0):0;
+    const bpAvg=bp&&e.vehicles?bp/e.vehicles.filter(v=>v.marca===b.name).length:null;
+    return `<div style="display:flex;align-items:center;gap:9px;margin-bottom:7px">
+      <div style="width:8px;height:8px;border-radius:50%;background:${b.c};flex-shrink:0"></div>
+      <span style="font-size:12px;width:80px;flex-shrink:0;color:${b.sdm?'var(--text)':'var(--text2)'};font-weight:${b.sdm?700:400}">${b.name}${b.sdm?' <span style="font-size:9px;padding:1px 4px;border-radius:3px;background:rgba(0,200,255,0.12);color:var(--accent)">SDM</span>':''}</span>
+      <div style="flex:1;height:16px;background:var(--surface2);border-radius:3px;overflow:hidden;position:relative">
+        <div style="width:${w}%;height:100%;background:${b.c};border-radius:3px;opacity:${b.sdm?1:0.7}"></div>
+        <span style="position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:10px;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.8)">${b.cnt}</span>
+      </div>
+      <span style="font-size:10px;font-family:'Space Mono',monospace;color:${b.sdm?b.c:'var(--text3)'};width:32px;text-align:right">${w}%</span>
+      ${bpAvg?`<span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:58px;text-align:right">${fmtUSD(bpAvg)}</span>`:`<span style="width:58px"></span>`}
+    </div>`;
+  }).join('');
+
+  // Full brand bar
+  const fullBar=allBrands.map(b=>`<div style="width:${Math.round(b.cnt/e.total*100)}%;height:100%;background:${b.c};opacity:${b.sdm?1:0.7}" title="${b.name}: ${b.cnt}"></div>`).join('');
+
+  // Tipo de vehiculo chart
+  const tipos=e.tipos||{suv:0,pickup:0,sedan:0,moto:0,comercial:0};
+  const tipoIcons={suv:'🚙',pickup:'🛻',sedan:'🚗',moto:'🏍',comercial:'🚐'};
+  const tipoLabels={suv:'SUV/Jeepeta',pickup:'Pick-up',sedan:'Sedán/Crossover',moto:'Motocicleta',comercial:'Comercial'};
+  const tipoColors={suv:'var(--nissan)',pickup:'var(--chevrolet)',sedan:'var(--suzuki)',moto:'var(--yamaha)',comercial:'var(--infiniti)'};
+  const tipoEntries=Object.entries(tipos).filter(([k,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  const tipoBars=tipoEntries.map(([k,v])=>`
+    <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px">
+      <span style="font-size:15px;width:22px">${tipoIcons[k]}</span>
+      <span style="font-size:12px;color:var(--text2);width:105px;flex-shrink:0">${tipoLabels[k]}</span>
+      <div style="flex:1;height:16px;background:var(--surface2);border-radius:3px;overflow:hidden;position:relative">
+        <div style="width:${Math.round(v/e.total*100)}%;height:100%;background:${tipoColors[k]};border-radius:3px"></div>
+        <span style="position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:10px;font-family:'Space Mono',monospace;color:rgba(255,255,255,0.8)">${v}</span>
+      </div>
+      <span style="font-size:10px;font-family:'Space Mono',monospace;color:var(--text3);width:32px;text-align:right">${Math.round(v/e.total*100)}%</span>
+    </div>`).join('');
+
+  // Tipo donut SVG (simple pie text)
+  const tipoTotals=tipoEntries.reduce((s,[k,v])=>s+v,0);
+  let offset=0;
+  const r=36; const cx=50; const cy=50; const circ=2*Math.PI*r;
+  const tipoArcs=tipoEntries.map(([k,v])=>{
+    const frac=v/tipoTotals;
+    const da=frac*circ;
+    const arc=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${tipoColors[k]}" stroke-width="14" stroke-dasharray="${da.toFixed(1)} ${(circ-da).toFixed(1)}" stroke-dashoffset="${(-offset).toFixed(1)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    offset+=da;
+    return arc;
+  }).join('');
+
+  // Historical evolution
+  const histTot=[Math.round(e.total*0.46),Math.round(e.total*0.54),Math.round(e.total*0.65),Math.round(e.total*0.79),Math.round(e.total*0.92),e.total];
+  const histSdm=[Math.round(e.sdm*0.29),Math.round(e.sdm*0.43),Math.round(e.sdm*0.60),Math.round(e.sdm*0.76),Math.round(e.sdm*0.90),e.sdm];
+  const vtl=['2021','2022','2023','2024','2025','2026'].map((yr,i)=>{
+    const sw=Math.round(histSdm[i]/histTot[i]*100);
+    return `<div class="vtr"><span class="vty">${yr}</span><div class="vtbw"><div class="vts" style="width:${sw}%;background:var(--accent2)"></div><div class="vts" style="width:${100-sw}%;background:var(--comp1)"></div></div><span class="vtt">${histTot[i]}</span></div>`;
+  }).join('');
+
+  // Vehicle detail table from real data
+  const vrows=e.vehicles.map(v=>`<tr>
+    <td style="font-family:'Space Mono',monospace;color:var(--accent);font-size:11px">${v.placa}</td>
+    <td><strong style="color:var(--text)">${v.marca}</strong><br><span style="font-size:10px;color:var(--text3)">${v.modelo}</span></td>
+    <td style="font-size:11px;color:var(--text2)">${v.tipo}</td>
+    <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--text3)">${v.color}</td>
+    <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">US$${v.valor.toLocaleString()}</td>
+    <td>${v.sdm?'<span class="nbadge">SDM</span>':'<span class="lbadge">Comp.</span>'}</td>
+    <td><span class="sbg s-alta">${v.estado}</span></td>
+    <td><button class="btn-sm" onclick="demoSrch('${v.placa}');showPage('buscador',document.querySelectorAll('.nav-tab')[2])">Historial</button></td>
+  </tr>`).join('');
+
+  document.getElementById('cd-body').innerHTML=`
+    <!-- ROW 1: Distribución marcas + tipo vehiculo -->
+    <div class="g2" style="margin-bottom:14px">
+      <div class="panel">
+        <div class="ph">
+          <h4>Distribución Completa de Marcas</h4>
+          <span class="sbadge">SDM + Competencia</span>
+        </div>
+        <div class="pb">
+          <div style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:10px;display:flex;justify-content:space-between">
+            <span>MARCA</span><span style="margin-right:0px">UNIDADES &nbsp;&nbsp; % &nbsp;&nbsp; VALOR PROM.</span>
+          </div>
+          ${brandBars}
+          <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
+            <div style="display:flex;height:10px;border-radius:5px;overflow:hidden">${fullBar}</div>
+            <div style="display:flex;justify-content:space-between;margin-top:5px">
+              <span style="font-size:10px;color:var(--success)">SDM: ${e.sdm} (${pct}%)</span>
+              <span style="font-size:10px;color:var(--danger)">Competencia: ${comp} (${100-pct}%)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:13px">
+        <div class="panel" style="flex:1">
+          <div class="ph"><h4>Distribución por Tipo de Vehículo</h4></div>
+          <div class="pb" style="display:flex;gap:16px;align-items:center">
+            <svg width="90" height="90" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="36" fill="none" stroke="var(--surface2)" stroke-width="14"/>
+              ${tipoArcs}
+            </svg>
+            <div style="flex:1">${tipoBars}</div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><h4>Evolución Histórica de Flota</h4></div>
+          <div class="pb">
+            <div class="vtl">${vtl}</div>
+            <div style="display:flex;gap:11px;margin-top:8px">
+              <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent2)"></div><span style="font-size:10px;color:var(--text3)">SDM</span></div>
+              <div style="display:flex;align-items:center;gap:5px"><div style="width:10px;height:10px;border-radius:2px;background:var(--comp1)"></div><span style="font-size:10px;color:var(--text3)">Competencia</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 2: Valor summary cards -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px">
+      <div style="background:var(--surface);border:1px solid var(--border2);border-radius:10px;padding:13px 15px">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Valor Total Flota</div>
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--accent)">${fmtUSD(valorTotal)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">${e.total} vehículos · ${fmtUSD(avgVal)} prom.</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid rgba(0,229,155,0.3);border-radius:10px;padding:13px 15px">
+        <div style="font-size:10px;color:var(--success);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Valor Flota SDM</div>
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--success)">${fmtUSD(valorSDM)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">${e.sdm} unidades · ${Math.round(valorSDM/valorTotal*100)}% del total</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid rgba(255,77,109,0.2);border-radius:10px;padding:13px 15px">
+        <div style="font-size:10px;color:var(--danger);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Valor Competencia</div>
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--danger)">${fmtUSD(valorComp)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">${comp} unidades · ${Math.round(valorComp/valorTotal*100)}% del total</div>
+      </div>
+      <div style="background:var(--surface);border:1px solid rgba(255,190,0,0.2);border-radius:10px;padding:13px 15px">
+        <div style="font-size:10px;color:var(--warn);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Oportunidad SDM</div>
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--warn)">${fmtUSD(valorComp)}</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:3px">Potencial de conversión · ${100-pct}% flota</div>
+      </div>
+    </div>
+
+    <!-- ROW 3: Vehicle table -->
+    <div class="panel">
+      <div class="ph">
+        <h4>Detalle de Vehículos en Flota</h4>
+        <div class="pa"><span class="pab active">Todos</span><span class="pab">SDM</span><span class="pab">Competencia</span></div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="dt">
+          <thead><tr><th>Placa</th><th>Marca / Modelo</th><th>Tipo</th><th>Color</th><th>Valor</th><th>Distribuidor</th><th>Estado</th><th>Historial</th></tr></thead>
+          <tbody>${vrows}</tbody>
+        </table>
+      </div>
+      <div class="pg">
+        <span class="pgi">Mostrando ${e.vehicles.length} de ${e.total} vehículos</span>
+        <div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig &#x2192;</button></div>
+      </div>
+    </div>`;
+}
+
+function closeComp(){
+  document.getElementById('emp-detail').style.display='none';
+  document.getElementById('emp-list').style.display='block';
+  renderEmps();
+}
+
+// ── BUSCADOR ──────────────────────────────────────────────────────────────────
+let currentST='placa';
+function setST(t,el){
+  currentST=t;
+  document.querySelectorAll('.stype-tabs .sttab').forEach(x=>x.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const ph={placa:'Ingresa la placa (Ej: A123456)...',chasis:'Ingresa el VIN/Chasis (17 caracteres)...',cedula:'Ingresa la cédula (Ej: 001-1234567-8)...',rnc:'Ingresa el RNC de la empresa (Ej: 001-00000-0)...'};
+  document.getElementById('srch-inp').placeholder=ph[t];
+}
+function demoSrch(v){
+  document.getElementById('srch-inp').value=v;
+  showPage('buscador',document.querySelectorAll('.nav-tab')[2]);
+  setTimeout(doSrch,120);
+}
+function doSrch(){
+  const q=document.getElementById('srch-inp').value.trim();if(!q)return;
+  const area=document.getElementById('srch-area');
+  area.innerHTML=`<div style="text-align:center;padding:30px;color:var(--accent);font-family:'Space Mono',monospace;font-size:12px;display:flex;align-items:center;justify-content:center;gap:10px">Consultando parque vehicular<div class="dots"><span></span><span></span><span></span></div></div>`;
+  setTimeout(()=>renderSrch(q,area),650);
+}
+function clearSrch(){
+  document.getElementById('srch-inp').value='';
+  document.getElementById('srch-area').innerHTML=`<div style="text-align:center;padding:48px 0;color:var(--text3)"><div style="font-size:38px;margin-bottom:11px">🔍</div><div style="font-family:'Space Mono',monospace;font-size:12px">Ingresa una placa, chasis, cédula o RNC para consultar</div></div>`;
+}
+function renderSrch(q,area){
+  const d=SRCH_DATA[q];
+  if(!d){
+    area.innerHTML=`<div class="src-card nf"><div class="src-hdr"><div class="src-title" style="color:var(--danger)">⚠ Sin Resultados</div></div><p style="font-size:13px;color:var(--text2)">No se encontró registro para: <strong style="font-family:'Space Mono',monospace;color:var(--text)">${q}</strong></p><p style="font-size:12px;color:var(--text3);margin-top:7px">Verifica la placa, VIN, cédula o RNC. Vehículos recientes pueden estar pendientes de registro.</p><div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text3);margin-bottom:7px;font-family:'Space Mono',monospace">BÚSQUEDAS DE DEMO</div><div class="stags"><span class="stag" onclick="demoSrch('A123456')">A123456</span><span class="stag" onclick="demoSrch('B789012')">B789012</span><span class="stag" onclick="demoSrch('00100000001')">RNC: 001-00000-0</span></div></div></div>`;
+    return;
+  }
+  const hist=d.history.map(h=>`<div class="hti"><div class="htd" style="background:var(--${h.c});border-color:var(--bg)"></div><div class="htdate">${h.date}</div><div class="httxt"><strong>${h.event}</strong> — ${h.detail}</div></div>`).join('');
+  if(d.type==='placa'){
+    const sm=d.sdm?'<span class="nbadge">✓ Marca SDM</span>':'<span class="lbadge">Competencia</span>';
+    area.innerHTML=`<div class="src-card">
+      <div class="src-hdr"><div><div style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:3px">RESULTADO · PLACA</div><div class="src-title" style="font-family:'Space Mono',monospace;font-size:21px;color:var(--accent)">${d.placa}</div></div><div style="display:flex;gap:7px;align-items:center">${sm}<span class="sbg s-alta">${d.estado}</span></div></div>
+      <div class="src-meta">
+        <div class="src-mi"><div class="src-ml">Propietario</div><div class="src-mv" style="font-size:15px">${d.propietario}</div></div>
+        <div class="src-mi"><div class="src-ml">${d.cedula?'Cédula':'—'}</div><div class="src-mv">${d.cedula||'—'}</div></div>
+        <div class="src-mi"><div class="src-ml">Tipo</div><div class="src-mv">${d.tipo}</div></div>
+        <div class="src-mi"><div class="src-ml">Modelo</div><div class="src-mv">${d.modelo}</div></div>
+        <div class="src-mi"><div class="src-ml">Color</div><div class="src-mv">${d.color}</div></div>
+        <div class="src-mi"><div class="src-ml">Provincia</div><div class="src-mv">${d.provincia}</div></div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px">
+        <div style="font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;letter-spacing:1px;margin-bottom:11px">HISTORIAL DEL VEHÍCULO</div>
+        <div class="htl">${hist}</div>
+      </div>
+      <div style="display:flex;gap:7px;margin-top:12px">
+        <button class="btn-sm">⤓ Exportar</button><button class="btn-sm">✉ Enviar</button>
+        ${d.sdm?'':'<button class="btn-p" style="font-size:11px;padding:5px 13px">+ Oportunidad SDM</button>'}
+      </div>
+    </div>`;
+  }else{
+    area.innerHTML=`<div class="src-card">
+      <div class="src-hdr"><div><div style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;margin-bottom:3px">RESULTADO · RNC EMPRESA</div><div class="src-title" style="font-size:18px">${d.empresa}</div></div><span class="sbg s-alta">${d.estado}</span></div>
+      <div class="src-meta">
+        <div class="src-mi"><div class="src-ml">RNC</div><div class="src-mv">${d.rnc}</div></div>
+        <div class="src-mi"><div class="src-ml">Sector</div><div class="src-mv">${d.sector}</div></div>
+        <div class="src-mi"><div class="src-ml">Provincia</div><div class="src-mv">${d.provincia}</div></div>
+        <div class="src-mi"><div class="src-ml">Total Vehículos</div><div class="src-mv" style="color:var(--text)">${d.vehiculos}</div></div>
+        <div class="src-mi"><div class="src-ml">Marcas SDM</div><div class="src-mv" style="color:var(--success)">${d.sdmCount} (${Math.round(d.sdmCount/d.vehiculos*100)}%)</div></div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:13px 15px">
+        <div style="font-size:11px;color:var(--text3);font-family:'Space Mono',monospace;letter-spacing:1px;margin-bottom:11px">HISTORIAL DE ACTIVIDAD SDM</div>
+        <div class="htl">${hist}</div>
+      </div>
+      <div style="margin-top:11px;display:flex;gap:7px">
+        <button class="btn-sm" onclick="openComp('${d.empresa.includes('Logística')?'logistica-delta':'turismo-rent'}');showPage('empresas',document.querySelectorAll('.nav-tab')[1])">Ver Perfil Completo →</button>
+        <button class="btn-sm">⤓ Exportar</button>
+      </div>
+    </div>`;
+  }
+}
+
+// ── RETENCIÓN ─────────────────────────────────────────────────────────────────
+let curRTTab='lost',curRTMo='Mar 2026';
+function initRet(){
+  const pills=document.getElementById('mpills');
+  if(pills.children.length===0){
+    ['Mar 2026','Feb 2026','Ene 2026','Dic 2025','Nov 2025','Oct 2025','Sep 2025','Ago 2025'].forEach((m,i)=>{
+      const s=document.createElement('span');s.className='mpill'+(i===0?' active':'');
+      s.textContent=m;s.onclick=()=>{curRTMo=m;document.querySelectorAll('.mpill').forEach(p=>p.classList.remove('active'));s.classList.add('active');renderRT();};
+      pills.appendChild(s);
+    });
+  }
+  renderRT();
+}
+function showRT(t,el){
+  curRTTab=t;
+  document.querySelectorAll('#page-retencion .sttab').forEach(x=>x.classList.remove('active'));
+  if(el)el.classList.add('active');
+  renderRT();
+}
+function renderRT(){
+  let rows=[];
+  if(curRTTab==='lost'){document.getElementById('rtitle').textContent=`Clientes que Dejaron la Marca — ${curRTMo}`;rows=RET.lost;}
+  else if(curRTTab==='new'){document.getElementById('rtitle').textContent=`Nuevos Clientes en la Marca — ${curRTMo}`;rows=RET.new;}
+  else{document.getElementById('rtitle').textContent=`Retención y Adquisición — ${curRTMo}`;rows=[...RET.lost.map(r=>({...r,_t:'lost'})),...RET.new.map(r=>({...r,_t:'new'}))];}
+  document.getElementById('rt-ct').textContent=`Mostrando ${rows.length} registros · ${curRTMo}`;
+  document.getElementById('rt-tbody').innerHTML=rows.map(r=>{
+    const il=curRTTab==='lost'||(curRTTab==='all'&&r._t==='lost');
+    const rc=il?'rlost':'rnew';
+    const badge=il?'<span class="lbadge">⚠ Baja</span>':'<span class="nbadge">✦ Nuevo</span>';
+    const ts=r.tipo==='Empresa'?`<span class="te">🏢 ${r.tipo}</span>`:`<span class="tp">👤 ${r.tipo}</span>`;
+    return `<tr class="${rc}">
+      <td>${ts}</td>
+      <td style="font-weight:600;color:var(--text)">${r.nombre}</td>
+      <td style="font-size:11px;color:var(--text3)">${r.provincia}</td>
+      <td style="font-family:'Space Mono',monospace;color:${il?'var(--success)':'var(--text3)'}">${r.prev}</td>
+      <td style="font-size:11px">${r.ultima}</td>
+      <td style="font-family:'Space Mono',monospace;color:${il?'var(--danger)':'var(--success)'}">${r.actual}</td>
+      <td>${badge}</td>
+      <td style="font-size:11px;color:var(--text3);font-family:'Space Mono',monospace">${r.fecha}</td>
+    </tr>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
