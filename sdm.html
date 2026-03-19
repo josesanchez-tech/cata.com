@@ -304,9 +304,9 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
     </div>
   </div>
   <div class="kgrid">
-    <div class="kcard" style="--ka:var(--accent)"><div class="klb">Cuota SDM en RD</div><div class="kval">18.5%</div><div class="ksub">Target: 20.0%</div><span class="kbadge bwn">▲ 1.2% gap</span></div>
-    <div class="kcard" style="--ka:var(--accent3)"><div class="klb">Total Vehículos RD</div><div class="kval">6.64M</div><div class="ksub">+446,819 nuevos en 2025</div><span class="kbadge bup">▲ 7.2% interanual</span></div>
-    <div class="kcard" style="--ka:var(--success)"><div class="klb">Crecimiento Marcas SDM</div><div class="kval">+4.2%</div><div class="ksub">Último trimestre Q1 2026</div><span class="kbadge bup">▲ Sobre meta</span></div>
+    <div class="kcard" style="--ka:var(--accent)"><div class="klb">Cuota SDM en RD</div><div class="kval">18.5%</div><div class="ksub">Cuota estimada SDM vs parque DGII</div><span class="kbadge bwn">▲ 1.5% para meta</span></div>
+    <div class="kcard" style="--ka:var(--accent3)"><div class="klb">Total Vehículos RD</div><div class="kval">6.64M</div><div class="ksub">+446,819 nuevos · Motos 57.9% · Autos 17.9% · Jeeps 12.0%</div><span class="kbadge bup">▲ 7.2% vs 2024</span></div>
+    <div class="kcard" style="--ka:var(--success)"><div class="klb">Crecimiento Marcas SDM</div><div class="kval">+4.2%</div><div class="ksub">Parque total RD creció +7.2% (DGII)</div><span class="kbadge bup">▲ Sobre meta</span></div>
     <div class="kcard" style="--ka:var(--warn)"><div class="klb">Valor Promedio</div><div class="kval">US$19.5K</div><div class="ksub">Por unidad · Parque SDM</div><span class="kbadge bup">▲ +US$1,200 vs 2024</span></div>
   </div>
 
@@ -334,14 +334,42 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         <div id="aiRes" class="ait" style="display:none"></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-top:8px;border-top:1px solid var(--border)">
-        <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace">Datos: Mar 2025 – Mar 2026</span>
+        <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace">Fuente: DGII · Parque Vehicular 2025 · Corte: Dic 2025</span>
         <div style="display:flex;gap:5px"><button class="btn-sm" onclick="alert('PDF disponible en versión completa')">⤓ PDF</button><button class="btn-sm" onclick="copyRep()">⧉ Copiar</button></div>
       </div>
     </div>
   </div>
 
   <!-- ── PARQUE VEHICULAR MARKET DATA ── -->
-  <div class="stitle"><h3>Parque Vehicular RD — Marcas Generales</h3><span class="sbadge">6.64M UNIDADES · 2025-2026</span></div>
+  <div class="stitle"><h3>Parque Vehicular RD — Marcas Generales</h3><span class="sbadge">6,640,871 UNIDADES · DGII DIC 2025</span></div>
+  <div style="background:rgba(0,200,255,0.05);border:1px solid var(--border2);border-radius:10px;padding:12px 18px;margin-bottom:16px;display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start">
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:9px;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:2px;margin-bottom:5px">📄 FUENTE OFICIAL · DGII</div>
+      <div style="font-size:12px;color:var(--text2)">Boletín <strong style="color:var(--text)">Parque Vehicular 2025</strong> — Gerencia de Estudios Económicos y Tributarios, Dirección General de Impuestos Internos (DGII). Corte: <strong style="color:var(--text)">31 de diciembre de 2025</strong>. Cifras generadas al 10 de febrero de 2026.</div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:2px">Total Parque</div>
+        <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--accent)">6,640,871</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:2px">Crecimiento 2025</div>
+        <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--success)">+7.2%</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:2px">Nuevas unidades</div>
+        <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--warn)">+446,819</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:2px">Recaudación 2025</div>
+        <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--text)">RD$27,317M</div>
+      </div>
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:8px 12px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:2px">Traspasos 2025</div>
+        <div style="font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--text2)">228,075</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Top 3 dominantes -->
   <div class="kgrid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px">
@@ -351,7 +379,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(235,64,52,0.15);color:#eb4034;font-family:'Space Mono',monospace">LÍDER ABSOLUTO</span>
       </div>
       <div class="kval" style="color:#eb4034">35.0%</div>
-      <div class="ksub">~2,324,305 unidades · Nuevos + usados</div>
+      <div class="ksub">339,476 autos (28.6%) + 138,838 jeeps (17.4%)</div>
       <div style="margin-top:8px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="width:35%;height:100%;background:#eb4034;border-radius:2px"></div></div>
     </div>
     <div class="kcard" style="--ka:#e55c3a;border-color:rgba(229,92,58,0.3)">
@@ -360,7 +388,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(229,92,58,0.15);color:#e55c3a;font-family:'Space Mono',monospace">2do LUGAR</span>
       </div>
       <div class="kval" style="color:#e55c3a">20.0%</div>
-      <div class="ksub">~1,328,174 unidades · Fuerte en sedanes</div>
+      <div class="ksub">197,201 autos (16.6%) + 121,761 jeeps (15.3%)</div>
       <div style="margin-top:8px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="width:20%;height:100%;background:#e55c3a;border-radius:2px"></div></div>
     </div>
     <div class="kcard" style="--ka:#005aab;border-color:rgba(0,90,171,0.3)">
@@ -369,7 +397,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         <span style="font-size:9px;padding:2px 7px;border-radius:4px;background:rgba(0,90,171,0.15);color:#005aab;font-family:'Space Mono',monospace">3er LUGAR</span>
       </div>
       <div class="kval" style="color:#005aab">14.5%</div>
-      <div class="ksub">~962,327 unidades · Import. Corea/EE.UU.</div>
+      <div class="ksub">145,337 autos (12.2%) + 81,670 jeeps (10.2%) · DGII</div>
       <div style="margin-top:8px;height:4px;background:var(--surface2);border-radius:2px;overflow:hidden"><div style="width:14.5%;height:100%;background:#005aab;border-radius:2px"></div></div>
     </div>
   </div>
@@ -379,7 +407,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
     <div class="panel">
       <div class="ph">
         <h4>Ranking Completo de Marcas — Parque RD</h4>
-        <span class="sbadge">% del total 6.64M</span>
+        <span class="sbadge">% del total 6,640,871 · fuente DGII</span>
       </div>
       <div class="pb" style="display:flex;flex-direction:column;gap:7px">
         <!-- Toyota -->
@@ -387,70 +415,70 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
           <span style="font-size:10px;color:gold;font-family:'Space Mono',monospace;width:16px">1</span>
           <span style="font-size:12px;color:var(--text);flex:1;font-weight:600">Toyota</span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:100%;background:#eb4034"><span class="bar-vl">35.0%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">2.32M</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">478.3K</span>
         </div>
         <!-- Honda -->
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:10px;color:#c0c0c0;font-family:'Space Mono',monospace;width:16px">2</span>
           <span style="font-size:12px;color:var(--text);flex:1;font-weight:600">Honda</span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:57%;background:#e55c3a"><span class="bar-vl">20.0%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">1.33M</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">318.9K</span>
         </div>
         <!-- Hyundai -->
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:10px;color:#cd7f32;font-family:'Space Mono',monospace;width:16px">3</span>
           <span style="font-size:12px;color:var(--text);flex:1;font-weight:600">Hyundai</span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:41%;background:#005aab"><span class="bar-vl">14.5%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">962K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">227.0K</span>
         </div>
         <!-- Nissan SDM -->
         <div style="display:flex;align-items:center;gap:8px;background:rgba(192,0,32,0.07);border-radius:5px;padding:3px 5px;margin:-3px -5px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">4</span>
           <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Nissan <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(192,0,32,0.2);color:var(--nissan);margin-left:4px">SDM</span></span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:20.6%;background:var(--nissan)"><span class="bar-vl">7.2%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">478K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">118.2K</span>
         </div>
         <!-- Kia -->
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">5</span>
           <span style="font-size:12px;color:var(--text2);flex:1">Kia</span>
-          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:17%;background:#bb1e10"><span class="bar-vl">5.9%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">392K</span>
+          <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:18%;background:#bb1e10"><span class="bar-vl">6.3%</span></div></div>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">74.9K autos</span>
         </div>
         <!-- Suzuki SDM -->
         <div style="display:flex;align-items:center;gap:8px;background:rgba(0,96,192,0.06);border-radius:5px;padding:3px 5px;margin:-3px -5px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">6</span>
           <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Suzuki <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(0,96,192,0.2);color:var(--suzuki);margin-left:4px">SDM</span></span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:12.9%;background:var(--suzuki)"><span class="bar-vl">4.5%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">299K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">48.6K</span>
         </div>
         <!-- Mazda -->
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">7</span>
           <span style="font-size:12px;color:var(--text2);flex:1">Mazda</span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:10%;background:#9a0a2e"><span class="bar-vl">3.5%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">232K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">51.5K</span>
         </div>
         <!-- Chevrolet SDM -->
         <div style="display:flex;align-items:center;gap:8px;background:rgba(212,160,0,0.06);border-radius:5px;padding:3px 5px;margin:-3px -5px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">8</span>
           <span style="font-size:12px;color:var(--text);flex:1;font-weight:700">Chevrolet <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(212,160,0,0.2);color:var(--chevrolet);margin-left:4px">SDM</span></span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:16.6%;background:var(--chevrolet)"><span class="bar-vl">5.8%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">385K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">74.3K</span>
         </div>
         <!-- Changan/Geely -->
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">9</span>
           <span style="font-size:12px;color:var(--text2);flex:1">Changan/Geely <span style="font-size:9px;padding:1px 5px;border-radius:3px;background:rgba(255,190,0,0.15);color:var(--warn)">↑ EN AUGE</span></span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:7.1%;background:var(--warn)"><span class="bar-vl">2.5%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">166K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">15.97K</span>
         </div>
         <!-- Otros -->
         <div style="display:flex;align-items:center;gap:8px">
           <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:16px">+</span>
           <span style="font-size:11px;color:var(--text3);flex:1">Otros (Mitsubishi, Ford, Mercedes, BMW, Isuzu...)</span>
           <div class="bar-tr" style="flex:2"><div class="bar-fi" style="width:25%;background:var(--comp1)"><span class="bar-vl">6.1%</span></div></div>
-          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:32px;text-align:right">405K</span>
+          <span style="font-size:10px;color:var(--text3);font-family:'Space Mono',monospace;width:40px;text-align:right">~156K</span>
         </div>
         <!-- SDM Yamaha -->
         <div style="margin-top:4px;padding-top:8px;border-top:1px solid var(--border)">
@@ -513,27 +541,89 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         <div class="pb" style="display:flex;flex-direction:column;gap:7px">
           <div class="bar-row">
             <span class="bar-lbl" style="width:68px;font-size:11px">🇯🇵 Japonesas</span>
-            <div class="bar-tr"><div class="bar-fi" style="width:60.4%;background:#eb4034"><span class="bar-vl">60.4%</span></div></div>
+            <div class="bar-tr"><div class="bar-fi" style="width:59.8%;background:#eb4034"><span class="bar-vl">59.8%</span></div></div>
           </div>
           <div class="bar-row">
             <span class="bar-lbl" style="width:68px;font-size:11px">🇰🇷 Coreanas</span>
-            <div class="bar-tr"><div class="bar-fi" style="width:14.6%;background:#005aab"><span class="bar-vl">14.6%</span></div></div>
+            <div class="bar-tr"><div class="bar-fi" style="width:15.0%;background:#005aab"><span class="bar-vl">15.0%</span></div></div>
           </div>
           <div class="bar-row">
             <span class="bar-lbl" style="width:68px;font-size:11px">🇺🇸 EE.UU.</span>
-            <div class="bar-tr"><div class="bar-fi" style="width:11.6%;background:var(--chevrolet)"><span class="bar-vl">11.6%</span></div></div>
+            <div class="bar-tr"><div class="bar-fi" style="width:11.5%;background:var(--chevrolet)"><span class="bar-vl">11.5%</span></div></div>
           </div>
           <div class="bar-row">
             <span class="bar-lbl" style="width:68px;font-size:11px">🇨🇳 Chinas ↑</span>
-            <div class="bar-tr"><div class="bar-fi" style="width:5%;background:var(--warn)"><span class="bar-vl">5.0%</span></div></div>
+            <div class="bar-tr"><div class="bar-fi" style="width:1.6%;background:var(--warn)"><span class="bar-vl">1.6%</span></div></div>
           </div>
           <div class="bar-row">
             <span class="bar-lbl" style="width:68px;font-size:11px">🇩🇪 Europeas</span>
-            <div class="bar-tr"><div class="bar-fi" style="width:4.4%;background:#606090"><span class="bar-vl">4.4%</span></div></div>
+            <div class="bar-tr"><div class="bar-fi" style="width:6.5%;background:#606090"><span class="bar-vl">6.5%</span></div></div>
           </div>
           <div class="bar-row">
             <span class="bar-lbl" style="width:68px;font-size:11px">🌐 Otras</span>
-            <div class="bar-tr"><div class="bar-fi" style="width:4%;background:var(--comp1)"><span class="bar-vl">4.0%</span></div></div>
+            <div class="bar-tr"><div class="bar-fi" style="width:5.6%;background:var(--comp1)"><span class="bar-vl">5.6%</span></div></div>
+          </div>
+          <div style="margin-top:9px;padding-top:8px;border-top:1px solid var(--border);font-size:10px;color:var(--text3)">Nota: Excluye motocicletas · Fuente DGII 2025</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Composición real DGII por tipo -->
+  <div class="panel" style="margin-bottom:14px">
+    <div class="ph"><h4>Composición del Parque Vehicular por Tipo</h4><span class="sbadge">DGII · DIC 2025 · CIFRAS EXACTAS</span></div>
+    <div class="pb">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px">
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;text-align:center">
+          <div style="font-size:18px;margin-bottom:4px">🏍</div>
+          <div style="font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.8px">Motocicletas</div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--warn)">3,846,694</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">57.9%  <span style="color:var(--success)">▲ 8.9%</span></div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;text-align:center">
+          <div style="font-size:18px;margin-bottom:4px">🚗</div>
+          <div style="font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.8px">Automóviles</div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--accent)">1,188,583</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">17.9%  <span style="color:var(--success)">▲ 2.7%</span></div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;text-align:center">
+          <div style="font-size:18px;margin-bottom:4px">🚙</div>
+          <div style="font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.8px">Jeeps / SUVs</div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--nissan)">797,851</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">12.0%  <span style="color:var(--success)">▲ 8.4%</span></div>
+        </div>
+        <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px 13px;text-align:center">
+          <div style="font-size:18px;margin-bottom:4px">🚛</div>
+          <div style="font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.8px">Carga + Otros</div>
+          <div style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--chevrolet)">807,743</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px">12.2%  <span style="color:var(--success)">▲ 5.0%</span></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+        <div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:8px">Persona Física vs Jurídica</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="bar-row"><span class="bar-lbl" style="width:80px;font-size:11px">👤 Físicas</span><div class="bar-tr"><div class="bar-fi" style="width:70.7%;background:var(--accent2)"><span class="bar-vl">70.7%</span></div></div></div>
+            <div class="bar-row"><span class="bar-lbl" style="width:80px;font-size:11px">🏢 Jurídicas</span><div class="bar-tr"><div class="bar-fi" style="width:29.3%;background:var(--chevrolet)"><span class="bar-vl">29.3%</span></div></div></div>
+          </div>
+          <div style="font-size:10px;color:var(--text3);margin-top:7px">Físicas: 4,693,677 · Jurídicas: 1,947,194</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:8px">Género de Propietarios Físicos</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <div class="bar-row"><span class="bar-lbl" style="width:80px;font-size:11px">♂ Masculino</span><div class="bar-tr"><div class="bar-fi" style="width:76.1%;background:var(--accent2)"><span class="bar-vl">76.1%</span></div></div></div>
+            <div class="bar-row"><span class="bar-lbl" style="width:80px;font-size:11px">♀ Femenino</span><div class="bar-tr"><div class="bar-fi" style="width:23.9%;background:#e55c3a"><span class="bar-vl">23.9%</span></div></div></div>
+          </div>
+          <div style="font-size:10px;color:var(--text3);margin-top:7px">3,573,901 masc. · 1,119,776 fem. · Fem. crece +6.0% anual</div>
+        </div>
+        <div>
+          <div style="font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:8px">Edad Propietarios Físicos</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <div class="bar-row"><span class="bar-lbl" style="width:70px;font-size:10px">56+ años</span><div class="bar-tr"><div class="bar-fi" style="width:31%;background:#eb4034"><span class="bar-vl">31.0%</span></div></div></div>
+            <div class="bar-row"><span class="bar-lbl" style="width:70px;font-size:10px">46–55 años</span><div class="bar-tr"><div class="bar-fi" style="width:23.4%;background:#d4520a"><span class="bar-vl">23.4%</span></div></div></div>
+            <div class="bar-row"><span class="bar-lbl" style="width:70px;font-size:10px">36–45 años</span><div class="bar-tr"><div class="bar-fi" style="width:23.9%;background:var(--warn)"><span class="bar-vl">23.9%</span></div></div></div>
+            <div class="bar-row"><span class="bar-lbl" style="width:70px;font-size:10px">26–35 años</span><div class="bar-tr"><div class="bar-fi" style="width:18.5%;background:var(--accent)"><span class="bar-vl">18.5%</span></div></div></div>
+            <div class="bar-row"><span class="bar-lbl" style="width:70px;font-size:10px">Menos 25</span><div class="bar-tr"><div class="bar-fi" style="width:3.3%;background:var(--success)"><span class="bar-vl">3.3%</span></div></div></div>
           </div>
         </div>
       </div>
@@ -696,23 +786,23 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
           <div style="background:rgba(255,190,0,0.07);border:1px solid rgba(255,190,0,0.2);border-radius:8px;padding:10px 12px">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
               <span style="font-weight:700;font-size:13px">🇨🇳 Changan</span>
-              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+38% interanual</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+237.5% en 2022 vs 2021 · Lidera jeeps chinos</span>
             </div>
-            <div style="font-size:11px;color:var(--text2)">Enfoque en sedanes y SUVs de precio bajo. Compite directamente con Nissan Versa y Suzuki.</div>
+            <div style="font-size:11px;color:var(--text2)">Marca líder entre chinos con 47.0% del total de jeeps chinos (7,499 unidades). Crecimiento explosivo 2022-2024, desaceleración en 2025.</div>
           </div>
           <div style="background:rgba(255,190,0,0.07);border:1px solid rgba(255,190,0,0.2);border-radius:8px;padding:10px 12px">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
               <span style="font-weight:700;font-size:13px">🇨🇳 Geely</span>
-              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+29% interanual</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+19.5% participación en jeeps 2026 · crecimiento acelerado</span>
             </div>
-            <div style="font-size:11px;color:var(--text2)">Posicionada en crossovers y SUVs económicas. Amenaza el segmento de Suzuki Vitara y Chevrolet Equinox.</div>
+            <div style="font-size:11px;color:var(--text2)">17.6% del total jeeps chinos (2,807 unidades). Apenas apareció en 2024 y ya es la 2da marca china más relevante en 2026.</div>
           </div>
           <div style="background:rgba(255,190,0,0.06);border:1px solid rgba(255,190,0,0.15);border-radius:8px;padding:10px 12px">
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
               <span style="font-weight:700;font-size:13px">🇨🇳 JAC Motors</span>
-              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">+22% interanual</span>
+              <span style="font-family:'Space Mono',monospace;font-size:11px;color:var(--warn)">Presente desde 2021 · crecimiento moderado sostenido</span>
             </div>
-            <div style="font-size:11px;color:var(--text2)">Segmento de utilitarios y camionetas. Impacto potencial en las ventas de Nissan Frontier y Chevrolet Silverado.</div>
+            <div style="font-size:11px;color:var(--text2)">689 unidades en parque · presencia constante desde 2021. Junto a Geely, Changan y Jetour conforman el bloque chino que alcanzó 2.0% del total de jeeps.</div>
           </div>
         </div>
         <div style="font-size:10px;color:var(--accent);letter-spacing:1px;text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:8px">✦ Marcas Comerciales</div>
@@ -721,6 +811,172 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
           <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🛻 Ford · Pick-ups</span>
           <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🚗 Daihatsu · Compactos</span>
           <span style="padding:4px 10px;border-radius:4px;background:var(--surface2);border:1px solid var(--border);font-size:11px;color:var(--text2)">🏎 Mitsubishi · SUVs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══ MAPA RD ══ -->
+  <div class="stitle"><h3>Mapa del Parque Vehicular por Provincia</h3><span class="sbadge">DGII DIC 2025 · TOTAL + SDM</span></div>
+  <div class="panel" style="margin-bottom:14px">
+    <div class="ph" style="flex-wrap:wrap;gap:10px">
+      <h4>República Dominicana — Distribución Geográfica</h4>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:14px;border-radius:3px;background:rgba(0,200,255,0.7)"></div><span style="font-size:11px;color:var(--text2)">Total vehículos</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:14px;border-radius:3px;background:rgba(0,229,155,0.9)"></div><span style="font-size:11px;color:var(--text2)">Alta penetración SDM</span></div>
+        <div style="display:flex;align-items:center;gap:5px"><div style="width:14px;height:14px;border-radius:3px;background:rgba(255,190,0,0.8)"></div><span style="font-size:11px;color:var(--text2)">Media penetración SDM</span></div>
+        <div class="pa" style="margin-left:8px">
+          <span class="pab active" id="map-total-btn" onclick="mapMode('total',this)">Total</span>
+          <span class="pab" id="map-sdm-btn" onclick="mapMode('sdm',this)">SDM %</span>
+          <span class="pab" id="map-jeep-btn" onclick="mapMode('jeep',this)">Jeeps</span>
+        </div>
+      </div>
+    </div>
+    <div class="pb" style="padding:0">
+      <div style="display:flex;gap:0;flex-wrap:wrap">
+        <!-- MAP CONTAINER -->
+        <div style="flex:1;min-width:320px;position:relative;background:linear-gradient(160deg,#061220,#091a2e);overflow:hidden" id="rd-map-wrap">
+          <svg id="rd-map" viewBox="0 0 900 480" style="width:100%;display:block" xmlns="http://www.w3.org/2000/svg">
+            <!-- Ocean/background -->
+            <rect width="900" height="480" fill="url(#ocean)"/>
+            <defs>
+              <radialGradient id="ocean" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#0a1f38"/>
+                <stop offset="100%" stop-color="#040e1a"/>
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="shadow">
+                <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,0.5)"/>
+              </filter>
+            </defs>
+
+            <!-- Grid lines subtle -->
+            <line x1="0" y1="240" x2="900" y2="240" stroke="rgba(0,200,255,0.05)" stroke-width="1"/>
+            <line x1="450" y1="0" x2="450" y2="480" stroke="rgba(0,200,255,0.05)" stroke-width="1"/>
+
+            <!-- ═══ PROVINCE PATHS — República Dominicana ═══ -->
+            <!-- Coordinates based on approximate geographic layout of RD provinces -->
+
+            <!-- DAJABÓN (DA) - NW border -->
+            <path id="p-DA" class="prov" d="M98,52 L148,48 L158,80 L140,105 L95,100 Z" data-prov="Dajabón" data-code="DA" data-total="42113" data-sdm="6317"/>
+
+            <!-- MONTE CRISTI (MC) - N coast NW -->
+            <path id="p-MC" class="prov" d="M148,30 L218,25 L228,55 L205,70 L158,80 L148,48 Z" data-prov="Monte Cristi" data-code="MC" data-total="152419" data-sdm="22863"/>
+
+            <!-- VALVERDE (VA) - N center-W -->
+            <path id="p-VA" class="prov" d="M218,25 L278,22 L288,58 L260,72 L228,55 Z" data-prov="Valverde" data-code="VA" data-total="123845" data-sdm="18577"/>
+
+            <!-- SANTIAGO RODRÍGUEZ (SR) - W interior -->
+            <path id="p-SR" class="prov" d="M140,105 L158,80 L205,70 L228,55 L228,100 L195,118 L155,115 Z" data-prov="Santiago Rodríguez" data-code="SR" data-total="26408" data-sdm="3961"/>
+
+            <!-- PUERTO PLATA (PP) - N coast -->
+            <path id="p-PP" class="prov" d="M278,22 L368,18 L378,50 L355,62 L320,68 L288,58 Z" data-prov="Puerto Plata" data-code="PP" data-total="172500" data-sdm="25875"/>
+
+            <!-- ESPAILLAT (ES) - N interior -->
+            <path id="p-ES" class="prov" d="M320,68 L355,62 L378,50 L395,75 L380,95 L342,100 L310,95 Z" data-prov="Espaillat" data-code="ES" data-total="150383" data-sdm="22557"/>
+
+            <!-- SANTIAGO (SANT) - large center-N -->
+            <path id="p-SANT" class="prov" d="M228,55 L260,72 L288,58 L320,68 L310,95 L295,130 L268,148 L228,155 L195,145 L195,118 L228,100 Z" data-prov="Santiago" data-code="SANT" data-total="555413" data-sdm="83312"/>
+
+            <!-- HERMANAS MIRABAL (HE) - N -->
+            <path id="p-HE" class="prov" d="M380,95 L395,75 L430,72 L445,98 L420,112 L395,115 Z" data-prov="Hermanas Mirabal" data-code="HE" data-total="73161" data-sdm="10974"/>
+
+            <!-- MARÍA TRINIDAD SÁNCHEZ (MT) - NE coast -->
+            <path id="p-MT" class="prov" d="M430,72 L490,68 L510,90 L495,110 L465,115 L445,98 Z" data-prov="María Trinidad Sánchez" data-code="MT" data-total="105712" data-sdm="15857"/>
+
+            <!-- SAMANÁ (SM) - Peninsula NE -->
+            <path id="p-SM" class="prov" d="M490,68 L570,60 L580,80 L555,90 L510,90 Z" data-prov="Samaná" data-code="SM" data-total="52696" data-sdm="7904"/>
+
+            <!-- DUARTE (DU) - center-N -->
+            <path id="p-DU" class="prov" d="M395,115 L420,112 L445,98 L465,115 L460,145 L430,158 L400,150 L385,130 Z" data-prov="Duarte" data-code="DU" data-total="198400" data-sdm="29760"/>
+
+            <!-- SÁNCHEZ RAMÍREZ (SZ) - center -->
+            <path id="p-SZ" class="prov" d="M385,130 L400,150 L430,158 L435,185 L405,195 L375,185 L365,160 Z" data-prov="Sánchez Ramírez" data-code="SZ" data-total="74381" data-sdm="11157"/>
+
+            <!-- MONSEÑOR NOUEL (MN) - center -->
+            <path id="p-MN" class="prov" d="M295,130 L320,125 L342,130 L365,160 L345,178 L315,182 L290,168 L282,148 Z" data-prov="Monseñor Nouel" data-code="MN" data-total="125713" data-sdm="18857"/>
+
+            <!-- LA VEGA (VG) - center large -->
+            <path id="p-VG" class="prov" d="M228,155 L268,148 L295,130 L282,148 L290,168 L275,195 L248,205 L218,195 L210,175 Z" data-prov="La Vega" data-code="VG" data-total="370155" data-sdm="55523"/>
+
+            <!-- HATO MAYOR (HM) - E center -->
+            <path id="p-HM" class="prov" d="M430,158 L460,145 L490,155 L498,180 L475,195 L448,192 L435,185 Z" data-prov="Hato Mayor" data-code="HM" data-total="35564" data-sdm="5335"/>
+
+            <!-- EL SEIBO (SE) - E -->
+            <path id="p-SE" class="prov" d="M490,155 L530,148 L555,165 L548,195 L515,205 L498,180 Z" data-prov="El Seibo" data-code="SE" data-total="32887" data-sdm="4933"/>
+
+            <!-- LA ALTAGRACIA (AL) - SE coast (Punta Cana) -->
+            <path id="p-AL" class="prov" d="M530,148 L600,140 L640,160 L645,215 L608,235 L565,240 L548,195 L555,165 Z" data-prov="La Altagracia" data-code="AL" data-total="221563" data-sdm="33234"/>
+
+            <!-- MONTE PLATA (MP) - center-E -->
+            <path id="p-MP" class="prov" d="M375,185 L405,195 L435,185 L448,192 L450,220 L428,238 L395,242 L368,228 L360,205 Z" data-prov="Monte Plata" data-code="MP" data-total="47935" data-sdm="7190"/>
+
+            <!-- DISTRITO NACIONAL (DN) - capital -->
+            <path id="p-DN" class="prov" d="M368,228 L395,242 L400,258 L378,265 L358,255 L355,238 Z" data-prov="Distrito Nacional" data-code="DN" data-total="1897994" data-sdm="284699"/>
+
+            <!-- SANTO DOMINGO (SD) - surrounds DN -->
+            <path id="p-SD" class="prov" d="M360,205 L368,228 L355,238 L358,255 L378,265 L400,275 L418,260 L428,238 L418,215 L400,210 Z" data-prov="Santo Domingo" data-code="SD" data-total="1093177" data-sdm="163977"/>
+
+            <!-- LA ROMANA (RO) - SE -->
+            <path id="p-RO" class="prov" d="M450,220 L490,215 L520,225 L525,255 L498,268 L465,260 L450,245 Z" data-prov="La Romana" data-code="RO" data-total="204312" data-sdm="30647"/>
+
+            <!-- SAN PEDRO DE MACORÍS (PM) - S coast E -->
+            <path id="p-PM" class="prov" d="M418,260 L450,245 L465,260 L468,282 L445,295 L415,288 L408,272 Z" data-prov="San Pedro de Macorís" data-code="PM" data-total="166430" data-sdm="24965"/>
+
+            <!-- SAN CRISTÓBAL (SAC) - S center -->
+            <path id="p-SAC" class="prov" d="M318,255 L355,238 L358,255 L378,265 L400,275 L408,272 L415,288 L395,305 L365,310 L335,295 L315,275 Z" data-prov="San Cristóbal" data-code="SAC" data-total="308997" data-sdm="46350"/>
+
+            <!-- AZUA (AZ) - SW -->
+            <path id="p-AZ" class="prov" d="M242,255 L282,248 L318,255 L315,275 L298,295 L272,305 L245,295 L232,275 Z" data-prov="Azua" data-code="AZ" data-total="79591" data-sdm="11939"/>
+
+            <!-- SAN JUAN DE LA MAGUANA (SJ) - SW large -->
+            <path id="p-SJ" class="prov" d="M155,200 L195,195 L218,195 L248,205 L242,255 L232,275 L205,280 L172,268 L155,245 L148,220 Z" data-prov="San Juan de la Maguana" data-code="SJ" data-total="89540" data-sdm="13431"/>
+
+            <!-- PERAVIA (PV) - S center -->
+            <path id="p-PV" class="prov" d="M298,295 L335,295 L365,310 L358,332 L330,345 L300,335 L278,315 Z" data-prov="Peravia" data-code="PV" data-total="110212" data-sdm="16532"/>
+
+            <!-- SAN JOSÉ DE OCOA (JO) - S interior -->
+            <path id="p-JO" class="prov" d="M245,295 L272,305 L298,295 L278,315 L258,322 L238,312 Z" data-prov="San José de Ocoa" data-code="JO" data-total="23426" data-sdm="3514"/>
+
+            <!-- BAHORUCO (BR) - SW -->
+            <path id="p-BR" class="prov" d="M148,280 L172,268 L205,280 L205,305 L180,318 L152,308 Z" data-prov="Bahoruco" data-code="BR" data-total="18615" data-sdm="2792"/>
+
+            <!-- BARAHONA (BH) - S coast SW -->
+            <path id="p-BH" class="prov" d="M152,308 L180,318 L205,305 L215,330 L198,352 L168,355 L145,335 L140,312 Z" data-prov="Barahona" data-code="BH" data-total="65174" data-sdm="9776"/>
+
+            <!-- INDEPENDENCIA (IN) - W border SW -->
+            <path id="p-IN" class="prov" d="M98,270 L148,265 L148,280 L140,312 L118,320 L95,305 L88,285 Z" data-prov="Independencia" data-code="IN" data-total="7344" data-sdm="1102"/>
+
+            <!-- ELÍAS PIÑA (EP) - W border center -->
+            <path id="p-EP" class="prov" d="M95,200 L140,195 L155,200 L148,220 L155,245 L140,255 L115,250 L90,235 L88,215 Z" data-prov="Elías Piña" data-code="EP" data-total="8390" data-sdm="1259"/>
+
+            <!-- PEDERNALES (PD) - S tip SW -->
+            <path id="p-PD" class="prov" d="M115,340 L145,335 L168,355 L158,375 L128,378 L108,358 Z" data-prov="Pedernales" data-code="PD" data-total="6421" data-sdm="963"/>
+
+            <!-- Tooltip -->
+            <g id="map-tooltip" style="display:none;pointer-events:none">
+              <rect id="tt-bg" x="0" y="0" width="200" height="90" rx="8" fill="rgba(7,13,26,0.96)" stroke="rgba(0,200,255,0.4)" stroke-width="1"/>
+              <text id="tt-name" x="10" y="20" fill="#e8f2ff" font-size="12" font-family="DM Sans" font-weight="700"/>
+              <text id="tt-total" x="10" y="40" fill="#8bacc8" font-size="11" font-family="Space Mono"/>
+              <text id="tt-sdm" x="10" y="57" fill="#00e59b" font-size="11" font-family="Space Mono"/>
+              <text id="tt-pct" x="10" y="74" fill="#00c8ff" font-size="11" font-family="Space Mono"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- PROVINCE TABLE PANEL -->
+        <div style="width:300px;flex-shrink:0;border-left:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column">
+          <div style="padding:12px 14px;border-bottom:1px solid var(--border);background:var(--surface2)">
+            <div style="font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:1px;margin-bottom:4px">RANKING PROVINCIAS</div>
+            <div id="map-subtitle" style="font-size:11px;color:var(--text2)">Total vehículos registrados</div>
+          </div>
+          <div style="overflow-y:auto;flex:1;max-height:430px;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent" id="prov-list">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
     </div>
@@ -1067,7 +1323,7 @@ async function genRep(){
   document.getElementById('aiRes').style.display='none';
   const t=document.getElementById('aiThink');
   t.style.display='flex';
-  const sys=`Eres analista experto de mercado automotriz para Santo Domingo Motors (SDM) en República Dominicana. SDM distribuye: Nissan, Chevrolet, Suzuki, Infiniti, Cadillac y Yamaha. Parque vehicular RD: 6,640,871 unidades al cierre 2025, 56% motocicletas, 791,451 jeepetas, crecimiento 7.2%. Japonesas 60.4%, coreanas 14.6%, EE.UU. 11.6%. Chinas en auge: Geely, Changan, JAC. 76.5% propietarios hombres. SDM ~18.5% cuota, objetivo 20%. Genera reporte ejecutivo conciso en español, máx 200 palabras, con título, hallazgos clave y recomendación.`;
+  const sys=`Eres analista experto de mercado automotriz para Santo Domingo Motors (SDM) en República Dominicana. SDM distribuye: Nissan, Chevrolet, Suzuki, Infiniti, Cadillac y Yamaha. Parque vehicular RD: 6,640,871 unidades al cierre 2025 (corte feb 2026, fuente DGII). Composición: 57.9% motocicletas (3,846,694), 17.9% automóviles (1,188,583), 12.0% jeeps (797,851), 8.7% carga, 3.5% otros. Crecimiento 7.2% vs 2024 (+446,819 unidades). Excluyendo motos: japoneses 59.8%, coreanos 15.0%, EE.UU 11.5%, europeos 6.5%, chinos 1.6%, otros 5.6%. Personas físicas 70.7% (4,693,677), jurídicas 29.3% (1,947,194). Género: 76.1% masculino, 23.9% femenino. Edad propietarios: 31% tienen 56+ años, 23.4% entre 46-55, 23.9% entre 36-45, 18.5% entre 26-35, 3.3% menores 25. DN concentra 28.6% del parque, Sto.Domingo 16.5%, Santiago 8.4%. Traspasos 2025: 228,075 (+4.8%). Recaudación total RD$27,316.7 millones. Top marcas automóviles: Toyota 28.6%, Honda 16.6%, Nissan 7.1%, Hyundai 12.2%, Kia 6.3%. Top marcas jeeps: Toyota 17.4%, Honda 15.3%, Hyundai 10.2%, Kia 7.2%, Ford 8.6%. Chinos en jeeps crecieron 237.5% en 2022, Changan lidera 47% de jeeps chinos. SDM ~18.5% cuota estimada, objetivo 20%. Genera reporte ejecutivo conciso en español, máx 200 palabras, con título, hallazgos clave y recomendación.`;
   try{
     const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,messages:[{role:'user',content:prompt}]})});
     const d=await r.json();
@@ -1079,7 +1335,7 @@ async function genRep(){
   }catch{
     t.style.display='none';
     const res=document.getElementById('aiRes');
-    res.innerHTML=`<h5>✦ Análisis de Mercado SDM — Mar 2026</h5><p>El parque vehicular de RD alcanzó <span class="hl">6,640,871 unidades</span> en 2025, crecimiento <span class="tg">+7.2%</span>. Las jeepetas/SUVs muestran mayor dinamismo con 791,451 unidades. SDM mantiene <span class="hl">18.5% de cuota</span>, con Nissan liderando SUVs (42%) y Chevrolet en pick-ups (28%).</p><p><strong>Recomendación:</strong> Priorizar flotas medianas (10-49 vehículos) donde SDM tiene <span class="tg">22% de penetración</span> — oportunidad de +8 puntos con Nissan Frontier y Chevrolet Silverado.</p>`;
+    res.innerHTML=`<h5>✦ Análisis de Mercado SDM — Parque Vehicular RD 2025 (DGII)</h5><p>Al 31 de dic 2025, el parque vehicular de RD totalizó <span class="hl">6,640,871 unidades</span> (+7.2% vs 2024, equivalente a +446,819 unidades nuevas). Composición: <span class="tg">57.9%</span> motocicletas (3,846,694), 17.9% automóviles (1,188,583), 12.0% jeeps (797,851). Excluyendo motos, los vehículos japoneses dominan con <span class="hl">59.8%</span>, seguidos coreanos 15.0%, EE.UU. 11.5%. Chinos alcanzan 1.6% con fuerte crecimiento. Top marcas automóviles: Toyota 28.6%, Honda 16.6%, Hyundai 12.2%, Nissan 7.1%, Kia 6.3%. En jeeps: Toyota 17.4%, Honda 15.3%, Hyundai 10.2%, Ford 8.6%, Kia 7.2%.</p><p><strong>Contexto SDM:</strong> Con Nissan (~7.1% automóviles) y Suzuki en fuerte crecimiento reciente (+1,099 unidades en 2024), SDM mantiene posición relevante. <span class="tg">Oportunidad clave:</span> Personas jurídicas representan 29.3% del parque (1,947,194 vehículos) — segmento flotas con alta rentabilidad para Nissan Frontier y Chevrolet Silverado.</p>`;
     res.style.display='block';
   }
 }
@@ -1441,6 +1697,171 @@ function renderSrch(q,area){
     </div>`;
   }
 }
+
+
+// ── MAPA RD ─────────────────────────────────────────────────────────────────
+const PROV_DATA = [
+  {code:'DN', name:'Distrito Nacional', total:1897994, jeep:270663, sdm:284699},
+  {code:'SD', name:'Santo Domingo',     total:1093177, jeep:163288, sdm:163977},
+  {code:'SANT', name:'Santiago',         total:555413,  jeep:96170,  sdm:83312},
+  {code:'VG', name:'La Vega',           total:370155,  jeep:30950,  sdm:55523},
+  {code:'AL', name:'La Altagracia',     total:221563,  jeep:25329,  sdm:33234},
+  {code:'DU', name:'Duarte',            total:198400,  jeep:15736,  sdm:29760},
+  {code:'SAC', name:'San Cristóbal',    total:308997,  jeep:25648,  sdm:46350},
+  {code:'RO', name:'La Romana',         total:204312,  jeep:14991,  sdm:30647},
+  {code:'PP', name:'Puerto Plata',      total:172500,  jeep:24980,  sdm:25875},
+  {code:'PM', name:'San Pedro Macorís', total:166430,  jeep:13716,  sdm:24965},
+  {code:'ES', name:'Espaillat',         total:150383,  jeep:18620,  sdm:22557},
+  {code:'MC', name:'Monte Cristi',      total:152419,  jeep:5207,   sdm:22863},
+  {code:'MN', name:'Monseñor Nouel',    total:125713,  jeep:10174,  sdm:18857},
+  {code:'VA', name:'Valverde',          total:123845,  jeep:9079,   sdm:18577},
+  {code:'MT', name:'María T. Sánchez',  total:105712,  jeep:6277,   sdm:15857},
+  {code:'PV', name:'Peravia',           total:110212,  jeep:9131,   sdm:16532},
+  {code:'SJ', name:'San Juan Maguana',  total:89540,   jeep:8016,   sdm:13431},
+  {code:'SZ', name:'Sánchez Ramírez',   total:74381,   jeep:6319,   sdm:11157},
+  {code:'AZ', name:'Azua',              total:79591,   jeep:5547,   sdm:11939},
+  {code:'BH', name:'Barahona',          total:65174,   jeep:5727,   sdm:9776},
+  {code:'SM', name:'Samaná',            total:52696,   jeep:4647,   sdm:7904},
+  {code:'MP', name:'Monte Plata',       total:47935,   jeep:3617,   sdm:7190},
+  {code:'HM', name:'Hato Mayor',        total:35564,   jeep:2710,   sdm:5335},
+  {code:'SE', name:'El Seibo',          total:32887,   jeep:2487,   sdm:4933},
+  {code:'SR', name:'Santiago Rodríguez',total:26408,   jeep:3153,   sdm:3961},
+  {code:'JO', name:'San José de Ocoa',  total:23426,   jeep:2077,   sdm:3514},
+  {code:'HE', name:'Hermanas Mirabal',  total:73161,   jeep:7221,   sdm:10974},
+  {code:'IN', name:'Independencia',     total:7344,    jeep:785,    sdm:1102},
+  {code:'EP', name:'Elías Piña',        total:8390,    jeep:862,    sdm:1259},
+  {code:'BR', name:'Bahoruco',          total:18615,   jeep:1509,   sdm:2792},
+  {code:'DA', name:'Dajabón',           total:42113,   jeep:2671,   sdm:6317},
+  {code:'PD', name:'Pedernales',        total:6421,    jeep:544,    sdm:963},
+];
+
+let currentMapMode = 'total';
+
+function getColor(p, mode) {
+  if (mode === 'total') {
+    const max = 1897994;
+    const v = Math.pow(p.total / max, 0.4);
+    const r = Math.round(0 + v * 0);
+    const g = Math.round(80 + v * 148);
+    const b = Math.round(160 + v * 95);
+    return `rgba(${r},${g},${b},${0.35 + v * 0.55})`;
+  } else if (mode === 'sdm') {
+    const pct = p.sdm / p.total;
+    if (pct >= 0.20) return 'rgba(0,229,155,0.75)';
+    if (pct >= 0.15) return 'rgba(0,200,255,0.60)';
+    if (pct >= 0.12) return 'rgba(255,190,0,0.65)';
+    return 'rgba(255,77,109,0.50)';
+  } else { // jeep
+    const max = 270663;
+    const v = Math.pow(p.jeep / max, 0.4);
+    return `rgba(192,0,32,${0.25 + v * 0.65})`;
+  }
+}
+
+function fmt(n) { return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(0)+'K' : n; }
+
+function renderMap() {
+  const sorted = [...PROV_DATA].sort((a,b) => {
+    if (currentMapMode === 'sdm') return (b.sdm/b.total) - (a.sdm/a.total);
+    if (currentMapMode === 'jeep') return b.jeep - a.jeep;
+    return b.total - a.total;
+  });
+
+  // Color provinces
+  PROV_DATA.forEach(p => {
+    const el = document.getElementById('p-' + p.code);
+    if (!el) return;
+    el.setAttribute('fill', getColor(p, currentMapMode));
+  });
+
+  // Render list
+  const listEl = document.getElementById('prov-list');
+  const val = p => currentMapMode === 'sdm' ? p.sdm : currentMapMode === 'jeep' ? p.jeep : p.total;
+  const maxVal = Math.max(...sorted.map(val));
+  listEl.innerHTML = sorted.map((p, i) => {
+    const v = val(p);
+    const pct = currentMapMode === 'sdm' ? (p.sdm/p.total*100).toFixed(1)+'%' : fmt(v);
+    const barW = Math.round(v / maxVal * 100);
+    const rankColor = i===0?'gold':i===1?'#c0c0c0':i===2?'#cd7f32':'var(--text3)';
+    const barColor = currentMapMode === 'sdm' ? (p.sdm/p.total >= 0.18 ? 'var(--success)' : p.sdm/p.total >= 0.14 ? 'var(--accent)' : 'var(--warn)') :
+                     currentMapMode === 'jeep' ? 'var(--nissan)' : 'var(--accent2)';
+    return `<div class="prov-row" style="padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s" onmouseover="this.style.background='rgba(0,200,255,0.05)'" onmouseout="this.style.background=''" onclick="highlightProv('${p.code}')">
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">
+        <span style="font-size:10px;font-family:'Space Mono',monospace;color:${rankColor};width:18px;flex-shrink:0">${i+1}</span>
+        <span style="font-size:11px;font-weight:600;color:var(--text);flex:1">${p.name}</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;color:${barColor}">${pct}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;padding-left:25px">
+        <div style="flex:1;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden">
+          <div style="width:${barW}%;height:100%;background:${barColor};border-radius:2px"></div>
+        </div>
+        ${currentMapMode !== 'sdm' ? `<span style="font-size:9px;color:var(--text3);font-family:'Space Mono',monospace;white-space:nowrap">SDM ${(p.sdm/p.total*100).toFixed(1)}%</span>` : `<span style="font-size:9px;color:var(--text3);font-family:'Space Mono',monospace">${fmt(p.total)} total</span>`}
+      </div>
+    </div>`;
+  }).join('');
+
+  const subtitles = {total:'Total vehículos registrados (DGII 2025)', sdm:'% estimado penetración SDM', jeep:'Jeeps / SUVs registrados'};
+  document.getElementById('map-subtitle').textContent = subtitles[currentMapMode];
+}
+
+function highlightProv(code) {
+  document.querySelectorAll('.prov').forEach(el => el.setAttribute('stroke-width','0.5'));
+  const el = document.getElementById('p-' + code);
+  if (el) { el.setAttribute('stroke', '#00c8ff'); el.setAttribute('stroke-width','2'); }
+}
+
+function mapMode(mode, btn) {
+  currentMapMode = mode;
+  document.querySelectorAll('#rd-map-wrap ~ div .pab, .ph .pab').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderMap();
+}
+
+// Tooltip on province hover
+document.addEventListener('DOMContentLoaded', () => {
+  // Apply base styles to provinces
+  document.querySelectorAll('.prov').forEach(el => {
+    el.setAttribute('stroke', 'rgba(0,200,255,0.25)');
+    el.setAttribute('stroke-width', '0.5');
+    el.style.cursor = 'pointer';
+    el.style.transition = 'opacity 0.15s';
+    const code = el.dataset.code;
+    const p = PROV_DATA.find(x => x.code === code);
+    if (!p) return;
+
+    el.addEventListener('mouseenter', function(e) {
+      this.setAttribute('stroke', '#00c8ff');
+      this.setAttribute('stroke-width', '2');
+      this.setAttribute('filter', 'url(#glow)');
+      const tt = document.getElementById('map-tooltip');
+      const svg = document.getElementById('rd-map');
+      const rect = svg.getBoundingClientRect();
+      const ex = e.clientX - rect.left;
+      const ey = e.clientY - rect.top;
+      const svgW = rect.width; const svgH = rect.height;
+      const vbW = 900; const vbH = 480;
+      const sx = ex / svgW * vbW;
+      const sy = ey / svgH * vbH;
+      let tx = sx + 12; let ty = sy - 50;
+      if (tx + 210 > vbW) tx = sx - 220;
+      if (ty < 5) ty = sy + 12;
+      tt.setAttribute('transform', `translate(${tx},${ty})`);
+      document.getElementById('tt-name').textContent = p.name;
+      document.getElementById('tt-total').textContent = `Total: ${p.total.toLocaleString()} veh.`;
+      document.getElementById('tt-sdm').textContent = `SDM est.: ${p.sdm.toLocaleString()} (${(p.sdm/p.total*100).toFixed(1)}%)`;
+      document.getElementById('tt-pct').textContent = `Jeeps/SUVs: ${p.jeep.toLocaleString()}`;
+      tt.style.display = 'block';
+    });
+    el.addEventListener('mouseleave', function() {
+      this.setAttribute('stroke', 'rgba(0,200,255,0.25)');
+      this.setAttribute('stroke-width', '0.5');
+      this.removeAttribute('filter');
+      document.getElementById('map-tooltip').style.display = 'none';
+    });
+  });
+
+  renderMap();
+});
 
 // ── RETENCIÓN ─────────────────────────────────────────────────────────────────
 let curRTTab='lost',curRTMo='Mar 2026';
