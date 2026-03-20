@@ -1153,7 +1153,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
       </div>
       <div style="overflow-x:auto">
         <table class="dt" id="emp-table">
-          <thead><tr><th>#</th><th>Empresa</th><th>Sector</th><th>Provincia</th><th>Total Veh.</th><th>Valor Flota</th><th>SDM</th><th>Distribución de Marcas</th><th>% SDM</th><th></th></tr></thead>
+          <thead><tr><th>#</th><th>Empresa</th><th>Sector</th><th>Provincia</th><th>Empleados</th><th>Nómina/Mes</th><th>Total Veh.</th><th>Valor Flota</th><th>SDM</th><th>Distribución</th><th>% SDM</th><th></th></tr></thead>
           <tbody id="emp-tbody"></tbody>
         </table>
       </div>
@@ -1248,7 +1248,7 @@ const BRAND_PRICES={nissan:28500,chevrolet:42000,suzuki:22000,infiniti:52000,cad
 const BRAND_TYPE={nissan:'SUV/Pick-up',chevrolet:'Pick-up/SUV',suzuki:'SUV Compacta',infiniti:'Lujo',cadillac:'Lujo',yamaha:'Motocicleta',toyota:'SUV/Sedán',hyundai:'SUV/Sedán',kia:'SUV/Crossover',ford:'Pick-up',mitsubishi:'SUV',other:'Varios'};
 
 const EMPS=[
-  {id:'logistica-delta',name:'Logística Delta S.R.L.',rnc:'101-234-56',sector:'Logística/Transporte',provincia:'La Vega',
+  {id:'logistica-delta',name:'Logística Delta S.R.L.',rnc:'101-234-56',sector:'Logística/Transporte',provincia:'La Vega',empleados:487,nomina:34090000,antiguedad:1998,web:'logisticadelta.com.do',
    total:120,sdm:42,nissan:18,chevrolet:15,suzuki:6,infiniti:0,cadillac:0,yamaha:3,
    comp_toyota:22,comp_hyundai:10,comp_ford:18,comp_kia:8,comp_other:20,
    tipos:{pickup:48,suv:35,sedan:14,moto:3,comercial:20},
@@ -1262,7 +1262,7 @@ const EMPS=[
     {placa:'D445566',marca:'Yamaha',modelo:'MT-07 2023',tipo:'Moto',color:'Azul',valor:6200,estado:'Activo',sdm:true},
     {placa:'E001100',marca:'Toyota',modelo:'Land Cruiser 2021',tipo:'SUV',color:'Negro',valor:72000,estado:'Activo',sdm:false},
    ]},
-  {id:'turismo-rent',name:'Turismo & Rent S.A.',rnc:'102-345-67',sector:'Turismo/Renta',provincia:'Sto. Domingo',
+  {id:'turismo-rent',name:'Turismo & Rent S.A.',rnc:'102-345-67',sector:'Turismo/Renta',provincia:'Sto. Domingo',empleados:182,nomina:14560000,antiguedad:2008,web:'turismoyrent.com.do',
    total:98,sdm:38,nissan:20,chevrolet:8,suzuki:7,infiniti:1,cadillac:2,yamaha:0,
    comp_toyota:18,comp_hyundai:12,comp_ford:8,comp_kia:10,comp_other:12,
    tipos:{suv:55,sedan:25,pickup:8,moto:0,comercial:10},
@@ -1276,7 +1276,7 @@ const EMPS=[
     {placa:'H770077',marca:'Suzuki',modelo:'Vitara 2024',tipo:'SUV Compacta',color:'Blanco',valor:22500,estado:'Activo',sdm:true},
     {placa:'I880088',marca:'Chevrolet',modelo:'Equinox 2023',tipo:'Crossover',color:'Negro',valor:32000,estado:'Activo',sdm:true},
    ]},
-  {id:'constructora-alpha',name:'Constructora Alpha S.A.',rnc:'103-456-78',sector:'Construcción',provincia:'Sto. Domingo',
+  {id:'constructora-alpha',name:'Constructora Alpha S.A.',rnc:'103-456-78',sector:'Construcción',provincia:'Sto. Domingo',empleados:324,nomina:22680000,antiguedad:2001,web:'constructoraalpha.com.do',
    total:85,sdm:29,nissan:12,chevrolet:14,suzuki:2,infiniti:0,cadillac:1,yamaha:0,
    comp_toyota:20,comp_hyundai:5,comp_ford:16,comp_kia:4,comp_other:11,
    tipos:{pickup:50,suv:18,sedan:6,moto:0,comercial:11},
@@ -1290,7 +1290,7 @@ const EMPS=[
     {placa:'M700007',marca:'Toyota',modelo:'Hilux 2023',tipo:'Pick-up',color:'Azul',valor:33000,estado:'Activo',sdm:false},
     {placa:'M800008',marca:'Chevrolet',modelo:'Colorado 2024',tipo:'Pick-up',color:'Rojo',valor:36000,estado:'Activo',sdm:true},
    ]},
-  {id:'distribuidora-caribe',name:'Distribuidora Caribe',rnc:'104-567-89',sector:'Distribución',provincia:'Santiago',
+  {id:'distribuidora-caribe',name:'Distribuidora Caribe',rnc:'104-567-89',sector:'Distribución',provincia:'Santiago',empleados:215,nomina:12900000,antiguedad:1995,web:'distribuidoracaribe.com.do',
    total:74,sdm:18,nissan:8,chevrolet:7,suzuki:2,infiniti:0,cadillac:1,yamaha:0,
    comp_toyota:24,comp_hyundai:8,comp_ford:12,comp_kia:6,comp_other:6,
    tipos:{pickup:38,suv:20,sedan:10,moto:0,comercial:6},
@@ -1304,7 +1304,7 @@ const EMPS=[
     {placa:'Q700007',marca:'Cadillac',modelo:'XT5 2022',tipo:'SUV Lujo',color:'Negro',valor:58000,estado:'Activo',sdm:true},
     {placa:'Q800008',marca:'Hyundai',modelo:'Tucson 2021',tipo:'SUV',color:'Rojo',valor:25000,estado:'Activo',sdm:false},
    ]},
-  {id:'banco-reservas',name:'Banco de Reservas RD',rnc:'105-678-90',sector:'Finanzas/Banca',provincia:'Sto. Domingo',
+  {id:'banco-reservas',name:'Banco de Reservas RD',rnc:'105-678-90',sector:'Finanzas/Banca',provincia:'Sto. Domingo',empleados:2840,nomina:369200000,antiguedad:1941,web:'banreservas.com.do',
    total:68,sdm:14,nissan:5,chevrolet:6,suzuki:1,infiniti:1,cadillac:1,yamaha:0,
    comp_toyota:18,comp_hyundai:12,comp_ford:6,comp_kia:8,comp_other:10,
    tipos:{suv:28,sedan:22,pickup:6,moto:0,comercial:12},
@@ -1318,7 +1318,7 @@ const EMPS=[
     {placa:'U700007',marca:'Chevrolet',modelo:'Malibu 2021',tipo:'Sedán',color:'Negro',valor:23000,estado:'Activo',sdm:true},
     {placa:'U800008',marca:'Toyota',modelo:'Highlander 2023',tipo:'SUV',color:'Blanco',valor:43000,estado:'Activo',sdm:false},
    ]},
-  {id:'supermercados-nacional',name:'Supermercados La Nacional',rnc:'106-789-01',sector:'Retail/Alimentos',provincia:'Sto. Domingo',
+  {id:'supermercados-nacional',name:'Supermercados La Nacional',rnc:'106-789-01',sector:'Retail/Alimentos',provincia:'Sto. Domingo',empleados:1240,nomina:62000000,antiguedad:1965,web:'lanacional.com.do',
    total:62,sdm:22,nissan:10,chevrolet:8,suzuki:3,infiniti:0,cadillac:1,yamaha:0,
    comp_toyota:14,comp_hyundai:8,comp_ford:6,comp_kia:6,comp_other:6,
    tipos:{pickup:22,suv:18,sedan:12,moto:0,comercial:10},
@@ -1332,7 +1332,7 @@ const EMPS=[
     {placa:'Y700007',marca:'Kia',modelo:'Sportage 2023',tipo:'SUV',color:'Rojo',valor:27000,estado:'Activo',sdm:false},
     {placa:'Y800008',marca:'Suzuki',modelo:'Vitara 2023',tipo:'SUV Compacta',color:'Negro',valor:21500,estado:'Activo',sdm:true},
    ]},
-  {id:'transporte-express',name:'Transporte Express SRL',rnc:'107-890-12',sector:'Transporte',provincia:'San Cristóbal',
+  {id:'transporte-express',name:'Transporte Express SRL',rnc:'107-890-12',sector:'Transporte',provincia:'San Cristóbal',empleados:148,nomina:8880000,antiguedad:2005,web:'transporteexpress.com.do',
    total:55,sdm:12,nissan:4,chevrolet:6,suzuki:1,infiniti:0,cadillac:1,yamaha:0,
    comp_toyota:15,comp_hyundai:6,comp_ford:12,comp_kia:4,comp_other:6,
    tipos:{pickup:30,suv:10,sedan:5,moto:0,comercial:10},
@@ -1346,7 +1346,7 @@ const EMPS=[
     {placa:'C500005',marca:'Ford',modelo:'F-150 2022',tipo:'Pick-up',color:'Rojo',valor:41000,estado:'Activo',sdm:false},
     {placa:'C600006',marca:'Nissan',modelo:'Frontier 2023',tipo:'Pick-up',color:'Azul',valor:32000,estado:'Activo',sdm:true},
    ]},
-  {id:'mineria-caribeña',name:'Minería Caribeña S.A.',rnc:'108-901-23',sector:'Minería',provincia:'La Romana',
+  {id:'mineria-caribeña',name:'Minería Caribeña S.A.',rnc:'108-901-23',sector:'Minería',provincia:'La Romana',empleados:685,nomina:75350000,antiguedad:1988,web:'mineriacaribena.com.do',
    total:50,sdm:20,nissan:7,chevrolet:9,suzuki:2,infiniti:0,cadillac:2,yamaha:0,
    comp_toyota:16,comp_hyundai:2,comp_ford:8,comp_kia:2,comp_other:2,
    tipos:{pickup:30,suv:12,sedan:2,moto:0,comercial:6},
@@ -1360,7 +1360,7 @@ const EMPS=[
     {placa:'G700007',marca:'Toyota',modelo:'Land Cruiser 2021',tipo:'SUV',color:'Negro',valor:72000,estado:'Activo',sdm:false},
     {placa:'G800008',marca:'Suzuki',modelo:'Vitara 2022',tipo:'SUV Compacta',color:'Plata',valor:21000,estado:'Activo',sdm:true},
    ]},
-  {id:'grupo-medico',name:'Grupo Médico Central',rnc:'109-012-34',sector:'Salud',provincia:'Santiago',
+  {id:'grupo-medico',name:'Grupo Médico Central',rnc:'109-012-34',sector:'Salud',provincia:'Santiago',empleados:524,nomina:46616000,antiguedad:1999,web:'grupomedico.com.do',
    total:45,sdm:8,nissan:3,chevrolet:2,suzuki:2,infiniti:1,cadillac:0,yamaha:0,
    comp_toyota:14,comp_hyundai:10,comp_ford:4,comp_kia:8,comp_other:1,
    tipos:{suv:20,sedan:18,pickup:4,moto:0,comercial:3},
@@ -1374,7 +1374,7 @@ const EMPS=[
     {placa:'K700007',marca:'Toyota',modelo:'Highlander 2022',tipo:'SUV',color:'Blanco',valor:42000,estado:'Activo',sdm:false},
     {placa:'K800008',marca:'Chevrolet',modelo:'Equinox 2021',tipo:'SUV',color:'Negro',valor:28000,estado:'Activo',sdm:true},
    ]},
-  {id:'inmobiliaria-norte',name:'Inmobiliaria del Norte',rnc:'110-123-45',sector:'Inmobiliario',provincia:'Puerto Plata',
+  {id:'inmobiliaria-norte',name:'Inmobiliaria del Norte',rnc:'110-123-45',sector:'Inmobiliario',provincia:'Puerto Plata',empleados:96,nomina:8160000,antiguedad:2010,web:'inmobiliariadelnorte.com.do',
    total:38,sdm:14,nissan:6,chevrolet:4,suzuki:2,infiniti:1,cadillac:1,yamaha:0,
    comp_toyota:8,comp_hyundai:6,comp_ford:4,comp_kia:4,comp_other:2,
    tipos:{suv:20,sedan:10,pickup:4,moto:0,comercial:4},
@@ -1387,6 +1387,92 @@ const EMPS=[
     {placa:'N600006',marca:'Suzuki',modelo:'Grand Vitara 2023',tipo:'SUV',color:'Rojo',valor:23000,estado:'Activo',sdm:true},
     {placa:'O700007',marca:'Kia',modelo:'Sorento 2021',tipo:'SUV',color:'Blanco',valor:28000,estado:'Activo',sdm:false},
     {placa:'O800008',marca:'Chevrolet',modelo:'Blazer 2022',tipo:'SUV',color:'Negro',valor:35000,estado:'Activo',sdm:true},
+   ]},
+  // ── EMPRESAS MEDIANAS (sdm 48-90 → sdmAnual 16-30) ──────────────────────
+  {id:'claro-dominicana',name:'Claro Dominicana S.A.',rnc:'130-12345-7',sector:'Telecomunicaciones',provincia:'Sto. Domingo',empleados:3200,nomina:384000000,antiguedad:2003,web:'claro.com.do',
+   total:280,sdm:72,nissan:28,chevrolet:22,suzuki:10,infiniti:4,cadillac:2,yamaha:6,
+   comp_toyota:58,comp_hyundai:30,comp_ford:20,comp_kia:18,comp_other:10,
+   tipos:{suv:95,sedan:60,pickup:35,moto:12,comercial:78},
+   vehicles:[
+    {placa:'CL100001',marca:'Nissan',modelo:'Pathfinder 2024',tipo:'SUV',color:'Negro',valor:39000,estado:'Activo',sdm:true},
+    {placa:'CL100002',marca:'Chevrolet',modelo:'Silverado 2024',tipo:'Pick-up',color:'Blanco',valor:50000,estado:'Activo',sdm:true},
+    {placa:'CL100003',marca:'Infiniti',modelo:'QX60 2023',tipo:'SUV Lujo',color:'Gris',valor:58000,estado:'Activo',sdm:true},
+    {placa:'CL100004',marca:'Toyota',modelo:'Hilux 2023',tipo:'Pick-up',color:'Blanco',valor:33000,estado:'Activo',sdm:false},
+    {placa:'CL100005',marca:'Nissan',modelo:'NV350 2022',tipo:'Comercial',color:'Blanco',valor:28000,estado:'Activo',sdm:true},
+    {placa:'CL100006',marca:'Hyundai',modelo:'Tucson 2023',tipo:'SUV',color:'Azul',valor:27000,estado:'Activo',sdm:false},
+    {placa:'CL100007',marca:'Suzuki',modelo:'Grand Vitara 2024',tipo:'SUV',color:'Rojo',valor:24000,estado:'Activo',sdm:true},
+    {placa:'CL100008',marca:'Toyota',modelo:'Land Cruiser 2022',tipo:'SUV',color:'Negro',valor:72000,estado:'Activo',sdm:false},
+   ]},
+  {id:'altice-rd',name:'Altice República Dominicana',rnc:'131-23456-8',sector:'Telecomunicaciones',provincia:'Sto. Domingo',empleados:2850,nomina:313500000,antiguedad:2000,web:'altice.com.do',
+   total:245,sdm:66,nissan:24,chevrolet:20,suzuki:8,infiniti:6,cadillac:2,yamaha:6,
+   comp_toyota:50,comp_hyundai:28,comp_ford:22,comp_kia:16,comp_other:7,
+   tipos:{suv:88,sedan:52,pickup:30,moto:10,comercial:65},
+   vehicles:[
+    {placa:'AL100001',marca:'Nissan',modelo:'X-Trail 2025',tipo:'SUV',color:'Plata',valor:31000,estado:'Activo',sdm:true},
+    {placa:'AL100002',marca:'Cadillac',modelo:'Escalade 2024',tipo:'SUV Lujo',color:'Negro',valor:98000,estado:'Activo',sdm:true},
+    {placa:'AL100003',marca:'Chevrolet',modelo:'Tahoe 2023',tipo:'SUV',color:'Blanco',valor:58000,estado:'Activo',sdm:true},
+    {placa:'AL100004',marca:'Toyota',modelo:'Camry 2023',tipo:'Sedán',color:'Gris',valor:29000,estado:'Activo',sdm:false},
+    {placa:'AL100005',marca:'Infiniti',modelo:'QX55 2024',tipo:'SUV Lujo',color:'Azul',valor:55000,estado:'Activo',sdm:true},
+    {placa:'AL100006',marca:'Hyundai',modelo:'Santa Fe 2022',tipo:'SUV',color:'Rojo',valor:31000,estado:'Activo',sdm:false},
+    {placa:'AL100007',marca:'Nissan',modelo:'Frontier 2024',tipo:'Pick-up',color:'Blanco',valor:32000,estado:'Activo',sdm:true},
+    {placa:'AL100008',marca:'Ford',modelo:'Transit 2023',tipo:'Comercial',color:'Blanco',valor:38000,estado:'Activo',sdm:false},
+   ]},
+  {id:'grupo-punta-cana',name:'Grupo Punta Cana S.A.',rnc:'132-34567-9',sector:'Turismo/Hotelería',provincia:'La Altagracia',empleados:4500,nomina:270000000,antiguedad:1969,web:'puntacana.com',
+   total:320,sdm:78,nissan:30,chevrolet:18,suzuki:14,infiniti:8,cadillac:4,yamaha:4,
+   comp_toyota:72,comp_hyundai:38,comp_ford:45,comp_kia:22,comp_other:15,
+   tipos:{suv:105,sedan:35,pickup:80,moto:8,comercial:92},
+   vehicles:[
+    {placa:'PC100001',marca:'Nissan',modelo:'Frontier 2025',tipo:'Pick-up',color:'Blanco',valor:34000,estado:'Activo',sdm:true},
+    {placa:'PC100002',marca:'Chevrolet',modelo:'Silverado HD 2024',tipo:'Pick-up',color:'Negro',valor:62000,estado:'Activo',sdm:true},
+    {placa:'PC100003',marca:'Infiniti',modelo:'QX80 2024',tipo:'SUV Lujo',color:'Blanco',valor:72000,estado:'Activo',sdm:true},
+    {placa:'PC100004',marca:'Toyota',modelo:'Land Cruiser 2023',tipo:'SUV',color:'Gris',valor:75000,estado:'Activo',sdm:false},
+    {placa:'PC100005',marca:'Ford',modelo:'F-150 Raptor 2023',tipo:'Pick-up',color:'Azul',valor:58000,estado:'Activo',sdm:false},
+    {placa:'PC100006',marca:'Suzuki',modelo:'Jimny 2024',tipo:'SUV Compacta',color:'Verde',valor:22000,estado:'Activo',sdm:true},
+    {placa:'PC100007',marca:'Cadillac',modelo:'Escalade 2023',tipo:'SUV Lujo',color:'Negro',valor:98000,estado:'Activo',sdm:true},
+    {placa:'PC100008',marca:'Toyota',modelo:'Hilux 2023',tipo:'Pick-up',color:'Blanco',valor:33000,estado:'Activo',sdm:false},
+   ]},
+  // ── EMPRESAS GRANDES (sdm 93-150 → sdmAnual 31-50) ────────────────────────
+  {id:'edenorte',name:'EDENORTE Dominicana S.A.',rnc:'140-45678-1',sector:'Energía/Utilities',provincia:'Santiago',empleados:2100,nomina:189000000,antiguedad:1999,web:'edenorte.com.do',
+   total:520,sdm:138,nissan:52,chevrolet:44,suzuki:20,infiniti:6,cadillac:4,yamaha:12,
+   comp_toyota:115,comp_hyundai:55,comp_ford:88,comp_kia:42,comp_other:40,
+   tipos:{pickup:220,suv:85,sedan:30,moto:22,comercial:163},
+   vehicles:[
+    {placa:'EN100001',marca:'Nissan',modelo:'Frontier 2025',tipo:'Pick-up',color:'Blanco',valor:34000,estado:'Activo',sdm:true},
+    {placa:'EN100002',marca:'Chevrolet',modelo:'Silverado 2024',tipo:'Pick-up',color:'Blanco',valor:50000,estado:'Activo',sdm:true},
+    {placa:'EN100003',marca:'Nissan',modelo:'Navara 2024',tipo:'Pick-up',color:'Gris',valor:30000,estado:'Activo',sdm:true},
+    {placa:'EN100004',marca:'Toyota',modelo:'Hilux 2023',tipo:'Pick-up',color:'Blanco',valor:33000,estado:'Activo',sdm:false},
+    {placa:'EN100005',marca:'Ford',modelo:'F-150 2022',tipo:'Pick-up',color:'Blanco',valor:41000,estado:'Activo',sdm:false},
+    {placa:'EN100006',marca:'Yamaha',modelo:'YBR 125 2024',tipo:'Moto',color:'Azul',valor:3500,estado:'Activo',sdm:true},
+    {placa:'EN100007',marca:'Chevrolet',modelo:'Express 2023',tipo:'Comercial',color:'Blanco',valor:35000,estado:'Activo',sdm:true},
+    {placa:'EN100008',marca:'Toyota',modelo:'Land Cruiser 2022',tipo:'SUV',color:'Negro',valor:72000,estado:'Activo',sdm:false},
+   ]},
+  {id:'grupo-leon-jimenes',name:'Grupo León Jimenes C x A',rnc:'141-56789-2',sector:'Manufactura/Alimentos',provincia:'Santiago',empleados:8500,nomina:680000000,antiguedad:1903,web:'gleoni.com',
+   total:680,sdm:168,nissan:65,chevrolet:55,suzuki:22,infiniti:8,cadillac:6,yamaha:12,
+   comp_toyota:148,comp_hyundai:62,comp_ford:115,comp_kia:48,comp_other:39,
+   tipos:{pickup:285,suv:115,sedan:45,moto:18,comercial:217},
+   vehicles:[
+    {placa:'LJ100001',marca:'Nissan',modelo:'Titan 2024',tipo:'Pick-up',color:'Negro',valor:48000,estado:'Activo',sdm:true},
+    {placa:'LJ100002',marca:'Cadillac',modelo:'Escalade ESV 2024',tipo:'SUV Lujo',color:'Negro',valor:115000,estado:'Activo',sdm:true},
+    {placa:'LJ100003',marca:'Chevrolet',modelo:'Silverado HD 2024',tipo:'Pick-up',color:'Blanco',valor:62000,estado:'Activo',sdm:true},
+    {placa:'LJ100004',marca:'Toyota',modelo:'Tundra 2023',tipo:'Pick-up',color:'Gris',valor:50000,estado:'Activo',sdm:false},
+    {placa:'LJ100005',marca:'Infiniti',modelo:'QX80 2024',tipo:'SUV Lujo',color:'Blanco',valor:72000,estado:'Activo',sdm:true},
+    {placa:'LJ100006',marca:'Ford',modelo:'F-250 Super Duty 2023',tipo:'Pick-up',color:'Blanco',valor:52000,estado:'Activo',sdm:false},
+    {placa:'LJ100007',marca:'Nissan',modelo:'NV Cargo 2023',tipo:'Comercial',color:'Blanco',valor:32000,estado:'Activo',sdm:true},
+    {placa:'LJ100008',marca:'Toyota',modelo:'Land Cruiser 2024',tipo:'SUV',color:'Negro',valor:80000,estado:'Activo',sdm:false},
+   ]},
+  {id:'central-romana',name:'Central Romana Corp. Ltd.',rnc:'142-67890-3',sector:'Agroindustria/Azúcar',provincia:'La Romana',empleados:12000,nomina:720000000,antiguedad:1912,web:'centralromana.com.do',
+   total:850,sdm:210,nissan:82,chevrolet:72,suzuki:28,infiniti:10,cadillac:8,yamaha:10,
+   comp_toyota:185,comp_hyundai:78,comp_ford:145,comp_kia:52,comp_other:55,
+   tipos:{pickup:385,suv:125,sedan:40,moto:12,comercial:288},
+   vehicles:[
+    {placa:'CR100001',marca:'Chevrolet',modelo:'Silverado HD 2025',tipo:'Pick-up',color:'Rojo',valor:65000,estado:'Activo',sdm:true},
+    {placa:'CR100002',marca:'Nissan',modelo:'Titan XD 2024',tipo:'Pick-up',color:'Blanco',valor:52000,estado:'Activo',sdm:true},
+    {placa:'CR100003',marca:'Toyota',modelo:'Land Cruiser 70 2023',tipo:'Pick-up',color:'Blanco',valor:60000,estado:'Activo',sdm:false},
+    {placa:'CR100004',marca:'Cadillac',modelo:'Escalade 2024',tipo:'SUV Lujo',color:'Negro',valor:115000,estado:'Activo',sdm:true},
+    {placa:'CR100005',marca:'Ford',modelo:'F-350 2023',tipo:'Pick-up',color:'Blanco',valor:58000,estado:'Activo',sdm:false},
+    {placa:'CR100006',marca:'Nissan',modelo:'Frontier 2025',tipo:'Pick-up',color:'Amarillo',valor:35000,estado:'Activo',sdm:true},
+    {placa:'CR100007',marca:'Infiniti',modelo:'QX80 2024',tipo:'SUV Lujo',color:'Gris',valor:72000,estado:'Activo',sdm:true},
+    {placa:'CR100008',marca:'Toyota',modelo:'Hilux 2024',tipo:'Pick-up',color:'Blanco',valor:35000,estado:'Activo',sdm:false},
    ]},
 ];
 
@@ -1510,15 +1596,20 @@ function renderEmps(filter=''){
     ];
     const segs=brs.map(b=>b.w>0?`<div style="width:${b.w}%;background:${b.c};height:8px" title="${b.c}"></div>`:'').join('');
     const valTot=fmtUSD(empValorTotal(e));
+    const fmtRD2=v=>v>=1000000000?'RD$'+(v/1000000000).toFixed(1)+'B':v>=1000000?'RD$'+(v/1000000).toFixed(1)+'M':'RD$'+(v/1000).toFixed(0)+'K';
+    const empStr=e.empleados?e.empleados.toLocaleString():'—';
+    const nomStr=e.nomina?fmtRD2(e.nomina):'—';
     return `<tr>
       <td><span style="font-family:'Space Mono',monospace;font-size:12px;${rn}">${i+1}</span></td>
       <td><span class="tlink" onclick="openComp('${e.id}')">${e.name}</span></td>
       <td style="color:var(--text3);font-size:11px">${e.sector}</td>
       <td style="font-size:11px">${e.provincia}</td>
+      <td><span style="font-family:'Space Mono',monospace;color:var(--accent);font-size:11px">${empStr}</span></td>
+      <td><span style="font-family:'Space Mono',monospace;color:var(--success);font-size:11px">${nomStr}</span></td>
       <td><span style="font-family:'Space Mono',monospace;color:var(--text);font-weight:700">${e.total}</span></td>
       <td><span style="font-family:'Space Mono',monospace;color:var(--success);font-size:11px">${valTot}</span></td>
       <td><span style="font-family:'Space Mono',monospace;color:var(--accent)">${e.sdm}</span></td>
-      <td><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;min-width:90px">${segs}</div></td>
+      <td><div style="display:flex;height:8px;border-radius:4px;overflow:hidden;min-width:80px">${segs}</div></td>
       <td><span class="sbg ${pc}">${pct}%</span></td>
       <td><button class="btn-sm" onclick="openComp('${e.id}')">Ver &#x2192;</button></td>
     </tr>`;
@@ -1562,22 +1653,82 @@ function openComp(id){
   const tierRangeDesc={grande:'31–50 vehículos SDM/año',mediana:'16–30 vehículos SDM/año',pequeña:'5–15 vehículos SDM/año',sin_clasificar:'Menos de 5 veh./año'}[tier];
   const tierBadgeCls={grande:'cls-gd',mediana:'cls-md',pequeña:'cls-pq'}[tier]||'';
 
+  // Helper formatters
+  const fmtRD = v => v >= 1000000000 ? 'RD$'+(v/1000000000).toFixed(2)+'B' : v >= 1000000 ? 'RD$'+(v/1000000).toFixed(1)+'M' : 'RD$'+(v/1000).toFixed(0)+'K';
+  const fmtNum = v => v >= 1000 ? (v/1000).toFixed(1)+'K' : v.toString();
+  const empAnios = e.antiguedad ? (2026 - e.antiguedad) : null;
+  const salPromedio = e.empleados && e.nomina ? Math.round(e.nomina / e.empleados) : null;
+
   // KPI hero
   document.getElementById('cd-hero').innerHTML=`
     <div class="chero">
       <div class="cav">${ini}</div>
       <div style="flex:1">
         <div class="cname">${e.name}</div>
-        <div class="cmeta">
+        <div class="cmeta" style="margin-bottom:6px">
           <span>RNC: <strong>${e.rnc}</strong></span>
           <span>Sector: <strong>${e.sector}</strong></span>
-          <span>Provincia: <strong>${e.provincia}</strong></span>
-          <span>Estado: <strong style="color:var(--success)">Activo</strong></span>
+          <span>📍 <strong>${e.provincia}</strong></span>
+          ${e.antiguedad ? `<span>Desde: <strong>${e.antiguedad} (${2026-e.antiguedad} años)</strong></span>` : ''}
+          ${e.web ? `<span style="color:var(--accent)">${e.web}</span>` : ''}
+          <span>Estado: <strong style="color:var(--success)">● Activo</strong></span>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px">
         <span class="sbg ${pc}" style="font-size:14px;padding:6px 14px">${pct}% SDM</span>
         <span class="cls-badge ${tierBadgeCls}" style="font-size:11px;padding:4px 12px">${tierLabel}</span>
+      </div>
+    </div>
+
+    <!-- Empresa info cards: empleados, sector, provincia, nomina -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:14px">
+
+      <!-- Empleados -->
+      <div style="background:var(--surface);border:1px solid var(--border2);border-radius:11px;padding:14px 16px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:30px;height:30px;border-radius:7px;background:rgba(0,200,255,0.12);border:1px solid rgba(0,200,255,0.2);display:flex;align-items:center;justify-content:center;font-size:15px">👥</div>
+          <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace">Empleados</div>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--accent);margin-bottom:3px">${e.empleados ? e.empleados.toLocaleString() : '—'}</div>
+        <div style="font-size:10px;color:var(--text3)">Nómina activa registrada</div>
+        ${salPromedio ? `<div style="margin-top:7px;padding:5px 8px;background:rgba(0,200,255,0.06);border-radius:5px;font-size:10px;color:var(--text2)">Salario prom: <strong style="color:var(--text)">RD$${salPromedio.toLocaleString()}/mes</strong></div>` : ''}
+      </div>
+
+      <!-- Sector -->
+      <div style="background:var(--surface);border:1px solid var(--border2);border-radius:11px;padding:14px 16px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:30px;height:30px;border-radius:7px;background:rgba(0,128,255,0.12);border:1px solid rgba(0,128,255,0.2);display:flex;align-items:center;justify-content:center;font-size:15px">🏭</div>
+          <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace">Sector</div>
+        </div>
+        <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.2">${e.sector}</div>
+        <div style="font-size:10px;color:var(--text3)">Clasificación DGII</div>
+        ${empAnios ? `<div style="margin-top:7px;padding:5px 8px;background:rgba(0,128,255,0.06);border-radius:5px;font-size:10px;color:var(--text2)">Trayectoria: <strong style="color:var(--text)">${empAnios} años en operación</strong></div>` : ''}
+      </div>
+
+      <!-- Provincia -->
+      <div style="background:var(--surface);border:1px solid var(--border2);border-radius:11px;padding:14px 16px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent))"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:30px;height:30px;border-radius:7px;background:rgba(0,255,196,0.10);border:1px solid rgba(0,255,196,0.2);display:flex;align-items:center;justify-content:center;font-size:15px">📍</div>
+          <div style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace">Provincia</div>
+        </div>
+        <div style="font-size:20px;font-weight:700;color:var(--accent3);margin-bottom:3px">${e.provincia}</div>
+        <div style="font-size:10px;color:var(--text3)">Domicilio fiscal registrado</div>
+        <div style="margin-top:7px;padding:5px 8px;background:rgba(0,255,196,0.05);border-radius:5px;font-size:10px;color:var(--text2)">RNC: <strong style="color:var(--text);font-family:'Space Mono',monospace">${e.rnc}</strong></div>
+      </div>
+
+      <!-- Nómina -->
+      <div style="background:var(--surface);border:1px solid rgba(0,229,155,0.3);border-radius:11px;padding:14px 16px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--success),var(--accent3))"></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="width:30px;height:30px;border-radius:7px;background:rgba(0,229,155,0.12);border:1px solid rgba(0,229,155,0.2);display:flex;align-items:center;justify-content:center;font-size:15px">💰</div>
+          <div style="font-size:9px;color:var(--success);text-transform:uppercase;letter-spacing:1px;font-family:'Space Mono',monospace">Nómina Mensual</div>
+        </div>
+        <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--success);margin-bottom:3px;line-height:1.1">${e.nomina ? fmtRD(e.nomina) : '—'}</div>
+        <div style="font-size:10px;color:var(--text3)">Total nómina activa/mes</div>
+        ${e.nomina && e.empleados ? `<div style="margin-top:7px;padding:5px 8px;background:rgba(0,229,155,0.06);border-radius:5px;font-size:10px;color:var(--text2)">Anual: <strong style="color:var(--success)">${fmtRD(e.nomina*12)}</strong></div>` : ''}
       </div>
     </div>
 
@@ -2042,10 +2193,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Enrich EMPS with sdmAnual (annual SDM acquisitions) derived from sdm total / ~3 years active
 // Classification:  Pequeña 5-15/yr · Mediana 16-30/yr · Grande 31-50/yr
 function getSdmAnual(e) {
-  // Use sdm total / 3 years as annual rate (rough real-world estimate)
-  // Then clamp/round to realistic tier values based on fleet size
+  // Annual SDM acquisitions = total SDM fleet / 3 years active (estimated)
   const rate = Math.round(e.sdm / 3);
-  return Math.max(5, Math.min(50, rate));
+  return Math.max(5, rate); // no upper cap — grandes can exceed 50
 }
 
 function getMensual(anual) {
@@ -2072,8 +2222,9 @@ function getTierColor(tier) {
 }
 
 function getRitmoBars(anual) {
-  // 3-segment bar: low/mid/high relative to 50 max
-  const pct = Math.min(100, Math.round(anual / 50 * 100));
+  // Bar relative to max of dataset, cap display at 100%
+  const displayMax = anual > 50 ? anual * 1.2 : 50;
+  const pct = Math.min(100, Math.round(anual / displayMax * 100));
   const tier = getTier(anual);
   const col = getTierColor(tier);
   return `<div style="display:flex;align-items:center;gap:7px">
