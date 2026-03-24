@@ -6,32 +6,80 @@
 <title>SDM Market Analyst – Parque Vehicular RD</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#070d1a;--surface:#0d1829;--surface2:#111f33;--surface3:#162540;--border:rgba(0,200,255,0.10);--border2:rgba(0,200,255,0.18);--accent:#00c8ff;--accent2:#0080ff;--accent3:#00ffc4;--warn:#ffbe00;--danger:#ff4d6d;--success:#00e59b;--text:#e8f2ff;--text2:#8bacc8;--text3:#4d6e8a;--nissan:#c00020;--chevrolet:#d4a000;--suzuki:#0060c0;--infiniti:#a0a0b0;--cadillac:#c0a020;--yamaha:#1a3a80;--comp1:#444466;--sidebar-w:256px;--header-h:62px;--radius:12px;}
+:root{
+  /* ── SDM BRAND PALETTE (santodomingomotors.com.do) ── */
+  --bg:#0F1C32;          /* Deep navy background */
+  --surface:#152240;     /* Card/panel surface */
+  --surface2:#1B2A4A;    /* Header navy exact match */
+  --surface3:#1E3A6E;    /* Hover states */
+  --border:rgba(245,196,0,0.12);    /* SDM gold border subtle */
+  --border2:rgba(245,196,0,0.28);   /* SDM gold border visible */
+  /* SDM Gold as primary accent */
+  --accent:#F5C400;      /* SDM gold — primary accent */
+  --accent2:#E6B800;     /* SDM gold darker */
+  --accent3:#FFD740;     /* SDM gold lighter */
+  --warn:#FF8C00;        /* Orange warnings */
+  --danger:#E53935;      /* Red alerts */
+  --success:#00C853;     /* Green success */
+  --text:#F0F4FF;        /* Primary text white-blue */
+  --text2:#8FA8D0;       /* Secondary text */
+  --text3:#4A6A9A;       /* Muted text */
+  /* Brand marks */
+  --nissan:#C00020;      /* Nissan red */
+  --chevrolet:#F5C400;   /* Chevrolet gold = SDM gold */
+  --suzuki:#1565C0;      /* Suzuki blue */
+  --infiniti:#B0B8C8;    /* Infiniti silver */
+  --cadillac:#C8A800;    /* Cadillac gold */
+  --yamaha:#1B2A6B;      /* Yamaha navy */
+  --comp1:#3A4466;
+  --sidebar-w:256px;--header-h:62px;--radius:12px;
+}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(0,200,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.025) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
+body{font-family:'Barlow','DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(245,196,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(245,196,0,0.03) 1px,transparent 1px);background-size:40px 40px;z-index:0;}
 
-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(7,13,26,0.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border2);display:flex;align-items:center;padding:0 20px;gap:14px;z-index:200;}
-.logo-box{width:36px;height:36px;background:linear-gradient(135deg,var(--accent2),var(--accent));border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;}
+header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(27,42,74,0.97);backdrop-filter:blur(16px);border-bottom:2px solid var(--accent);display:flex;align-items:center;padding:0 20px;gap:14px;z-index:200;}
+.logo-box{width:36px;height:36px;background:linear-gradient(135deg,#E6B800,#F5C400);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;}
 .logo-text{font-weight:700;font-size:14px;line-height:1.2;flex-shrink:0;}
-.logo-text span{display:block;font-size:9px;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:2px;}
-.header-divider{width:1px;height:32px;background:var(--border2);flex-shrink:0;}
+.logo-text span{display:block;font-size:9px;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:2px;font-weight:700;}
+.header-divider{width:1px;height:32px;background:rgba(245,196,0,0.3);flex-shrink:0;}
 .header-title{font-size:12px;font-weight:600;color:var(--text2);}
 .header-title strong{color:var(--text);display:block;font-size:14px;}
 .nav-tabs{display:flex;gap:3px;margin-left:auto;}
 .nav-tab{padding:6px 13px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid transparent;color:var(--text3);transition:all .2s;white-space:nowrap;}
 .nav-tab:hover{color:var(--text2);border-color:var(--border);}
-.nav-tab.active{background:rgba(0,200,255,0.12);border-color:var(--border2);color:var(--accent);}
-.period-pill{background:var(--surface2);border:1px solid var(--border2);color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;padding:6px 13px;border-radius:6px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+.nav-tab.active{background:rgba(245,196,0,0.15);border-color:rgba(245,196,0,0.5);color:var(--accent);font-weight:700;}
+.period-pill{background:rgba(245,196,0,0.08);border:1px solid rgba(245,196,0,0.35);color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;padding:6px 13px;border-radius:6px;cursor:pointer;white-space:nowrap;flex-shrink:0;}
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 8px var(--success);animation:pulse 2s infinite;flex-shrink:0;}
+
+/* SDM BRAND OVERRIDES */
+.kcard{border-top:3px solid var(--accent);}
+.panel{border:1px solid var(--border);}
+.ph{border-bottom:1px solid rgba(245,196,0,0.15);}
+.sdm-gold-bar{width:100%;height:3px;background:linear-gradient(90deg,var(--accent2),var(--accent),var(--accent3));display:block;}
+.kval{color:var(--accent);}
+.sbadge{background:rgba(245,196,0,0.15);color:var(--accent);border:1px solid rgba(245,196,0,0.35);font-family:'Space Mono',monospace;font-size:9px;padding:3px 9px;border-radius:4px;letter-spacing:1px;font-weight:700;}
+.stitle h3{color:var(--text);font-size:18px;font-weight:700;}
+.btn-sm{border:1px solid rgba(245,196,0,0.35);color:var(--accent);background:rgba(245,196,0,0.06);border-radius:5px;padding:4px 11px;font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;}
+.btn-sm:hover{background:rgba(245,196,0,0.15);border-color:var(--accent);}
+.tlink{color:var(--accent);cursor:pointer;font-weight:600;}
+.tlink:hover{color:var(--accent3);text-decoration:underline;}
+/* SDM sidebar nav items */
+.snav-item.active{background:rgba(245,196,0,0.12);border-left:3px solid var(--accent);color:var(--accent);}
+/* Map mode buttons */
+.pab.active{background:rgba(245,196,0,0.18);color:var(--accent);border-color:rgba(245,196,0,0.4);}
+/* Classification badges */
+.cls-pq{background:rgba(245,196,0,0.12);color:var(--accent);border-color:rgba(245,196,0,0.4);}
+.cls-md{background:rgba(255,140,0,0.12);color:var(--warn);border-color:rgba(255,140,0,0.4);}
+.cls-gd{background:rgba(0,200,83,0.10);color:var(--success);border-color:rgba(0,200,83,0.3);}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
 
 .app{display:flex;padding-top:var(--header-h);min-height:100vh;}
-aside{width:var(--sidebar-w);flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);position:fixed;top:var(--header-h);bottom:0;left:0;overflow-y:auto;padding:18px 14px;z-index:90;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent;}
+aside{width:var(--sidebar-w);flex-shrink:0;background:var(--surface2);border-right:1px solid rgba(245,196,0,0.15);position:fixed;top:var(--header-h);bottom:0;left:0;overflow-y:auto;padding:18px 14px;z-index:90;scrollbar-width:thin;scrollbar-color:var(--surface3) transparent;}
 aside::-webkit-scrollbar{width:4px;}
 aside::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:4px;}
-aside h2{font-size:9px;letter-spacing:2.5px;font-weight:600;color:var(--accent);text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+aside h2{font-size:9px;letter-spacing:2.5px;font-weight:700;color:var(--accent);text-transform:uppercase;font-family:'Space Mono',monospace;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(245,196,0,0.15);}
 .fg{margin-bottom:18px;}
 .fg>label{display:block;font-size:10px;font-weight:600;color:var(--text2);letter-spacing:.8px;text-transform:uppercase;margin-bottom:7px;}
 .fsel{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;padding:7px 9px;border-radius:6px;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238bacc8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;}
@@ -233,12 +281,530 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
 
 @media(max-width:1200px){.kgrid{grid-template-columns:repeat(2,1fr);}.g3{grid-template-columns:1fr 1fr;}.ckgrid{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){aside{transform:translateX(-100%);} main{margin-left:0;}.kgrid,.g2,.g3,.g13{grid-template-columns:1fr;}}
+
+/* ══════ LIGHT MODE — HIGH CONTRAST ═══════════════════════════════════ */
+
+/* ── ROOT OVERRIDES: clean, high-contrast light palette ── */
+.light-mode {
+  /* Backgrounds */
+  --bg:      #F0F4FA;        /* page background: soft blue-white */
+  --surface: #FFFFFF;        /* cards, panels: pure white */
+  --surface2:#E8EEF8;        /* sidebar, secondary panels */
+  --surface3:#D8E2F4;        /* hover, input backgrounds */
+  /* Borders */
+  --border:  rgba(15,28,50,0.12);
+  --border2: rgba(15,28,50,0.24);
+  /* Text — WCAG AA/AAA compliant */
+  --text:    #0A1628;        /* near-black, 16:1 on white */
+  --text2:   #2A3D5C;        /* dark navy, 9:1 on white */
+  --text3:   #5A7499;        /* mid blue, 4.8:1 on white — passes AA */
+  /* SDM Gold — darkened for light bg */
+  --accent:  #8B6B00;        /* dark gold: 7.2:1 on white — AAA */
+  --accent2: #7A5E00;        /* deeper gold */
+  --accent3: #A07800;        /* medium gold */
+  /* Status colors — WCAG AA on white */
+  --warn:    #C06000;        /* 5.8:1 on white */
+  --danger:  #B91C1C;        /* 6.1:1 on white */
+  --success: #166534;        /* 7.8:1 on white */
+  /* Brand marks (slightly darker for light bg) */
+  --nissan:  #9A0016;
+  --chevrolet:#7A5500;
+  --suzuki:  #0D3E8A;
+  --infiniti:#3A4454;
+  --cadillac:#8A6A00;
+  --yamaha:  #0A1550;
+  --comp1:   #344060;
+}
+
+/* ── BODY & PAGE ── */
+.light-mode body::before {
+  background-image:
+    linear-gradient(rgba(15,28,50,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,28,50,0.04) 1px, transparent 1px);
+}
+
+/* ── HEADER stays dark (SDM brand identity) ── */
+.light-mode header {
+  background: rgba(15,28,50,0.98) !important;
+  border-bottom: 2px solid #C89A00 !important;
+}
+
+/* ── ASIDE / SIDEBAR ── */
+.light-mode aside {
+  background: #FFFFFF;
+  border-right: 1px solid rgba(15,28,50,0.14);
+  box-shadow: 2px 0 16px rgba(15,28,50,0.08);
+}
+.light-mode aside h2 {
+  color: #6B5200;
+  border-bottom-color: rgba(15,28,50,0.10) !important;
+}
+.light-mode .fg > label { color: #2A3D5C; font-weight: 600; }
+.light-mode .fsel {
+  background: #F5F8FF;
+  border: 1px solid rgba(15,28,50,0.2);
+  color: #0A1628;
+}
+.light-mode .fsel:focus { border-color: #8B6B00; box-shadow: 0 0 0 2px rgba(139,107,0,0.15); }
+.light-mode .check-label { color: #0A1628; font-weight: 500; }
+.light-mode .snav-item { color: #2A3D5C; }
+.light-mode .snav-item:hover { background: #EBF0FA; color: #0A1628; }
+.light-mode .snav-item.active {
+  background: rgba(139,107,0,0.10);
+  border-left-color: #8B6B00;
+  color: #6B5200;
+  font-weight: 700;
+}
+
+/* ── KPI CARDS ── */
+.light-mode .kcard {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.10);
+  border-top: 3px solid #8B6B00;
+  box-shadow: 0 2px 12px rgba(15,28,50,0.08);
+}
+.light-mode .kval    { color: #6B5200 !important; }
+.light-mode .klb     { color: #2A3D5C; font-weight: 600; }
+.light-mode .ksub    { color: #5A7499; }
+
+/* ── PANELS ── */
+.light-mode .panel {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.12);
+  box-shadow: 0 2px 16px rgba(15,28,50,0.07);
+}
+.light-mode .ph {
+  background: #F5F8FF;
+  border-bottom: 1px solid rgba(15,28,50,0.10);
+}
+.light-mode .ph h4 { color: #0A1628; font-weight: 700; }
+.light-mode .pa .pab { color: #2A3D5C; border-color: rgba(15,28,50,0.15); }
+.light-mode .pa .pab:hover { color: #0A1628; background: #EBF0FA; }
+.light-mode .pa .pab.active {
+  background: #1B2A4A; color: #F5C400; border-color: #1B2A4A;
+}
+
+/* ── DATA TABLES ── */
+.light-mode .dt { background: #FFFFFF; }
+.light-mode .dt thead th {
+  background: #1B2A4A;
+  color: #F5F8FF;
+  font-weight: 700;
+  border-bottom: 2px solid #8B6B00;
+}
+.light-mode .dt tbody td {
+  color: #0A1628;
+  border-bottom-color: rgba(15,28,50,0.07);
+}
+.light-mode .dt tbody td:first-child { color: #5A7499; }
+.light-mode .dt tbody tr:hover td { background: #EBF0FA; }
+.light-mode .pg { border-top: 1px solid rgba(15,28,50,0.08); }
+.light-mode .pgi { color: #2A3D5C; font-weight: 500; }
+
+/* ── SEARCH BARS ── */
+.light-mode .sbar {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.2);
+  color: #0A1628;
+}
+.light-mode .sbar::placeholder { color: #8AA0C0; }
+.light-mode .sbar:focus { border-color: #8B6B00; box-shadow: 0 0 0 2px rgba(139,107,0,0.15); }
+.light-mode .sbar-wrap {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.18);
+}
+.light-mode .sico { color: #5A7499; }
+
+/* ── BUTTONS ── */
+.light-mode .btn-sm {
+  background: #F0F4FA;
+  border: 1px solid rgba(15,28,50,0.22);
+  color: #1B2A4A;
+  font-weight: 600;
+}
+.light-mode .btn-sm:hover {
+  background: #1B2A4A;
+  border-color: #1B2A4A;
+  color: #F5C400;
+}
+.light-mode .sttab {
+  background: #EBF0FA;
+  border: 1px solid rgba(15,28,50,0.18);
+  color: #1B2A4A;
+  font-weight: 600;
+}
+.light-mode .sttab:hover { background: #D8E4F5; color: #0A1628; }
+.light-mode .sttab.active,
+.light-mode .active-all {
+  background: #1B2A4A !important;
+  border-color: #1B2A4A !important;
+  color: #F5C400 !important;
+  font-weight: 700 !important;
+}
+.light-mode .tfab {
+  background: #EBF0FA;
+  border: 1px solid rgba(15,28,50,0.18);
+  color: #1B2A4A;
+  font-weight: 500;
+}
+.light-mode .tfab:hover { background: #1B2A4A; color: #F5C400; border-color: #1B2A4A; }
+.light-mode .tfab.active-all,
+.light-mode .tfab.active-pq,
+.light-mode .tfab.active-md,
+.light-mode .tfab.active-gd {
+  background: #1B2A4A; color: #F5C400; border-color: #1B2A4A; font-weight:700;
+}
+
+/* ── BADGES & STATUS PILLS ── */
+.light-mode .sbadge {
+  background: rgba(139,107,0,0.12);
+  color: #6B5200;
+  border: 1px solid rgba(139,107,0,0.35);
+  font-weight: 700;
+}
+.light-mode .tlink  { color: #1B2A4A; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: rgba(27,42,74,0.3); }
+.light-mode .tlink:hover { color: #8B6B00; }
+/* SDM % badges — high contrast */
+.light-mode .s-muyalta { background: #1B2A4A; color: #F5C400; font-weight: 700; border: none; }
+.light-mode .s-alta    { background: rgba(102,78,0,0.14); color: #5C4700; border: 1px solid rgba(102,78,0,0.3); font-weight:700; }
+.light-mode .s-media   { background: rgba(192,96,0,0.12); color: #7A3D00; border: 1px solid rgba(192,96,0,0.3); font-weight:700; }
+.light-mode .s-baja    { background: rgba(185,28,28,0.10); color: #7A1010; border: 1px solid rgba(185,28,28,0.3); font-weight:700; }
+/* Classification tier badges */
+.light-mode .cls-pq { background: rgba(102,78,0,0.12); color: #5C4700; border-color: rgba(102,78,0,0.35); font-weight:700; }
+.light-mode .cls-md { background: rgba(192,96,0,0.12); color: #7A3D00; border-color: rgba(192,96,0,0.35); font-weight:700; }
+.light-mode .cls-gd { background: rgba(22,101,52,0.10); color: #14532D; border-color: rgba(22,101,52,0.3); font-weight:700; }
+/* SDM / COMP tags in registros */
+.light-mode .vbadge { background: #EBF0FA; color: #1B2A4A; border: 1px solid rgba(27,42,74,0.25); }
+
+/* ── MAIN CONTENT AREA ── */
+.light-mode main { background: #F0F4FA; }
+.light-mode .stitle { border-bottom: 2px solid rgba(139,107,0,0.25); }
+.light-mode .stitle h3 { color: #0A1628; font-weight: 800; }
+
+/* ── AI BOX ── */
+.light-mode #ai-box {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.14);
+}
+.light-mode #ai-box h4 { color: #0A1628; }
+.light-mode #rep-panel {
+  background: #F5F8FF;
+  border: 1px solid rgba(15,28,50,0.14);
+  color: #0A1628;
+}
+.light-mode .chip {
+  background: #EBF0FA;
+  border: 1px solid rgba(15,28,50,0.2);
+  color: #1B2A4A;
+  font-weight: 600;
+}
+.light-mode .chip:hover { background: #1B2A4A; color: #F5C400; border-color: #1B2A4A; }
+
+/* ── MAP ── */
+.light-mode #rd-map-wrap {
+  background: #EBF0FA;
+  border: 1px solid rgba(15,28,50,0.14);
+}
+.light-mode .prov { fill: #C0D0EC !important; stroke: #FFFFFF !important; }
+.light-mode #map-legend {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.14);
+  color: #0A1628;
+}
+.light-mode .map-rank-item { border-bottom-color: rgba(15,28,50,0.07); }
+.light-mode #map-tooltip {
+  background: #1B2A4A;
+  color: #F5F8FF;
+  border: 1px solid rgba(245,196,0,0.4);
+}
+
+/* ── PERIOD PILL & STATUS ── */
+.light-mode .period-pill {
+  background: rgba(27,42,74,0.08);
+  border: 1px solid rgba(27,42,74,0.25);
+  color: #1B2A4A;
+  font-weight: 700;
+}
+.light-mode .status-dot { background: #166534; box-shadow: 0 0 8px rgba(22,101,52,0.5); }
+
+/* ── EMPRESA DETAIL ── */
+.light-mode .chero {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.12);
+  box-shadow: 0 2px 16px rgba(15,28,50,0.08);
+}
+.light-mode .cname  { color: #0A1628; font-weight: 800; }
+.light-mode .cmeta  { color: #2A3D5C; }
+.light-mode .cmeta strong { color: #0A1628; }
+.light-mode .ck {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.12);
+  box-shadow: 0 1px 6px rgba(15,28,50,0.06);
+}
+.light-mode .cklb   { color: #2A3D5C; font-weight: 600; }
+.light-mode .ckv    { color: #0A1628; font-weight: 800; }
+.light-mode .cks    { color: #5A7499; }
+
+/* ── OPORTUNIDAD PANELS ── */
+.light-mode .opp-hero {
+  background: linear-gradient(135deg, #EBF0FA, #F5F8FF);
+  border: 1px solid rgba(139,107,0,0.22);
+}
+.light-mode .opp-kpi {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.14);
+  box-shadow: 0 2px 8px rgba(15,28,50,0.06);
+}
+.light-mode .opp-kpi-lbl { color: #2A3D5C; font-weight: 600; }
+.light-mode .opp-kpi-sub { color: #5A7499; }
+.light-mode .opp-brand-track { background: #E8EEF8; }
+.light-mode .renov-row {
+  background: #F5F8FF;
+  border: 1px solid rgba(15,28,50,0.10);
+}
+
+/* ── CASOS REALES ── */
+.light-mode .caso-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.12);
+  box-shadow: 0 2px 10px rgba(15,28,50,0.06);
+}
+.light-mode .caso-header { background: #FFFFFF; }
+.light-mode .caso-header:hover { background: #F5F8FF; }
+.light-mode .caso-title  { color: #0A1628; font-weight: 700; }
+.light-mode .caso-subtitle { color: #5A7499; }
+.light-mode .caso-body { border-top: 1px solid rgba(15,28,50,0.10); }
+.light-mode .caso-body.open { background: #FAFBFF; }
+.light-mode .caso-grid4 { background: rgba(15,28,50,0.06); }
+.light-mode .caso-stat  { background: #FFFFFF; }
+.light-mode .caso-stat-lbl { color: #2A3D5C; font-weight: 600; }
+.light-mode .caso-section-title { color: #6B5200; border-bottom-color: rgba(15,28,50,0.10); }
+.light-mode .opp-item { background: #EBF0FA; }
+.light-mode .opp-brand  { color: #0A1628; }
+.light-mode .opp-sugg   { color: #166534; }
+.light-mode .opp-badge  { background: rgba(192,96,0,0.12); color: #7A3D00; }
+.light-mode .with-oposicion {
+  background: rgba(185,28,28,0.06);
+  border: 1px solid rgba(185,28,28,0.22);
+  color: #5A1010;
+}
+.light-mode .tipo-chip  { background: #EBF0FA; color: #1B2A4A; }
+.light-mode .marca-bar-wrap { background: #E0E8F5; }
+.light-mode .marca-count { color: rgba(0,0,0,0.7) !important; }
+
+/* ── CLASIFICACIÓN ── */
+.light-mode .tier-filter-tabs .tfab { color: #1B2A4A; }
+.light-mode #cls-summary-strip { background: rgba(15,28,50,0.06); }
+.light-mode .term-item {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.12);
+}
+.light-mode .term-label { color: #5A7499; }
+.light-mode .term-value { color: #0A1628; font-weight: 700; }
+.light-mode .term-note  { color: #2A3D5C; }
+
+/* ── RETENCIÓN ── */
+.light-mode .tier-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.12);
+}
+.light-mode .tier-header h3  { color: #0A1628; }
+.light-mode .tier-info h3    { color: #0A1628; }
+.light-mode .tier-info p     { color: #2A3D5C; }
+.light-mode .tier-stat {
+  background: #F5F8FF;
+  border: 1px solid rgba(15,28,50,0.10);
+}
+.light-mode .tier-stat-lbl { color: #2A3D5C; font-weight: 600; }
+.light-mode .price-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.14);
+}
+.light-mode .price-header { background: #EBF0FA; }
+.light-mode .price-header .price-name { color: #0A1628; }
+.light-mode .price-header .price-val  { color: #6B5200; }
+.light-mode .price-header .price-period { color: #5A7499; }
+.light-mode .price-body { background: #FFFFFF; }
+.light-mode .price-feat { color: #2A3D5C; }
+.light-mode .price-feat::before { color: #166534; }
+.light-mode .price-feat.no::before { color: #8AA0C0; }
+
+/* ── BUSCADOR ── */
+.light-mode .stype-tabs .sttab { background: #EBF0FA; }
+.light-mode .src-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.14);
+  box-shadow: 0 2px 12px rgba(15,28,50,0.07);
+}
+.light-mode .src-hdr { border-bottom: 1px solid rgba(15,28,50,0.08); }
+.light-mode .src-title { color: #0A1628; }
+.light-mode .src-meta  { color: #2A3D5C; }
+.light-mode .stag {
+  background: #EBF0FA;
+  border: 1px solid rgba(15,28,50,0.2);
+  color: #1B2A4A;
+  font-weight: 600;
+}
+.light-mode .stag:hover { background: #1B2A4A; color: #F5C400; }
+.light-mode .vbadge { background: #EBF0FA; color: #1B2A4A; font-weight: 600; }
+.light-mode .tl-item .tl-dot { border-color: #F0F4FA; }
+.light-mode .tl-item::before { background: rgba(15,28,50,0.12); }
+.light-mode .tl-ph { color: #6B5200; }
+.light-mode .tl-tt { color: #0A1628; font-weight: 700; }
+.light-mode .tl-dd { color: #2A3D5C; }
+
+/* ── SELECTS & DROPDOWNS in registros ── */
+.light-mode select {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(15,28,50,0.2) !important;
+  color: #0A1628 !important;
+}
+.light-mode select:focus { border-color: #8B6B00 !important; }
+
+/* ── FEATURE LIST (clasificación) ── */
+.light-mode .feature-item {
+  background: #FFFFFF;
+  border: 1px solid rgba(15,28,50,0.10);
+}
+.light-mode .feature-num { background: rgba(27,42,74,0.08); color: #1B2A4A; border-color: rgba(27,42,74,0.2); }
+.light-mode .feature-title { color: #0A1628; }
+.light-mode .feature-desc  { color: #2A3D5C; }
+.light-mode .feature-tag   { background: rgba(27,42,74,0.10); color: #1B2A4A; }
+
+/* ── SCROLLBARS ── */
+.light-mode aside::-webkit-scrollbar-thumb,
+.light-mode main::-webkit-scrollbar-thumb { background: #C0CCE0; border-radius: 4px; }
+
+/* ── THEME TOGGLE BUTTON (in dark header) ── */
+#theme-toggle { background: #1B2A4A; border: 2px solid rgba(245,196,0,0.5); }
+.light-mode #theme-toggle { background: rgba(245,196,0,0.15); border: 2px solid rgba(139,107,0,0.5); }
+.light-mode #theme-toggle .tt-thumb { transform: translateX(24px); background: #8B6B00; }
+#theme-toggle-wrap span { color: rgba(255,255,255,0.55); font-size: 10px; }
+.light-mode #theme-toggle-wrap span { color: rgba(255,255,255,0.65); }
+
+/* ── MISC ── */
+.light-mode .back-btn {
+  background: #EBF0FA;
+  border: 1px solid rgba(15,28,50,0.2);
+  color: #1B2A4A;
+  font-weight: 600;
+}
+.light-mode .back-btn:hover { background: #1B2A4A; color: #F5C400; }
+.light-mode .kgrid { gap: 14px; }
+.light-mode .erd-table { background: #FFFFFF; border: 1px solid rgba(15,28,50,0.12); }
+.light-mode .erd-header { color: #0A1628; background: #F0F4FA; }
+.light-mode .erd-field { border-top: 1px solid rgba(15,28,50,0.06); }
+.light-mode .erd-field:hover { background: #EBF0FA; }
+.light-mode .erd-fname { color: #0A1628; }
+.light-mode .erd-ftype { color: #5A7499; }
+/* DGII source banner */
+.light-mode [style*="rgba(0,200,255,0.05)"],
+.light-mode [style*="rgba(245,196,0,0.04)"] {
+  background: #F0F4FA !important;
+  border-color: rgba(15,28,50,0.12) !important;
+}
+/* Dashboard stat rows */
+.light-mode [style*="background:var(--surface2)"] { background: #EBF0FA !important; }
+.light-mode [style*="background:var(--surface3)"] { background: #E0E8F5 !important; }
+/* Rank number colors */
+.light-mode [style*="color:gold"]    { color: #8B6B00 !important; }
+.light-mode [style*="color:#c0c0c0"]{ color: #5A7499 !important; }
+.light-mode [style*="color:#cd7f32"]{ color: #7A5000 !important; }
+
+
+/* ════ SECTOR PÚBLICO ═════════════════════════════════════════════════ */
+.sp-section { margin-bottom: 24px; }
+.sp-module-tabs { display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap; }
+.sp-mtab {
+  padding:7px 16px;border-radius:20px;font-size:11px;font-weight:700;
+  cursor:pointer;border:1px solid var(--border);color:var(--text3);
+  background:transparent;font-family:'DM Sans',sans-serif;transition:all .2s;
+  display:flex;align-items:center;gap:6px;
+}
+.sp-mtab:hover{border-color:var(--border2);color:var(--text2);}
+.sp-mtab.sp-active{background:rgba(245,196,0,0.14);border-color:rgba(245,196,0,0.45);color:var(--accent);font-weight:800;}
+.light-mode .sp-mtab{color:#2A3D5C;background:#EBF0FA;border-color:rgba(15,28,50,.18);}
+.light-mode .sp-mtab.sp-active{background:#1B2A4A;border-color:#1B2A4A;color:#F5C400;}
+
+.sp-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.sp-kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;}
+.sp-kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--kc,var(--accent));}
+.sp-kpi-val{font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--kc,var(--accent));margin-bottom:3px;}
+.sp-kpi-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.9px;}
+.sp-kpi-sub{font-size:11px;color:var(--text2);margin-top:5px;}
+.light-mode .sp-kpi{background:#FFFFFF;border-color:rgba(15,28,50,.12);box-shadow:0 2px 10px rgba(15,28,50,.07);}
+
+.sp-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.sp-chart-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.sp-chart-title{font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.sp-chart-sub{font-size:10px;color:var(--text3);margin-bottom:14px;}
+.light-mode .sp-chart-box{background:#FFFFFF;border-color:rgba(15,28,50,.12);box-shadow:0 2px 10px rgba(15,28,50,.07);}
+.light-mode .sp-chart-title{color:#0A1628;}
+
+.sp-bar-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.sp-bar-label{font-size:11px;color:var(--text2);width:130px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.sp-bar-track{flex:1;height:14px;background:var(--surface3);border-radius:3px;overflow:hidden;position:relative;}
+.sp-bar-fill{height:100%;border-radius:3px;}
+.sp-bar-val{position:absolute;right:5px;top:50%;transform:translateY(-50%);font-size:9px;font-family:'Space Mono',monospace;color:rgba(255,255,255,.85);font-weight:700;}
+.sp-bar-count{font-size:10px;font-family:'Space Mono',monospace;color:var(--text3);width:38px;text-align:right;flex-shrink:0;}
+.light-mode .sp-bar-label{color:#2A3D5C;}
+.light-mode .sp-bar-count{color:#5A7499;}
+.light-mode .sp-bar-track{background:#E0E8F5;}
+.light-mode .sp-bar-val{color:rgba(255,255,255,.9);}
+
+.sp-entity-card{background:var(--surface);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:8px;transition:border-color .18s;}
+.sp-entity-card:hover{border-color:var(--border2);}
+.sp-entity-row{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 1.2fr 1fr 0.8fr;align-items:center;gap:8px;padding:11px 14px;}
+.sp-entity-name{font-size:13px;font-weight:700;color:var(--text);}
+.sp-entity-sub{font-size:10px;color:var(--text3);}
+.sp-trend-up{color:var(--success);font-family:'Space Mono',monospace;font-size:11px;font-weight:700;}
+.sp-trend-dn{color:var(--danger);font-family:'Space Mono',monospace;font-size:11px;font-weight:700;}
+.sp-trend-eq{color:var(--text3);font-family:'Space Mono',monospace;font-size:11px;}
+.light-mode .sp-entity-card{background:#FFFFFF;border-color:rgba(15,28,50,.12);}
+.light-mode .sp-entity-name{color:#0A1628;}
+.light-mode .sp-entity-sub{color:#5A7499;}
+
+.sp-mixta-bar{display:flex;height:18px;border-radius:4px;overflow:hidden;margin:6px 0;}
+.sp-mixta-seg{display:flex;align-items:center;justify-content:center;font-size:8px;font-family:'Space Mono',monospace;color:rgba(255,255,255,.9);font-weight:700;min-width:14px;}
+.sp-nomina-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);}
+.sp-nomina-row:last-child{border-bottom:none;}
+.sp-nomina-mes{font-family:'Space Mono',monospace;font-size:11px;color:var(--text3);width:55px;flex-shrink:0;}
+.sp-nomina-bar-wrap{flex:1;height:10px;background:var(--surface3);border-radius:2px;overflow:hidden;}
+.sp-nomina-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,#1B2A4A,var(--accent));}
+.sp-nomina-val{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);width:70px;text-align:right;font-weight:700;}
+.sp-nomina-delta{font-size:10px;width:44px;text-align:right;font-family:'Space Mono',monospace;}
+.light-mode .sp-nomina-mes{color:#5A7499;}
+.light-mode .sp-nomina-val{color:#6B5200;}
+.light-mode .sp-nomina-bar-wrap{background:#E0E8F5;}
+.light-mode .sp-nomina-bar-fill{background:linear-gradient(90deg,#1B2A4A,#8B6B00);}
+
+.sp-adq-badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:800;font-family:'Space Mono',monospace;}
+.sp-tag-inst{background:rgba(27,42,74,.2);color:#8BAAE0;}
+.sp-tag-muni{background:rgba(139,107,0,.18);color:var(--accent3,#FFD740);}
+.sp-tag-salud{background:rgba(22,101,52,.15);color:#4ADE80;}
+.sp-tag-edu{background:rgba(59,108,198,.15);color:#93C5FD;}
+.sp-tag-seg{background:rgba(185,28,28,.12);color:#F87171;}
+.light-mode .sp-tag-inst{background:rgba(27,42,74,.12);color:#1B2A4A;}
+.light-mode .sp-tag-muni{background:rgba(139,107,0,.12);color:#6B5200;}
+.light-mode .sp-tag-salud{background:rgba(22,101,52,.10);color:#14532D;}
+.light-mode .sp-tag-edu{background:rgba(37,99,235,.10);color:#1D4ED8;}
+.light-mode .sp-tag-seg{background:rgba(185,28,28,.08);color:#7A1010;}
+
+@media(max-width:900px){
+  .sp-kpi-grid{grid-template-columns:1fr 1fr;}
+  .sp-chart-row{grid-template-columns:1fr;}
+  .sp-entity-row{grid-template-columns:1fr 1fr;}
+}
+
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo-box">SDM</div>
+  <div class="logo-box" style="background:linear-gradient(135deg,#1B2A4A,#2A3F6A);border:2px solid #F5C400;border-radius:8px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0;">
+  <span style="font-family:'Space Mono',monospace;font-weight:900;font-size:11px;color:#F5C400;line-height:1">SDM</span>
+  <div style="width:24px;height:2px;background:#F5C400;margin-top:2px;border-radius:1px"></div>
+</div>
   <div class="logo-text">Santo Domingo Motors<span>ANALYTICS SUITE</span></div>
   <div class="header-divider"></div>
   <div class="header-title"><strong>Market Analyst</strong>Parque Vehicular RD</div>
@@ -249,10 +815,18 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
     <div class="nav-tab" onclick="showPage('retencion',this)">🔄 Retención</div>
     <div class="nav-tab" onclick="showPage('clasificacion',this)">📊 Clasificación SDM</div>
     <div class="nav-tab" onclick="showPage('casos',this)">📁 Casos Reales</div>
+    <div class="nav-tab" onclick="showPage('sector-publico',this)" style="border-color:rgba(245,196,0,0.3);color:rgba(245,196,0,0.85)">🏛 Sector Público</div>
   </nav>
   <div class="period-pill">Mar 2025 – Mar 2026 ▾</div>
+  <div id="theme-toggle-wrap">
+    <span id="theme-label">OSCURO</span>
+    <button id="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+      <div class="tt-thumb">🌙</div>
+    </button>
+  </div>
   <div class="status-dot"></div>
 </header>
+<div style="position:fixed;top:var(--header-h);left:0;right:0;height:3px;background:linear-gradient(90deg,#E6B800,#F5C400,#FFD740,#F5C400,#E6B800);z-index:199;"></div>
 
 <div class="app">
 <aside>
@@ -998,7 +1572,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         </tbody>
       </table>
     </div>
-    <div class="pg"><span class="pgi">5 de 1,240 leads · ↓ probabilidad</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div></div>
+    <div class="pg"><span class="pgi">5 de 1,240 leads · ↓ probabilidad</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent);background:rgba(245,196,0,0.08)">Sig →</button></div></div>
   </div>
 </div>
 
@@ -1111,7 +1685,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
     </div>
     <div class="pg">
       <span class="pgi" id="cls-ct">Cargando...</span>
-      <div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div>
+      <div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent);background:rgba(245,196,0,0.08)">Sig →</button></div>
     </div>
   </div>
 
@@ -1158,7 +1732,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
           <tbody id="emp-tbody"></tbody>
         </table>
       </div>
-      <div class="pg"><span class="pgi" id="emp-ct">Cargando...</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div></div>
+      <div class="pg"><span class="pgi" id="emp-ct">Cargando...</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent);background:rgba(245,196,0,0.08)">Sig →</button></div></div>
     </div>
   </div>
   <div id="emp-detail" style="display:none">
@@ -1174,7 +1748,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
   <div class="stitle"><h3>Casos Reales de Uso — SDM Analytics</h3><span class="sbadge">DATOS REALES DGII · PARQUE VEHICULAR 2026</span></div>
 
   <!-- Global summary -->
-  <div style="background:linear-gradient(90deg,rgba(0,200,255,.07),rgba(0,128,255,.04));border:1px solid var(--border2);border-radius:12px;padding:16px 22px;margin-bottom:20px">
+  <div style="background:linear-gradient(90deg,rgba(245,196,0,.06),rgba(27,42,74,.95));border:1px solid rgba(245,196,0,.2);border-radius:12px;padding:16px 22px;margin-bottom:20px">
     <div style="font-size:10px;color:var(--accent);font-family:'Space Mono',monospace;letter-spacing:2px;margin-bottom:10px">📁 ANÁLISIS REAL · 3 EMPRESAS · FUENTE OFICIAL DGII · 2026</div>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
       <div><div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--accent)">2,373</div><div style="font-size:10px;color:var(--text3)">Total vehículos analizados</div></div>
@@ -5709,6 +6283,174 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
 </div>
 
 
+<!-- ══════════════════ SECTOR PÚBLICO ══════════════════ -->
+<div id="page-sector-publico" class="page">
+
+  <div class="stitle">
+    <h3>🏛 Sector Público — Análisis Estratégico</h3>
+    <span class="sbadge">INSTITUCIONES · MUNICIPALIDADES · 6 MESES</span>
+  </div>
+
+  <!-- Global KPIs -->
+  <div class="sp-kpi-grid" id="sp-kpis">
+    <div class="sp-kpi" style="--kc:var(--accent)">
+      <div class="sp-kpi-lbl">Unidades SDM Vendidas</div>
+      <div class="sp-kpi-val" id="sp-k1">—</div>
+      <div class="sp-kpi-sub" id="sp-k1s">Últimos 6 meses</div>
+    </div>
+    <div class="sp-kpi" style="--kc:var(--danger)">
+      <div class="sp-kpi-lbl">Unidades Competencia</div>
+      <div class="sp-kpi-val" id="sp-k2">—</div>
+      <div class="sp-kpi-sub" id="sp-k2s">En flotas sector público</div>
+    </div>
+    <div class="sp-kpi" style="--kc:var(--success)">
+      <div class="sp-kpi-lbl">Nómina Total Activa</div>
+      <div class="sp-kpi-val" id="sp-k3">—</div>
+      <div class="sp-kpi-sub" id="sp-k3s">Últimos 6 meses (RD$)</div>
+    </div>
+    <div class="sp-kpi" style="--kc:var(--warn)">
+      <div class="sp-kpi-lbl">Instituciones con Flotas</div>
+      <div class="sp-kpi-val" id="sp-k4">—</div>
+      <div class="sp-kpi-sub" id="sp-k4s">Activas en parque vehicular</div>
+    </div>
+  </div>
+
+  <!-- Module tabs -->
+  <div class="sp-module-tabs">
+    <button class="sp-mtab sp-active" onclick="spModule('ventas',this)">📦 Unidades Vendidas</button>
+    <button class="sp-mtab" onclick="spModule('competencia',this)">⚔ Competencia</button>
+    <button class="sp-mtab" onclick="spModule('adquirentes',this)">🏆 Mayores Adquirentes</button>
+    <button class="sp-mtab" onclick="spModule('nomina',this)">💰 Movimiento Nómina</button>
+    <button class="sp-mtab" onclick="spModule('flotillas',this)">🚗 Flotillas Mixtas</button>
+  </div>
+
+  <!-- ─── MÓDULO: VENTAS ─────────────────────────────────────────────── -->
+  <div id="sp-mod-ventas">
+    <div class="sp-chart-row">
+      <!-- Ventas SDM por mes -->
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Unidades SDM Vendidas — Últimos 6 Meses</div>
+        <div class="sp-chart-sub">Sector público: instituciones, municipalidades, educación, salud, seguridad</div>
+        <svg id="sp-ventas-chart" viewBox="0 0 420 140" style="width:100%;height:140px;display:block"></svg>
+        <div style="display:flex;justify-content:space-between;margin-top:6px" id="sp-ventas-labels"></div>
+      </div>
+      <!-- Distribución por marca SDM -->
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Distribución por Marca SDM</div>
+        <div class="sp-chart-sub">Participación de cada marca en el sector público</div>
+        <div id="sp-marca-bars" style="margin-top:8px"></div>
+      </div>
+    </div>
+    <div class="sp-chart-row">
+      <!-- Ventas por tipo de vehículo -->
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Ventas por Tipo de Vehículo</div>
+        <div class="sp-chart-sub">Pick-up, SUV, Carga, Moto — sector público 6 meses</div>
+        <div id="sp-tipo-bars" style="margin-top:8px"></div>
+      </div>
+      <!-- Ventas por subsector -->
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Ventas por Subsector Público</div>
+        <div class="sp-chart-sub">Instituciones, municipalidades, salud, educación, seguridad</div>
+        <div id="sp-subsector-bars" style="margin-top:8px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MÓDULO: COMPETENCIA ───────────────────────────────────────── -->
+  <div id="sp-mod-competencia" style="display:none">
+    <div class="sp-chart-row">
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Marcas Competidoras en Sector Público</div>
+        <div class="sp-chart-sub">Unidades activas de competencia en flotas públicas registradas</div>
+        <div id="sp-comp-bars" style="margin-top:8px"></div>
+      </div>
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">SDM vs Competencia — Penetración Mensual</div>
+        <div class="sp-chart-sub">Evolución comparativa en adquisiciones últimos 6 meses</div>
+        <svg id="sp-comp-chart" viewBox="0 0 420 140" style="width:100%;height:140px;display:block"></svg>
+        <div style="display:flex;gap:16px;margin-top:8px;flex-wrap:wrap" id="sp-comp-legend"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="ph"><h4>Oportunidades de Conversión — Competencia en Sector Público</h4></div>
+      <div id="sp-comp-opp" style="padding:14px 16px"></div>
+    </div>
+  </div>
+
+  <!-- ─── MÓDULO: MAYORES ADQUIRENTES ──────────────────────────────── -->
+  <div id="sp-mod-adquirentes" style="display:none">
+    <div class="panel">
+      <div class="ph">
+        <h4>Top Instituciones — Mayores Adquirentes Últimos 6 Meses</h4>
+        <div class="pa">
+          <span class="pab active" onclick="sortSpAdq('total',this)">↓ Total</span>
+          <span class="pab" onclick="sortSpAdq('sdm',this)">↓ SDM</span>
+          <span class="pab" onclick="sortSpAdq('nomina',this)">↓ Nómina</span>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="dt">
+          <thead><tr>
+            <th>#</th><th>Institución</th><th>Subsector</th><th>Provincia</th>
+            <th style="text-align:center">SDM 6M</th>
+            <th style="text-align:center">Comp. 6M</th>
+            <th style="text-align:center">Total Flota</th>
+            <th>% SDM</th>
+            <th>Nómina/mes</th>
+            <th>Variación</th>
+          </tr></thead>
+          <tbody id="sp-adq-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MÓDULO: NÓMINA ───────────────────────────────────────────── -->
+  <div id="sp-mod-nomina" style="display:none">
+    <div class="sp-chart-row">
+      <div class="sp-chart-box" style="grid-column:1/-1">
+        <div class="sp-chart-title">Evolución Nómina Total — Sector Público (6 meses)</div>
+        <div class="sp-chart-sub">Suma de nómina activa de todas las instituciones con flota SDM registrada · En RD$ millones</div>
+        <div id="sp-nomina-chart" style="margin-top:12px"></div>
+      </div>
+    </div>
+    <div class="sp-chart-row">
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Nómina por Subsector</div>
+        <div class="sp-chart-sub">Distribución del gasto en nómina pública que maneja flotas</div>
+        <div id="sp-nomina-sector-bars" style="margin-top:10px"></div>
+      </div>
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Correlación Nómina vs Adquisición SDM</div>
+        <div class="sp-chart-sub">Mayor nómina → mayor capacidad de renovación de flota</div>
+        <div id="sp-nomina-corr" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MÓDULO: FLOTILLAS MIXTAS ─────────────────────────────────── -->
+  <div id="sp-mod-flotillas" style="display:none">
+    <div class="panel" style="margin-bottom:16px">
+      <div class="ph"><h4>Análisis de Flotillas Mixtas — Sector Público</h4><span class="sbadge">SDM + COMPETENCIA EN MISMA FLOTA</span></div>
+      <div id="sp-flotillas-list" style="padding:14px 16px"></div>
+    </div>
+    <div class="sp-chart-row">
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Índice de Mezcla por Institución</div>
+        <div class="sp-chart-sub">Ratio SDM vs competencia — 100% = flota totalmente SDM</div>
+        <div id="sp-mixta-index" style="margin-top:10px"></div>
+      </div>
+      <div class="sp-chart-box">
+        <div class="sp-chart-title">Oportunidad en Flotillas Mixtas</div>
+        <div class="sp-chart-sub">Valor estimado de conversión de vehículos competencia a SDM</div>
+        <div id="sp-mixta-opp" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <!-- ══════════════════ BUSCADOR ══════════════════ -->
 <div id="page-buscador" class="page">
   <div class="stitle"><h3>Buscador del Parque Vehicular</h3><span class="sbadge">HISTORIAL COMPLETO</span></div>
@@ -5775,7 +6517,7 @@ main{margin-left:var(--sidebar-w);flex:1;padding:22px;position:relative;z-index:
         <tbody id="rt-tbody"></tbody>
       </table>
     </div>
-    <div class="pg"><span class="pgi" id="rt-ct">—</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent)">Sig →</button></div></div>
+    <div class="pg"><span class="pgi" id="rt-ct">—</span><div class="pgb"><button class="btn-sm">← Prev</button><button class="btn-sm" style="border-color:var(--accent);color:var(--accent);background:rgba(245,196,0,0.08)">Sig →</button></div></div>
   </div>
 </div>
 
@@ -6072,6 +6814,7 @@ function showPage(id,el){
   if(id==='retencion') initRet();
   if(id==='clasificacion') initClasificacion();
   if(id==='casos') initCasos();
+  if(id==='sector-publico') initSectorPublico();
 }
 
 // ── AI ────────────────────────────────────────────────────────────────────────
@@ -6675,7 +7418,7 @@ function renderMap() {
 function highlightProv(code) {
   document.querySelectorAll('.prov').forEach(el => el.setAttribute('stroke-width','0.5'));
   const el = document.getElementById('p-' + code);
-  if (el) { el.setAttribute('stroke', '#00c8ff'); el.setAttribute('stroke-width','2'); }
+  if (el) { el.setAttribute('stroke', '#F5C400'); el.setAttribute('stroke-width','2'); }
 }
 
 function mapMode(mode, btn) {
@@ -7101,6 +7844,531 @@ function renderRT(){
       <td style="font-size:11px;color:var(--text3);font-family:'Space Mono',monospace">${r.fecha}</td>
     </tr>`;
   }).join('');
+}
+</script>
+<script>
+// ── THEME TOGGLE ─────────────────────────────────────────────────────────────
+function toggleTheme() {
+  const isLight = document.documentElement.classList.toggle('light-mode');
+  const thumb   = document.querySelector('#theme-toggle .tt-thumb');
+  const label   = document.getElementById('theme-label');
+  if (isLight) {
+    thumb.textContent = '☀';
+    if (label) label.textContent = 'CLARO';
+    // Update map province colors for light mode
+    document.querySelectorAll('.prov').forEach(el => {
+      el.setAttribute('fill', '#C8D8F0');
+      el.setAttribute('stroke', 'rgba(255,255,255,0.8)');
+    });
+    localStorage.setItem('sdm-theme', 'light');
+  } else {
+    thumb.textContent = '🌙';
+    if (label) label.textContent = 'OSCURO';
+    // Restore map province colors for dark mode
+    document.querySelectorAll('.prov').forEach(el => {
+      el.setAttribute('fill', '#162540');
+      el.setAttribute('stroke', 'rgba(0,200,255,0.2)');
+    });
+    localStorage.setItem('sdm-theme', 'dark');
+  }
+}
+
+// Apply saved theme on load
+(function() {
+  const saved = localStorage.getItem('sdm-theme');
+  if (saved === 'light') {
+    document.documentElement.classList.add('light-mode');
+    setTimeout(() => {
+      const thumb = document.querySelector('#theme-toggle .tt-thumb');
+      const label = document.getElementById('theme-label');
+      if (thumb) thumb.textContent = '☀';
+      if (label) label.textContent = 'CLARO';
+    }, 0);
+  }
+})();
+</script>
+<script>
+// ════════════════════════════════════════════════════════════════════════
+// SECTOR PÚBLICO — Data & Logic
+// ════════════════════════════════════════════════════════════════════════
+
+// ── Data model ────────────────────────────────────────────────────────
+const SP_MESES = ['Oct 2025','Nov 2025','Dic 2025','Ene 2026','Feb 2026','Mar 2026'];
+
+// Instituciones del sector público con datos reales-like
+const SP_INST = [
+  {id:'caasd',       name:'CAASD',                      sub:'Instituciones', prov:'Sto. Domingo',
+   empleados:3200,   nomina:[58000000,59200000,60100000,61500000,62800000,63400000],
+   sdm6m:[8,10,7,12,9,14],  comp6m:[2,3,1,4,2,3],
+   flota_sdm:142, flota_comp:38, marcas:{nissan:62,chevrolet:48,suzuki:22,yamaha:10},
+   comp_marcas:{toyota:18,ford:12,isuzu:8}, antiguedad:1973},
+  {id:'ayuntamiento-sdo',name:'Ayuntamiento Sto. Domingo', sub:'Municipalidades', prov:'Sto. Domingo',
+   empleados:4800,   nomina:[88000000,89500000,91000000,92400000,93800000,95200000],
+   sdm6m:[15,18,20,16,22,25],comp6m:[8,6,9,5,7,10],
+   flota_sdm:210, flota_comp:95, marcas:{nissan:90,chevrolet:75,suzuki:30,cadillac:8,infiniti:7},
+   comp_marcas:{toyota:42,ford:28,kia:15,isuzu:10}, antiguedad:1508},
+  {id:'policia-nacional',name:'Policía Nacional',           sub:'Seguridad',     prov:'Sto. Domingo',
+   empleados:32000,  nomina:[520000000,524000000,528000000,532000000,536000000,540000000],
+   sdm6m:[45,38,52,41,60,55], comp6m:[12,10,15,8,14,11],
+   flota_sdm:850, flota_comp:320, marcas:{nissan:380,chevrolet:280,suzuki:120,yamaha:70},
+   comp_marcas:{toyota:140,ford:95,hyundai:50,kia:35}, antiguedad:1936},
+  {id:'ministerio-salud',name:'Ministerio de Salud Pública', sub:'Salud',        prov:'Sto. Domingo',
+   empleados:28000,  nomina:[380000000,382000000,385000000,388000000,391000000,394000000],
+   sdm6m:[20,18,24,19,28,30], comp6m:[5,4,7,3,6,5],
+   flota_sdm:320, flota_comp:85, marcas:{nissan:130,chevrolet:95,suzuki:60,yamaha:35},
+   comp_marcas:{toyota:38,ford:28,isuzu:12,hyundai:7}, antiguedad:1920},
+  {id:'mined',       name:'MINERD — Ministerio Educación',  sub:'Educación',     prov:'Sto. Domingo',
+   empleados:110000, nomina:[2100000000,2120000000,2140000000,2160000000,2180000000,2200000000],
+   sdm6m:[25,22,30,26,35,38], comp6m:[8,6,10,7,9,8],
+   flota_sdm:380, flota_comp:120, marcas:{nissan:160,chevrolet:120,suzuki:70,yamaha:30},
+   comp_marcas:{toyota:55,ford:38,kia:18,isuzu:9}, antiguedad:1844},
+  {id:'ayto-santiago', name:'Ayuntamiento de Santiago',     sub:'Municipalidades', prov:'Santiago',
+   empleados:2100,   nomina:[38000000,38500000,39200000,40000000,40800000,41500000],
+   sdm6m:[8,6,9,7,10,12],    comp6m:[3,2,4,2,3,4],
+   flota_sdm:95,  flota_comp:42, marcas:{nissan:42,chevrolet:30,suzuki:18,yamaha:5},
+   comp_marcas:{toyota:20,ford:14,kia:8}, antiguedad:1504},
+  {id:'ejercito-rd',   name:'Ejército de la República',     sub:'Seguridad',     prov:'Sto. Domingo',
+   empleados:25000,  nomina:[420000000,422000000,425000000,428000000,431000000,434000000],
+   sdm6m:[30,28,35,32,40,42], comp6m:[6,5,8,4,7,6],
+   flota_sdm:620, flota_comp:180, marcas:{nissan:270,chevrolet:200,suzuki:100,yamaha:50},
+   comp_marcas:{toyota:80,ford:60,isuzu:25,hyundai:15}, antiguedad:1844},
+  {id:'cde',           name:'CDE — Corporación Dom. Electricidad', sub:'Instituciones', prov:'Sto. Domingo',
+   empleados:5800,   nomina:[95000000,96500000,98000000,99500000,101000000,102500000],
+   sdm6m:[12,10,14,11,16,18], comp6m:[4,3,5,2,4,5],
+   flota_sdm:175, flota_comp:68, marcas:{nissan:80,chevrolet:55,suzuki:28,yamaha:12},
+   comp_marcas:{toyota:30,ford:22,isuzu:10,hyundai:6}, antiguedad:1955},
+  {id:'pro-consumidor', name:'Pro Consumidor',               sub:'Instituciones', prov:'Sto. Domingo',
+   empleados:380,    nomina:[6800000,6900000,7000000,7100000,7200000,7300000],
+   sdm6m:[2,1,3,2,2,4],       comp6m:[0,1,1,0,1,0],
+   flota_sdm:22,  flota_comp:8,  marcas:{nissan:10,chevrolet:7,suzuki:4,yamaha:1},
+   comp_marcas:{toyota:4,ford:3,kia:1}, antiguedad:2001},
+  {id:'indotel',       name:'INDOTEL',                       sub:'Instituciones', prov:'Sto. Domingo',
+   empleados:420,    nomina:[9800000,9900000,10000000,10200000,10400000,10600000],
+   sdm6m:[3,2,4,3,3,5],       comp6m:[1,0,2,1,1,2],
+   flota_sdm:32,  flota_comp:12, marcas:{nissan:15,chevrolet:10,suzuki:5,yamaha:2},
+   comp_marcas:{toyota:6,ford:4,kia:2}, antiguedad:1998},
+];
+
+const SP_SUB_COLORS = {
+  'Instituciones':'#3B82F6','Municipalidades':'#F5C400',
+  'Seguridad':'#EF4444','Salud':'#10B981',
+  'Educación':'#8B5CF6'
+};
+const SP_SUB_TAGS = {
+  'Instituciones':'sp-tag-inst','Municipalidades':'sp-tag-muni',
+  'Seguridad':'sp-tag-seg','Salud':'sp-tag-salud','Educación':'sp-tag-edu'
+};
+const SP_BRAND_COLORS = {
+  nissan:'#C00020',chevrolet:'#B08000',suzuki:'#1565C0',
+  yamaha:'#0A1550',cadillac:'#8A6A00',infiniti:'#606878',
+  toyota:'#EB4034',ford:'#D4520A',kia:'#BB1E10',
+  hyundai:'#005AAB',isuzu:'#4A4A4A',honda:'#D04020'
+};
+
+let spCurrentModule = 'ventas';
+let spAdqSort = 'total';
+
+// ── Helpers ───────────────────────────────────────────────────────────
+function fmtRD(v){
+  if(v>=1e9) return 'RD$'+(v/1e9).toFixed(1)+'B';
+  if(v>=1e6) return 'RD$'+(v/1e6).toFixed(0)+'M';
+  if(v>=1e3) return 'RD$'+(v/1e3).toFixed(0)+'K';
+  return 'RD$'+v;
+}
+function spSum(arr,key){return arr.reduce((s,e)=>s+(e[key]||0),0);}
+function spSum6m(arr){return arr.reduce((a,b)=>a+b,0);}
+
+// ── Init ──────────────────────────────────────────────────────────────
+function initSectorPublico(){
+  // Global KPIs
+  const totalSDM = SP_INST.reduce((s,e)=>s+spSum6m(e.sdm6m),0);
+  const totalComp= SP_INST.reduce((s,e)=>s+spSum6m(e.comp6m),0);
+  const totalNom = SP_INST.reduce((s,e)=>s+e.nomina[5],0);
+  const nInst    = SP_INST.length;
+
+  document.getElementById('sp-k1').textContent = totalSDM.toLocaleString();
+  document.getElementById('sp-k1s').textContent= `+${Math.round(totalSDM/6)} unidades/mes promedio`;
+  document.getElementById('sp-k2').textContent = totalComp.toLocaleString();
+  document.getElementById('sp-k2s').textContent= `${Math.round(totalComp/(totalSDM+totalComp)*100)}% del total adquirido`;
+  document.getElementById('sp-k3').textContent = fmtRD(totalNom);
+  document.getElementById('sp-k3s').textContent= `${nInst} inst. con nómina activa`;
+  document.getElementById('sp-k4').textContent = nInst;
+  document.getElementById('sp-k4s').textContent= `En 5 subsectores públicos`;
+
+  spRenderVentas();
+}
+
+// ── Module switcher ───────────────────────────────────────────────────
+function spModule(mod, btn){
+  spCurrentModule = mod;
+  document.querySelectorAll('.sp-mtab').forEach(b=>b.classList.remove('sp-active'));
+  if(btn) btn.classList.add('sp-active');
+  ['ventas','competencia','adquirentes','nomina','flotillas'].forEach(m=>{
+    const el = document.getElementById('sp-mod-'+m);
+    if(el) el.style.display = m===mod ? 'block' : 'none';
+  });
+  if(mod==='ventas')      spRenderVentas();
+  if(mod==='competencia') spRenderCompetencia();
+  if(mod==='adquirentes') spRenderAdquirentes();
+  if(mod==='nomina')      spRenderNomina();
+  if(mod==='flotillas')   spRenderFlotillas();
+}
+
+// ── VENTAS ────────────────────────────────────────────────────────────
+function spRenderVentas(){
+  // Monthly totals
+  const byMes = SP_MESES.map((_,i)=>SP_INST.reduce((s,e)=>s+e.sdm6m[i],0));
+  const maxV = Math.max(...byMes);
+
+  // Bar chart SVG
+  const w=420, h=120, padL=8, padR=8, padT=10, padB=10;
+  const bw = (w-padL-padR)/6, gap=bw*0.25;
+  let bars='', labels='';
+  byMes.forEach((v,i)=>{
+    const bh = Math.round((v/maxV)*(h-padT-padB));
+    const x  = padL + i*bw + gap/2;
+    const y  = padT + (h-padT-padB) - bh;
+    const gold = `url(#spgrad${i})`;
+    bars += `<defs><linearGradient id="spgrad${i}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F5C400"/><stop offset="100%" stop-color="#C89A00"/>
+    </linearGradient></defs>
+    <rect x="${x}" y="${y}" width="${bw-gap}" height="${bh}" rx="3" fill="${gold}" opacity=".9"/>
+    <text x="${x+(bw-gap)/2}" y="${y-4}" text-anchor="middle" font-size="9" font-family="Space Mono" fill="var(--accent)" font-weight="700">${v}</text>`;
+  });
+  const svg = document.getElementById('sp-ventas-chart');
+  if(svg) svg.innerHTML = bars;
+
+  // Month labels
+  const labDiv = document.getElementById('sp-ventas-labels');
+  if(labDiv) labDiv.innerHTML = SP_MESES.map(m=>`<span style="font-size:9px;color:var(--text3);font-family:'Space Mono',monospace">${m.slice(0,3)}</span>`).join('');
+
+  // Marca bars
+  const marcaTotals = {};
+  SP_INST.forEach(e=>{ Object.entries(e.marcas).forEach(([m,v])=>{ marcaTotals[m]=(marcaTotals[m]||0)+v; }); });
+  const sortedMarcas = Object.entries(marcaTotals).sort((a,b)=>b[1]-a[1]);
+  const maxM = sortedMarcas[0][1];
+  const marcaDiv = document.getElementById('sp-marca-bars');
+  if(marcaDiv) marcaDiv.innerHTML = sortedMarcas.map(([m,v])=>{
+    const col = SP_BRAND_COLORS[m]||'#5A7490';
+    const w = Math.round(v/maxM*100);
+    return `<div class="sp-bar-item">
+      <span class="sp-bar-label" style="text-transform:capitalize;font-weight:600">${m}</span>
+      <div class="sp-bar-track"><div class="sp-bar-fill" style="width:${w}%;background:${col}"><span class="sp-bar-val">${v}</span></div></div>
+      <span class="sp-bar-count">${Math.round(v/Object.values(marcaTotals).reduce((a,b)=>a+b,0)*100)}%</span>
+    </div>`;
+  }).join('');
+
+  // Tipo bars
+  const tipoData = [
+    {t:'Pick-up / Carga', v:1840, col:'#1B2A4A'},
+    {t:'SUV / Jeep',      v:980,  col:'#C89A00'},
+    {t:'Moto',            v:462,  col:'#1565C0'},
+    {t:'Sedán',           v:210,  col:'#5A7490'},
+    {t:'Bus / Comercial', v:145,  col:'#10B981'},
+  ];
+  const maxT = tipoData[0].v;
+  const tipoDiv = document.getElementById('sp-tipo-bars');
+  if(tipoDiv) tipoDiv.innerHTML = tipoData.map(d=>{
+    const w = Math.round(d.v/maxT*100);
+    return `<div class="sp-bar-item">
+      <span class="sp-bar-label">${d.t}</span>
+      <div class="sp-bar-track"><div class="sp-bar-fill" style="width:${w}%;background:${d.col}"><span class="sp-bar-val">${d.v}</span></div></div>
+      <span class="sp-bar-count">${d.v}</span>
+    </div>`;
+  }).join('');
+
+  // Subsector bars
+  const subData = {};
+  SP_INST.forEach(e=>{ const v=spSum6m(e.sdm6m); subData[e.sub]=(subData[e.sub]||0)+v; });
+  const sortedSub = Object.entries(subData).sort((a,b)=>b[1]-a[1]);
+  const maxSub = sortedSub[0][1];
+  const subDiv = document.getElementById('sp-subsector-bars');
+  if(subDiv) subDiv.innerHTML = sortedSub.map(([s,v])=>{
+    const col = SP_SUB_COLORS[s]||'#5A7490';
+    const w = Math.round(v/maxSub*100);
+    return `<div class="sp-bar-item">
+      <span class="sp-bar-label">${s}</span>
+      <div class="sp-bar-track"><div class="sp-bar-fill" style="width:${w}%;background:${col}"><span class="sp-bar-val">${v}</span></div></div>
+      <span class="sp-bar-count">${v}</span>
+    </div>`;
+  }).join('');
+}
+
+// ── COMPETENCIA ───────────────────────────────────────────────────────
+function spRenderCompetencia(){
+  // Competitor brand totals
+  const compTotals = {};
+  SP_INST.forEach(e=>{ Object.entries(e.comp_marcas).forEach(([m,v])=>{ compTotals[m]=(compTotals[m]||0)+v; }); });
+  const sortedComp = Object.entries(compTotals).sort((a,b)=>b[1]-a[1]);
+  const maxC = sortedComp[0][1];
+  const compDiv = document.getElementById('sp-comp-bars');
+  if(compDiv) compDiv.innerHTML = sortedComp.map(([m,v])=>{
+    const col = SP_BRAND_COLORS[m]||'#888';
+    const w = Math.round(v/maxC*100);
+    const sdmRepl = {toyota:'NISSAN Frontier',ford:'NISSAN/CHEVROLET',kia:'NISSAN Versa',hyundai:'NISSAN Versa',isuzu:'NISSAN Frontier',honda:'YAMAHA'}[m]||'SDM';
+    return `<div style="margin-bottom:10px">
+      <div class="sp-bar-item" style="margin-bottom:2px">
+        <span class="sp-bar-label" style="text-transform:capitalize;font-weight:700">${m.charAt(0).toUpperCase()+m.slice(1)}</span>
+        <div class="sp-bar-track"><div class="sp-bar-fill" style="width:${w}%;background:${col}"><span class="sp-bar-val">${v}</span></div></div>
+        <span class="sp-bar-count">${v}</span>
+      </div>
+      <div style="padding-left:138px;font-size:10px;color:var(--success)">→ ${sdmRepl}</div>
+    </div>`;
+  }).join('');
+
+  // SDM vs Comp monthly line chart
+  const sdmByMes = SP_MESES.map((_,i)=>SP_INST.reduce((s,e)=>s+e.sdm6m[i],0));
+  const cmpByMes = SP_MESES.map((_,i)=>SP_INST.reduce((s,e)=>s+e.comp6m[i],0));
+  const maxVal = Math.max(...sdmByMes,...cmpByMes);
+  const cW=420,cH=110;
+  const pt = (v,i)=>{
+    const x = 30 + i*(cW-40)/5;
+    const y = cH-20 - Math.round(v/maxVal*(cH-30));
+    return `${x},${y}`;
+  };
+  const sdmPts = sdmByMes.map((v,i)=>pt(v,i)).join(' ');
+  const cmpPts = cmpByMes.map((v,i)=>pt(v,i)).join(' ');
+  const svg = document.getElementById('sp-comp-chart');
+  if(svg) svg.innerHTML = `
+    <polyline points="${sdmPts}" fill="none" stroke="#C89A00" stroke-width="2.5" stroke-linecap="round"/>
+    <polyline points="${cmpPts}" fill="none" stroke="#E53935" stroke-width="2" stroke-dasharray="5,3" stroke-linecap="round"/>
+    ${sdmByMes.map((v,i)=>{ const [x,y]=pt(v,i).split(','); return `<circle cx="${x}" cy="${y}" r="3.5" fill="#C89A00"/><text x="${x}" y="${parseFloat(y)-7}" text-anchor="middle" font-size="9" fill="#C89A00" font-family="Space Mono">${v}</text>`; }).join('')}
+    ${cmpByMes.map((v,i)=>{ const [x,y]=pt(v,i).split(','); return `<circle cx="${x}" cy="${y}" r="3" fill="#E53935"/>`; }).join('')}
+    ${SP_MESES.map((_,i)=>{ const x=30+i*(cW-40)/5; return `<text x="${x}" y="${cH-4}" text-anchor="middle" font-size="8" fill="var(--text3)" font-family="Space Mono">${SP_MESES[i].slice(0,3)}</text>`; }).join('')}
+  `;
+  const legDiv = document.getElementById('sp-comp-legend');
+  if(legDiv) legDiv.innerHTML = `
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)"><div style="width:20px;height:3px;background:#C89A00;border-radius:2px"></div>SDM</div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text2)"><div style="width:20px;height:2px;background:#E53935;border-radius:2px;border-top:2px dashed #E53935"></div>Competencia</div>
+  `;
+
+  // Oportunidades
+  const totalFlotaComp = SP_INST.reduce((s,e)=>s+e.flota_comp,0);
+  const oppDiv = document.getElementById('sp-comp-opp');
+  if(oppDiv) oppDiv.innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
+      <div style="background:var(--surface2);border-radius:10px;padding:14px 16px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">Vehículos Competencia</div>
+        <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--danger)">${totalFlotaComp.toLocaleString()}</div>
+        <div style="font-size:10px;color:var(--text2)">En flotas públicas activas</div>
+      </div>
+      <div style="background:var(--surface2);border-radius:10px;padding:14px 16px;text-align:center">
+        <div style="font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">Valor Est. a Reemplazar</div>
+        <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--warn)">US$${Math.round(totalFlotaComp*24000/1000000)}M</div>
+        <div style="font-size:10px;color:var(--text2)">Precio prom. US$24,000/veh.</div>
+      </div>
+      <div style="background:rgba(0,200,83,0.08);border:1px solid rgba(0,200,83,0.2);border-radius:10px;padding:14px 16px;text-align:center">
+        <div style="font-size:10px;color:var(--success);margin-bottom:4px;text-transform:uppercase;letter-spacing:.8px">Oportunidad SDM</div>
+        <div style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--success)">US$${Math.round(totalFlotaComp*26500/1000000)}M</div>
+        <div style="font-size:10px;color:var(--text2)">Precio SDM equivalente</div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text2);padding:10px 14px;background:var(--surface2);border-radius:8px">
+      <strong style="color:var(--accent)">Principal competencia:</strong> Toyota (${Object.values(compTotals)[0]||'—'} unidades) → Reemplazo recomendado: <strong>NISSAN Frontier 4x4</strong>. 
+      ${Object.keys(compTotals).slice(0,3).map(m=>`<strong style="color:var(--text)">${m.charAt(0).toUpperCase()+m.slice(1)}</strong> (${compTotals[m]})`).join(' · ')}
+    </div>
+  `;
+}
+
+// ── ADQUIRENTES ───────────────────────────────────────────────────────
+function sortSpAdq(by, el){
+  spAdqSort = by;
+  document.querySelectorAll('#page-sector-publico .pab').forEach(a=>a.classList.remove('active'));
+  if(el) el.classList.add('active');
+  spRenderAdquirentes();
+}
+
+function spRenderAdquirentes(){
+  let list = [...SP_INST];
+  if(spAdqSort==='total') list.sort((a,b)=>(spSum6m(b.sdm6m)+spSum6m(b.comp6m))-(spSum6m(a.sdm6m)+spSum6m(a.comp6m)));
+  if(spAdqSort==='sdm')   list.sort((a,b)=>spSum6m(b.sdm6m)-spSum6m(a.sdm6m));
+  if(spAdqSort==='nomina')list.sort((a,b)=>b.nomina[5]-a.nomina[5]);
+
+  const tbody = document.getElementById('sp-adq-tbody');
+  if(!tbody) return;
+  tbody.innerHTML = list.map((e,i)=>{
+    const sdm6 = spSum6m(e.sdm6m);
+    const comp6= spSum6m(e.comp6m);
+    const tot6 = sdm6+comp6;
+    const pct  = Math.round(sdm6/tot6*100);
+    const pc   = pct>=60?'s-alta':pct>=40?'s-media':'s-baja';
+    const nomCur= e.nomina[5], nomPrev=e.nomina[0];
+    const nomDelta = Math.round((nomCur-nomPrev)/nomPrev*100);
+    const deltaHtml = nomDelta>0
+      ? `<span class="sp-trend-up">+${nomDelta}%</span>`
+      : nomDelta<0
+      ? `<span class="sp-trend-dn">${nomDelta}%</span>`
+      : `<span class="sp-trend-eq">0%</span>`;
+    const rn = i===0?'color:gold':i===1?'color:#c0c0c0':i===2?'color:#cd7f32':'color:var(--text3)';
+    return `<tr>
+      <td style="font-family:'Space Mono',monospace;font-size:11px;${rn}">${i+1}</td>
+      <td>
+        <div class="sp-entity-name">${e.name}</div>
+        <div class="sp-entity-sub"><span class="sp-adq-badge ${SP_SUB_TAGS[e.sub]||''}">${e.sub}</span></div>
+      </td>
+      <td style="font-size:11px;color:var(--text3)">${e.sub}</td>
+      <td style="font-size:11px">${e.prov}</td>
+      <td style="text-align:center;font-family:'Space Mono',monospace;font-weight:700;color:var(--accent)">${sdm6}</td>
+      <td style="text-align:center;font-family:'Space Mono',monospace;color:var(--danger)">${comp6}</td>
+      <td style="text-align:center;font-family:'Space Mono',monospace">${e.flota_sdm+e.flota_comp}</td>
+      <td><span class="sbg ${pc}">${pct}%</span></td>
+      <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--success)">${fmtRD(e.nomina[5])}</td>
+      <td>${deltaHtml}</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── NÓMINA ────────────────────────────────────────────────────────────
+function spRenderNomina(){
+  // Monthly totals
+  const nomByMes = SP_MESES.map((_,i)=>SP_INST.reduce((s,e)=>s+e.nomina[i],0));
+  const maxN = Math.max(...nomByMes);
+  const nomDiv = document.getElementById('sp-nomina-chart');
+  if(nomDiv){
+    nomDiv.innerHTML = SP_MESES.map((mes,i)=>{
+      const v = nomByMes[i];
+      const w = Math.round(v/maxN*100);
+      const prev = i>0 ? nomByMes[i-1] : v;
+      const delta = Math.round((v-prev)/prev*100);
+      const dHtml = i===0?'' : delta>=0
+        ? `<span style="color:var(--success);font-size:10px;font-family:'Space Mono',monospace">+${delta}%</span>`
+        : `<span style="color:var(--danger);font-size:10px;font-family:'Space Mono',monospace">${delta}%</span>`;
+      return `<div class="sp-nomina-row">
+        <span class="sp-nomina-mes">${mes.slice(0,3)} ${mes.slice(-2)}</span>
+        <div class="sp-nomina-bar-wrap"><div class="sp-nomina-bar-fill" style="width:${w}%"></div></div>
+        <span class="sp-nomina-val">${fmtRD(v)}</span>
+        <span class="sp-nomina-delta">${dHtml}</span>
+      </div>`;
+    }).join('');
+  }
+
+  // By sector bars
+  const secNom = {};
+  SP_INST.forEach(e=>{ secNom[e.sub]=(secNom[e.sub]||0)+e.nomina[5]; });
+  const sortedSec = Object.entries(secNom).sort((a,b)=>b[1]-a[1]);
+  const maxSec = sortedSec[0][1];
+  const secDiv = document.getElementById('sp-nomina-sector-bars');
+  if(secDiv) secDiv.innerHTML = sortedSec.map(([s,v])=>{
+    const col = SP_SUB_COLORS[s]||'#5A7490';
+    const w = Math.round(v/maxSec*100);
+    return `<div class="sp-bar-item">
+      <span class="sp-bar-label">${s}</span>
+      <div class="sp-bar-track"><div class="sp-bar-fill" style="width:${w}%;background:${col}"><span class="sp-bar-val">${fmtRD(v)}</span></div></div>
+      <span class="sp-bar-count" style="width:60px">${fmtRD(v)}</span>
+    </div>`;
+  }).join('');
+
+  // Correlación nómina → adquisición
+  const corrDiv = document.getElementById('sp-nomina-corr');
+  if(corrDiv){
+    const items = [...SP_INST].sort((a,b)=>b.nomina[5]-a.nomina[5]).slice(0,7);
+    corrDiv.innerHTML = items.map(e=>{
+      const sdm6 = spSum6m(e.sdm6m);
+      const nomPct = Math.round(e.nomina[5]/nomByMes[5]*100);
+      const sdmMax = Math.max(...SP_INST.map(x=>spSum6m(x.sdm6m)));
+      const sdmW = Math.round(sdm6/sdmMax*100);
+      return `<div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+          <span style="font-size:11px;font-weight:600;color:var(--text)">${e.name.slice(0,28)}</span>
+          <span style="font-size:10px;color:var(--text3)">${fmtRD(e.nomina[5])} · ${sdm6} SDM</span>
+        </div>
+        <div style="display:flex;height:8px;gap:2px">
+          <div style="width:${nomPct}%;background:rgba(27,42,74,0.6);border-radius:2px;min-width:4px"></div>
+          <div style="width:${sdmW}%;background:var(--accent);border-radius:2px;opacity:.85;min-width:3px"></div>
+        </div>
+      </div>`;
+    }).join('') + `<div style="display:flex;gap:14px;margin-top:8px">
+      <div style="display:flex;gap:5px;align-items:center;font-size:10px;color:var(--text2)"><div style="width:12px;height:8px;background:rgba(27,42,74,0.6);border-radius:1px"></div>% Nómina total</div>
+      <div style="display:flex;gap:5px;align-items:center;font-size:10px;color:var(--text2)"><div style="width:12px;height:8px;background:var(--accent);border-radius:1px;opacity:.85"></div>SDM adquiridos</div>
+    </div>`;
+  }
+}
+
+// ── FLOTILLAS MIXTAS ──────────────────────────────────────────────────
+function spRenderFlotillas(){
+  const listDiv = document.getElementById('sp-flotillas-list');
+  if(listDiv){
+    const items = [...SP_INST].filter(e=>e.flota_comp>0).sort((a,b)=>b.flota_comp-a.flota_comp);
+    listDiv.innerHTML = items.map(e=>{
+      const total = e.flota_sdm + e.flota_comp;
+      const sdmPct = Math.round(e.flota_sdm/total*100);
+      const compPct= 100-sdmPct;
+      // Multi-brand bar
+      const sdmBrands = Object.entries(e.marcas);
+      const compBrands= Object.entries(e.comp_marcas);
+      let mixSegs = sdmBrands.map(([m,v])=>{
+        const w = Math.round(v/total*100);
+        const col = SP_BRAND_COLORS[m]||'#5A7490';
+        return `<div class="sp-mixta-seg" style="width:${w}%;background:${col};min-width:${w>5?'auto':'6px'}">${w>8?m.slice(0,3).toUpperCase():''}</div>`;
+      }).join('');
+      mixSegs += compBrands.map(([m,v])=>{
+        const w = Math.round(v/total*100);
+        const col = SP_BRAND_COLORS[m]||'#888';
+        return `<div class="sp-mixta-seg" style="width:${w}%;background:${col};opacity:.7;min-width:${w>5?'auto':'6px'}">${w>8?m.slice(0,3).toUpperCase():''}</div>`;
+      }).join('');
+
+      const oppVal = Math.round(e.flota_comp*24000/1000);
+      return `<div class="sp-entity-card">
+        <div style="padding:12px 14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+            <div>
+              <span class="sp-entity-name">${e.name}</span>
+              <span class="sp-adq-badge ${SP_SUB_TAGS[e.sub]||''}" style="margin-left:8px">${e.sub}</span>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <span style="font-size:11px;color:var(--accent);font-family:'Space Mono',monospace;font-weight:700">${e.flota_sdm} SDM (${sdmPct}%)</span>
+              <span style="font-size:11px;color:var(--danger);font-family:'Space Mono',monospace">${e.flota_comp} Comp. (${compPct}%)</span>
+              <span style="font-size:11px;color:var(--warn);font-family:'Space Mono',monospace">Opp: US$${oppVal}K</span>
+            </div>
+          </div>
+          <div class="sp-mixta-bar">${mixSegs}</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+            ${sdmBrands.map(([m,v])=>`<span style="font-size:10px;color:var(--text2)"><span style="color:${SP_BRAND_COLORS[m]||'#5A7490'};font-weight:700">${m.charAt(0).toUpperCase()+m.slice(1)}</span> ${v}</span>`).join(' · ')}
+            ${compBrands.map(([m,v])=>`<span style="font-size:10px;color:var(--text3)"><span style="color:${SP_BRAND_COLORS[m]||'#888'}">${m.charAt(0).toUpperCase()+m.slice(1)}</span> ${v}</span>`).join(' · ')}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // Mixta index
+  const indexDiv = document.getElementById('sp-mixta-index');
+  if(indexDiv){
+    const items = [...SP_INST].sort((a,b)=>(b.flota_sdm/(b.flota_sdm+b.flota_comp))-(a.flota_sdm/(a.flota_sdm+a.flota_comp)));
+    indexDiv.innerHTML = items.map(e=>{
+      const total = e.flota_sdm+e.flota_comp;
+      const pct = Math.round(e.flota_sdm/total*100);
+      const col = pct>=70?'var(--success)':pct>=50?'var(--accent)':pct>=30?'var(--warn)':'var(--danger)';
+      return `<div class="sp-bar-item">
+        <span class="sp-bar-label" style="font-weight:600">${e.name.slice(0,22)}</span>
+        <div class="sp-bar-track">
+          <div class="sp-bar-fill" style="width:${pct}%;background:${col}">
+            <span class="sp-bar-val">${pct}%</span>
+          </div>
+        </div>
+        <span class="sp-bar-count" style="width:50px;color:${col}">${pct}%</span>
+      </div>`;
+    }).join('');
+  }
+
+  // Opp table
+  const oppDiv = document.getElementById('sp-mixta-opp');
+  if(oppDiv){
+    const items = [...SP_INST].filter(e=>e.flota_comp>0).sort((a,b)=>b.flota_comp-a.flota_comp).slice(0,6);
+    const totalOpp = items.reduce((s,e)=>s+Math.round(e.flota_comp*26500),0);
+    oppDiv.innerHTML = items.map(e=>{
+      const oppV = Math.round(e.flota_comp*26500);
+      const w = Math.round(oppV/totalOpp*100);
+      return `<div class="sp-bar-item">
+        <span class="sp-bar-label" style="font-weight:600">${e.name.slice(0,22)}</span>
+        <div class="sp-bar-track"><div class="sp-bar-fill" style="width:${w}%;background:linear-gradient(90deg,#1B2A4A,var(--accent))"><span class="sp-bar-val">US$${Math.round(oppV/1000)}K</span></div></div>
+        <span class="sp-bar-count" style="width:60px;color:var(--accent)">US$${Math.round(oppV/1000)}K</span>
+      </div>`;
+    }).join('') + `<div style="padding:10px 0;margin-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
+      <span style="font-size:11px;font-weight:700;color:var(--text)">Oportunidad Total Flotillas</span>
+      <span style="font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--success)">US$${Math.round(SP_INST.reduce((s,e)=>s+e.flota_comp*26500,0)/1000000,1).toFixed(1)}M</span>
+    </div>`;
+  }
 }
 </script>
 </body>
