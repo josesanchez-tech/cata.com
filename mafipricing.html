@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAFI — Tarifario 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #CF1B28;
+    --red-dark: #a81520;
+    --red-pale: #fdf2f3;
+    --black: #0d0d0d;
+    --off-white: #f9f7f7;
+    --gray: #6e6e6e;
+    --border: #e4dede;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--off-white);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 0 80px;
+  }
+
+  /* HEADER */
+  .header-band {
+    background: var(--black);
+    padding: 40px 56px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    animation: fadeDown 0.6s ease both;
+  }
+
+  .logo-wrap svg {
+    display: block;
+    height: 64px;
+    width: auto;
+  }
+
+  .header-meta { text-align: right; }
+
+  .header-meta .label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  .header-meta .doc-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .header-meta .date {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 1px;
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  .accent-bar {
+    height: 5px;
+    background: linear-gradient(90deg, var(--red) 0%, var(--red-dark) 100%);
+    animation: slideRight 0.8s 0.2s ease both;
+    transform-origin: left;
+  }
+
+  /* BODY */
+  .body { padding: 52px 56px 0; }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 52px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .section:nth-child(1) { animation-delay: 0.25s; }
+  .section:nth-child(2) { animation-delay: 0.4s; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--black);
+    white-space: nowrap;
+  }
+
+  .combo-tag {
+    background: var(--red);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .section-rule {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* TABLE */
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  }
+
+  .pricing-table thead tr { background: var(--black); }
+
+  .pricing-table thead th {
+    padding: 13px 24px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #aaa;
+    text-align: left;
+  }
+
+  .pricing-table thead th.right { text-align: right; }
+
+  .pricing-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+  }
+  .pricing-table tbody tr:last-child { border-bottom: none; }
+  .pricing-table tbody tr:hover { background: var(--red-pale); }
+
+  .pricing-table td {
+    padding: 15px 24px;
+    vertical-align: middle;
+  }
+
+  .qty-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .qty-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .qty-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .qty-label.popular { background: var(--red); color: #fff; }
+  .qty-label.best    { background: var(--black); color: #fff; }
+
+  .unit-price {
+    text-align: right;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--gray);
+  }
+
+  .total-price {
+    text-align: right;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  tr.is-popular .total-price { color: var(--red); }
+
+  .table-note {
+    margin-top: 12px;
+    font-size: 11px;
+    color: var(--gray);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .table-note .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--red);
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  .footer {
+    margin: 0 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeUp 0.6s 0.55s ease both;
+    opacity: 0;
+    animation-fill-mode: forwards;
+  }
+
+  .footer-logo svg {
+    height: 32px;
+    width: auto;
+    display: block;
+  }
+
+  .footer-info {
+    text-align: right;
+    font-size: 11px;
+    color: var(--gray);
+    line-height: 1.7;
+  }
+
+  .footer-info strong { color: var(--black); font-weight: 600; }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideRight {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* PRINT BUTTON */
+  .print-btn {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    z-index: 999;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 13px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    box-shadow: 0 4px 20px rgba(207,27,40,0.35);
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .print-btn:hover {
+    background: var(--red-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(207,27,40,0.45);
+  }
+  .print-btn:active { transform: translateY(0); }
+  .print-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+  @media print {
+    @page { size: A4 portrait; margin: 0; }
+
+    html, body {
+      width: 210mm;
+      height: 297mm;
+      overflow: hidden;
+      background: white !important;
+    }
+
+    .print-btn { display: none !important; }
+
+    * {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    .page { max-width: 100%; width: 210mm; padding-bottom: 0; }
+
+    .header-band { padding: 18px 32px 16px; }
+    .logo-wrap svg { height: 42px; }
+    .header-meta .doc-title { font-size: 18px; }
+    .header-meta .label { font-size: 7px; }
+    .header-meta .date { font-size: 8px; margin-top: 4px; }
+    .accent-bar { height: 3px; }
+
+    .body { padding: 22px 32px 0; }
+    .section { margin-bottom: 20px; }
+    .section-header { margin-bottom: 10px; }
+    .section-title { font-size: 17px; }
+    .combo-tag { font-size: 7px; padding: 3px 8px; }
+
+    .pricing-table thead th { padding: 7px 12px; font-size: 7px; }
+    .pricing-table td { padding: 6px 12px; }
+    .qty-num { font-size: 16px; }
+    .qty-label { font-size: 6.5px; padding: 2px 5px; }
+    .unit-price { font-size: 10px; }
+    .total-price { font-size: 17px; }
+    .table-note { font-size: 8px; margin-top: 5px; }
+
+    .footer { margin: 0 32px; padding-top: 14px; }
+    .footer-logo svg { height: 20px; }
+    .footer-info { font-size: 8.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header-band">
+    <div class="logo-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="368" height="110" viewBox="0 0 368 110">
+        <path d="M0 0 C9.9 0 19.8 0 30 0 C32.99539128 5.99078256 35.84229245 11.7389037 38.26953125 17.9296875 C38.55196182 18.63921066 38.8343924 19.34873383 39.12538147 20.07975769 C40.02529129 22.34319723 40.91906151 24.60899927 41.8125 26.875 C42.43271181 28.43952786 43.05331965 30.00389877 43.67431641 31.56811523 C44.59675135 33.89222102 45.51872508 36.21650127 46.43878174 38.54154968 C48.17304518 42.9238606 49.92209071 47.29965093 51.69140625 51.66796875 C52.06869873 52.6007666 52.44599121 53.53356445 52.8347168 54.49462891 C53.50963241 56.16061398 54.18674781 57.82571022 54.86645508 59.48974609 C57 64.77751146 57 64.77751146 57 67 C57.66 67 58.32 67 59 67 C59.15479324 66.43411163 59.30958649 65.86822327 59.46907043 65.28518677 C61.59746734 57.83191342 64.39829283 50.72644958 67.32421875 43.5546875 C67.83598875 42.29118452 68.34735963 41.0275198 68.85835266 39.76370239 C70.19091696 36.4709583 71.52881695 33.18040916 72.86791992 29.89031982 C74.23880505 26.51935943 75.60457155 23.1463265 76.97070312 19.7734375 C79.6416728 13.18005064 82.3210216 6.5901594 85 0 C94.9 0 104.8 0 115 0 C115 33.33 115 66.66 115 101 C106.75 101 98.5 101 90 101 C89.67 83.18 89.34 65.36 89 47 C82.4 64.82 75.8 82.64 69 101 C61.74 101 54.48 101 47 101 C45.27561171 96.50621818 43.55204683 92.01213508 41.83032227 87.51733398 C41.24807869 85.99796006 40.66541634 84.47874653 40.08227539 82.9597168 C35.62234943 71.34074086 31.30304476 59.67969291 27 48 C26.67 65.49 26.34 82.98 26 101 C17.42 101 8.84 101 0 101 C0 67.67 0 34.34 0 0 Z" fill="#ffffff" transform="translate(6,6)"/>
+        <path d="M0 0 C1.20970459 0.00523682 2.41940918 0.01047363 3.66577148 0.01586914 C4.97094727 0.0190918 6.27612305 0.02231445 7.62084961 0.02563477 C9.00952213 0.03399138 10.39819401 0.04245634 11.78686523 0.05102539 C13.17944179 0.05603873 14.57202005 0.06060193 15.96459961 0.06469727 C19.38456394 0.07653105 22.80444367 0.09301659 26.22436523 0.11352539 C29.61428522 7.34716766 32.3568781 14.76192998 35.04077148 22.28149414 C35.50162487 23.5645133 35.9628093 24.8474136 36.42430115 26.13020325 C37.63785241 29.50580613 38.84754865 32.88277667 40.05621338 36.26013184 C41.9561565 41.56714864 43.86185471 46.87210329 45.76743698 52.17709732 C46.24064402 53.49479435 46.713629 54.81257116 47.18638992 56.13042831 C49.89562984 63.68208347 52.62437333 71.22606153 55.3918457 78.7565918 C55.64915812 79.45682244 55.90647055 80.15705309 56.17158031 80.87850285 C57.40974903 84.24571243 58.65065984 87.61188645 59.89491272 90.97685242 C60.33226242 92.16317764 60.76961212 93.34950287 61.22021484 94.57177734 C61.6082579 95.62089798 61.99630096 96.67001862 62.39610291 97.75093079 C63.22436523 100.11352539 63.22436523 100.11352539 63.22436523 101.11352539 C53.98436523 101.11352539 44.74436523 101.11352539 35.22436523 101.11352539 C34.39936523 98.67977539 33.57436523 96.24602539 32.72436523 93.73852539 C32.3328125 92.5911792 32.3328125 92.5911792 31.93334961 91.4206543 C30.22436523 86.33574761 30.22436523 86.33574761 30.22436523 84.11352539 C18.01436523 84.44352539 5.80436523 84.77352539 -6.77563477 85.11352539 C-8.42563477 90.06352539 -10.07563477 95.01352539 -11.77563477 100.11352539 C-12.77563477 101.11352539 -12.77563477 101.11352539 -15.36767578 101.22705078 C-16.49359131 101.22181396 -17.61950684 101.21657715 -18.77954102 101.21118164 C-20.60195312 101.20634766 -20.60195312 101.20634766 -22.46118164 101.20141602 C-23.74057617 101.19303711 -25.0199707 101.1846582 -26.33813477 101.17602539 C-27.62139648 101.17151367 -28.9046582 101.16700195 -30.22680664 101.16235352 C-33.40979499 101.15052085 -36.59269239 101.13403607 -39.77563477 101.11352539 C-31.78491197 77.48213784 -23.27973082 54.04421688 -14.69525146 30.62310791 C-13.82812923 28.25677985 -12.96210753 25.89005227 -12.09643555 23.52319336 C-10.68142812 19.65583308 -9.26082208 15.79056729 -7.83813477 11.92602539 C-7.43143555 10.81662598 -7.02473633 9.70722656 -6.60571289 8.56420898 C-6.05753906 7.08235107 -6.05753906 7.08235107 -5.49829102 5.57055664 C-5.18641846 4.72468994 -4.8745459 3.87882324 -4.55322266 3.00732422 C-3.35813206 0.09670641 -3.3011791 0.13502052 0 0 Z M11.22436523 30.11352539 C9.65387976 34.63284796 8.08740287 39.15353198 6.5246582 43.67553711 C5.99223589 45.2143318 5.45871157 46.75274566 4.92407227 48.29077148 C4.15669779 50.49893068 3.39327016 52.70841993 2.63061523 54.91821289 C2.39000366 55.60785126 2.14939209 56.29748962 1.90148926 57.00802612 C0.64849542 60.48026424 0.64849542 60.48026424 0.22436523 64.11352539 C7.81436523 64.11352539 15.40436523 64.11352539 23.22436523 64.11352539 C20.90326198 55.46638431 20.90326198 55.46638431 18.18139648 47.00805664 C17.83012695 46.00581055 17.47885742 45.00356445 17.11694336 43.97094727 C16.76051758 42.96612305 16.4040918 41.96129883 16.03686523 40.92602539 C15.66883789 39.87866211 15.30081055 38.83129883 14.92163086 37.75219727 C14.02595262 35.20474876 13.12682708 32.65857687 12.22436523 30.11352539 C11.89436523 30.11352539 11.56436523 30.11352539 11.22436523 30.11352539 Z" fill="#ffffff" transform="translate(174.775634765625,5.886474609375)"/>
+        <path d="M0 0 C22.11 0 44.22 0 67 0 C67 6.6 67 13.2 67 20 C53.14 20 39.28 20 25 20 C25 26.93 25 33.86 25 41 C35.23 41 45.46 41 56 41 C56 47.6 56 54.2 56 61 C45.77 61 35.54 61 25 61 C25 74.2 25 87.4 25 101 C16.75 101 8.5 101 0 101 C0 67.67 0 34.34 0 0 Z" fill="#CF1B28" transform="translate(252,6)"/>
+        <path d="M0 0 C8.58 0 17.16 0 26 0 C26 33.33 26 66.66 26 101 C17.42 101 8.84 101 0 101 C0 67.67 0 34.34 0 0 Z" fill="#CF1B28" transform="translate(334,6)"/>
+      </svg>
+    </div>
+    <div class="header-meta">
+      <div class="label">Documento oficial</div>
+      <div class="doc-title">Tarifario de Planes</div>
+      <div class="date">Vigente · Marzo 2026</div>
+    </div>
+  </div>
+  <div class="accent-bar"></div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- PLANES MAFI + PRESTAN2 -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Planes MAFI</div>
+        <div class="combo-tag">+ PRESTAN2</div>
+        <div class="section-rule"></div>
+      </div>
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Paquete de Consultas</th>
+            <th class="right">Precio Unitario</th>
+            <th class="right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">1</span></div></td>
+            <td class="unit-price">$650.00</td>
+            <td class="total-price">$650.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">5</span></div></td>
+            <td class="unit-price">$630.00</td>
+            <td class="total-price">$3,150.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">12</span></div></td>
+            <td class="unit-price">$620.00</td>
+            <td class="total-price">$7,440.00</td>
+          </tr>
+          <tr class="is-popular">
+            <td><div class="qty-wrap"><span class="qty-num">20</span><span class="qty-label popular">Popular</span></div></td>
+            <td class="unit-price">$600.00</td>
+            <td class="total-price">$12,000.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">30</span></div></td>
+            <td class="unit-price">$580.00</td>
+            <td class="total-price">$17,400.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">50</span></div></td>
+            <td class="unit-price">$560.00</td>
+            <td class="total-price">$28,000.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">70</span></div></td>
+            <td class="unit-price">$540.00</td>
+            <td class="total-price">$37,800.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">100</span><span class="qty-label best">Máximo ahorro</span></div></td>
+            <td class="unit-price">$520.00</td>
+            <td class="total-price">$52,000.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note"><span class="dot"></span> Impuestos NO incluidos</div>
+    </div>
+
+    <!-- PLANES MAFI -->
+    <div class="section">
+      <div class="section-header">
+        <div class="section-title">Planes MAFI</div>
+        <div class="section-rule"></div>
+      </div>
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Paquete de Consultas</th>
+            <th class="right">Precio Unitario</th>
+            <th class="right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">1</span></div></td>
+            <td class="unit-price">$200.00</td>
+            <td class="total-price">$200.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">5</span></div></td>
+            <td class="unit-price">$190.00</td>
+            <td class="total-price">$950.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">12</span></div></td>
+            <td class="unit-price">$180.00</td>
+            <td class="total-price">$2,160.00</td>
+          </tr>
+          <tr class="is-popular">
+            <td><div class="qty-wrap"><span class="qty-num">20</span><span class="qty-label popular">Popular</span></div></td>
+            <td class="unit-price">$170.00</td>
+            <td class="total-price">$3,400.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">30</span></div></td>
+            <td class="unit-price">$160.00</td>
+            <td class="total-price">$4,800.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">50</span></div></td>
+            <td class="unit-price">$150.00</td>
+            <td class="total-price">$7,500.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">70</span></div></td>
+            <td class="unit-price">$140.00</td>
+            <td class="total-price">$9,800.00</td>
+          </tr>
+          <tr>
+            <td><div class="qty-wrap"><span class="qty-num">100</span><span class="qty-label best">Máximo ahorro</span></div></td>
+            <td class="unit-price">$120.00</td>
+            <td class="total-price">$12,000.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-note"><span class="dot"></span> Impuestos NO incluidos</div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="368" height="110" viewBox="0 0 368 110">
+        <path d="M0 0 C9.9 0 19.8 0 30 0 C32.99539128 5.99078256 35.84229245 11.7389037 38.26953125 17.9296875 C38.55196182 18.63921066 38.8343924 19.34873383 39.12538147 20.07975769 C40.02529129 22.34319723 40.91906151 24.60899927 41.8125 26.875 C42.43271181 28.43952786 43.05331965 30.00389877 43.67431641 31.56811523 C44.59675135 33.89222102 45.51872508 36.21650127 46.43878174 38.54154968 C48.17304518 42.9238606 49.92209071 47.29965093 51.69140625 51.66796875 C52.06869873 52.6007666 52.44599121 53.53356445 52.8347168 54.49462891 C53.50963241 56.16061398 54.18674781 57.82571022 54.86645508 59.48974609 C57 64.77751146 57 64.77751146 57 67 C57.66 67 58.32 67 59 67 C59.15479324 66.43411163 59.30958649 65.86822327 59.46907043 65.28518677 C61.59746734 57.83191342 64.39829283 50.72644958 67.32421875 43.5546875 C67.83598875 42.29118452 68.34735963 41.0275198 68.85835266 39.76370239 C70.19091696 36.4709583 71.52881695 33.18040916 72.86791992 29.89031982 C74.23880505 26.51935943 75.60457155 23.1463265 76.97070312 19.7734375 C79.6416728 13.18005064 82.3210216 6.5901594 85 0 C94.9 0 104.8 0 115 0 C115 33.33 115 66.66 115 101 C106.75 101 98.5 101 90 101 C89.67 83.18 89.34 65.36 89 47 C82.4 64.82 75.8 82.64 69 101 C61.74 101 54.48 101 47 101 C45.27561171 96.50621818 43.55204683 92.01213508 41.83032227 87.51733398 C41.24807869 85.99796006 40.66541634 84.47874653 40.08227539 82.9597168 C35.62234943 71.34074086 31.30304476 59.67969291 27 48 C26.67 65.49 26.34 82.98 26 101 C17.42 101 8.84 101 0 101 C0 67.67 0 34.34 0 0 Z" fill="#0d0d0d" transform="translate(6,6)"/>
+        <path d="M0 0 C1.20970459 0.00523682 2.41940918 0.01047363 3.66577148 0.01586914 C4.97094727 0.0190918 6.27612305 0.02231445 7.62084961 0.02563477 C9.00952213 0.03399138 10.39819401 0.04245634 11.78686523 0.05102539 C13.17944179 0.05603873 14.57202005 0.06060193 15.96459961 0.06469727 C19.38456394 0.07653105 22.80444367 0.09301659 26.22436523 0.11352539 C29.61428522 7.34716766 32.3568781 14.76192998 35.04077148 22.28149414 C35.50162487 23.5645133 35.9628093 24.8474136 36.42430115 26.13020325 C37.63785241 29.50580613 38.84754865 32.88277667 40.05621338 36.26013184 C41.9561565 41.56714864 43.86185471 46.87210329 45.76743698 52.17709732 C46.24064402 53.49479435 46.713629 54.81257116 47.18638992 56.13042831 C49.89562984 63.68208347 52.62437333 71.22606153 55.3918457 78.7565918 C55.64915812 79.45682244 55.90647055 80.15705309 56.17158031 80.87850285 C57.40974903 84.24571243 58.65065984 87.61188645 59.89491272 90.97685242 C60.33226242 92.16317764 60.76961212 93.34950287 61.22021484 94.57177734 C61.6082579 95.62089798 61.99630096 96.67001862 62.39610291 97.75093079 C63.22436523 100.11352539 63.22436523 100.11352539 63.22436523 101.11352539 C53.98436523 101.11352539 44.74436523 101.11352539 35.22436523 101.11352539 C34.39936523 98.67977539 33.57436523 96.24602539 32.72436523 93.73852539 C32.3328125 92.5911792 32.3328125 92.5911792 31.93334961 91.4206543 C30.22436523 86.33574761 30.22436523 86.33574761 30.22436523 84.11352539 C18.01436523 84.44352539 5.80436523 84.77352539 -6.77563477 85.11352539 C-8.42563477 90.06352539 -10.07563477 95.01352539 -11.77563477 100.11352539 C-12.77563477 101.11352539 -12.77563477 101.11352539 -15.36767578 101.22705078 C-16.49359131 101.22181396 -17.61950684 101.21657715 -18.77954102 101.21118164 C-20.60195312 101.20634766 -20.60195312 101.20634766 -22.46118164 101.20141602 C-23.74057617 101.19303711 -25.0199707 101.1846582 -26.33813477 101.17602539 C-27.62139648 101.17151367 -28.9046582 101.16700195 -30.22680664 101.16235352 C-33.40979499 101.15052085 -36.59269239 101.13403607 -39.77563477 101.11352539 C-31.78491197 77.48213784 -23.27973082 54.04421688 -14.69525146 30.62310791 C-13.82812923 28.25677985 -12.96210753 25.89005227 -12.09643555 23.52319336 C-10.68142812 19.65583308 -9.26082208 15.79056729 -7.83813477 11.92602539 C-7.43143555 10.81662598 -7.02473633 9.70722656 -6.60571289 8.56420898 C-6.05753906 7.08235107 -6.05753906 7.08235107 -5.49829102 5.57055664 C-5.18641846 4.72468994 -4.8745459 3.87882324 -4.55322266 3.00732422 C-3.35813206 0.09670641 -3.3011791 0.13502052 0 0 Z M11.22436523 30.11352539 C9.65387976 34.63284796 8.08740287 39.15353198 6.5246582 43.67553711 C5.99223589 45.2143318 5.45871157 46.75274566 4.92407227 48.29077148 C4.15669779 50.49893068 3.39327016 52.70841993 2.63061523 54.91821289 C2.39000366 55.60785126 2.14939209 56.29748962 1.90148926 57.00802612 C0.64849542 60.48026424 0.64849542 60.48026424 0.22436523 64.11352539 C7.81436523 64.11352539 15.40436523 64.11352539 23.22436523 64.11352539 C20.90326198 55.46638431 20.90326198 55.46638431 18.18139648 47.00805664 C17.83012695 46.00581055 17.47885742 45.00356445 17.11694336 43.97094727 C16.76051758 42.96612305 16.4040918 41.96129883 16.03686523 40.92602539 C15.66883789 39.87866211 15.30081055 38.83129883 14.92163086 37.75219727 C14.02595262 35.20474876 13.12682708 32.65857687 12.22436523 30.11352539 C11.89436523 30.11352539 11.56436523 30.11352539 11.22436523 30.11352539 Z" fill="#0d0d0d" transform="translate(174.775634765625,5.886474609375)"/>
+        <path d="M0 0 C22.11 0 44.22 0 67 0 C67 6.6 67 13.2 67 20 C53.14 20 39.28 20 25 20 C25 26.93 25 33.86 25 41 C35.23 41 45.46 41 56 41 C56 47.6 56 54.2 56 61 C45.77 61 35.54 61 25 61 C25 74.2 25 87.4 25 101 C16.75 101 8.5 101 0 101 C0 67.67 0 34.34 0 0 Z" fill="#CF1B28" transform="translate(252,6)"/>
+        <path d="M0 0 C8.58 0 17.16 0 26 0 C26 33.33 26 66.66 26 101 C17.42 101 8.84 101 0 101 C0 67.67 0 34.34 0 0 Z" fill="#CF1B28" transform="translate(334,6)"/>
+      </svg>
+    </div>
+    <div class="footer-info">
+      <strong>Tarifario oficial · 2026</strong><br>
+      Precios en Pesos Dominicanos (RD)<br>
+      Impuestos no incluidos
+    </div>
+  </div>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="6 9 6 2 18 2 18 9"></polyline>
+    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+    <rect x="6" y="14" width="12" height="8"></rect>
+  </svg>
+  Imprimir
+</button>
+</body>
+</html>
