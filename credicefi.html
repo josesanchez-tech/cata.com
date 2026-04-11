@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propuesta Comercial — CREDICEFI | CATA MULTISERVICES</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0B2463;--blue:#1565C0;--blue2:#1976D2;--sky:#E3F0FF;--cyan:#00B4D8;
+  --white:#FFFFFF;--offW:#F5F9FF;--gray:#64748B;--lgray:#94A3B8;--border:#DBEAFE;
+  --gold:#F59E0B;--green:#10B981;--red:#EF4444;
+  --shadow:0 4px 24px rgba(11,36,99,.10);--shadow-lg:0 8px 40px rgba(11,36,99,.14);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--offW);color:#1e293b;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-brand{display:flex;align-items:center;gap:10px}
+.nav-brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--blue))}
+.nav-brand span{font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;color:var(--navy);letter-spacing:.03em}
+.nav-links{display:flex;gap:1.5rem}
+.nav-links a{font-size:.8rem;font-weight:500;color:var(--gray);text-decoration:none;transition:color .2s;letter-spacing:.02em}
+.nav-links a:hover,.nav-links a.active{color:var(--blue)}
+.nav-badge{font-size:.72rem;font-weight:600;color:var(--white);background:var(--blue);padding:4px 14px;border-radius:20px;letter-spacing:.03em}
+
+/* HERO */
+#hero{min-height:100vh;background:linear-gradient(160deg,var(--navy) 0%,#1040A0 55%,#1565C0 100%);display:flex;align-items:center;padding:100px 2rem 60px;position:relative;overflow:hidden}
+#hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,216,.18) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,180,216,.15);border:1px solid rgba(0,180,216,.3);color:#7FDBF5;padding:6px 16px;border-radius:30px;font-size:.75rem;font-weight:600;letter-spacing:.08em;margin-bottom:1.5rem;animation:fadeUp .6s ease both}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan)}
+.hero-title{font-family:'Sora',sans-serif;font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:800;color:var(--white);line-height:1.1;margin-bottom:1.25rem;animation:fadeUp .6s .1s ease both}
+.hero-title span{color:var(--cyan)}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.7);margin-bottom:2rem;animation:fadeUp .6s .2s ease both}
+.hero-meta{display:flex;gap:2rem;animation:fadeUp .6s .3s ease both}
+.hero-meta-item label{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:.08em;display:block}
+.hero-meta-item span{font-size:.88rem;color:var(--white);font-weight:500}
+.hero-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:20px;padding:2rem;animation:fadeUp .6s .2s ease both;backdrop-filter:blur(8px)}
+.hero-card-title{font-size:.7rem;font-weight:600;letter-spacing:.1em;color:var(--cyan);margin-bottom:1.2rem}
+.hero-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.hero-stat{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1rem}
+.hero-stat .val{font-family:'Sora',sans-serif;font-weight:700;font-size:1.35rem;color:var(--white);display:block}
+.hero-stat .lbl{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:2px}
+.hero-stat .sub{font-size:.67rem;color:var(--cyan);margin-top:2px;font-weight:500}
+
+/* SECTION */
+section{padding:80px 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-tag{font-size:.72rem;font-weight:700;letter-spacing:.12em;color:var(--blue);text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:.75rem}
+.section-tag::before{content:'';width:24px;height:2px;background:var(--cyan);border-radius:2px}
+.section-title{font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(1.7rem,3vw,2.4rem);color:var(--navy);line-height:1.2;margin-bottom:.75rem}
+.section-desc{font-size:.98rem;color:var(--gray);max-width:580px}
+
+/* CONTRATO KPI */
+#vigente{background:var(--white)}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem}
+.kpi-card{border-radius:16px;padding:1.75rem;position:relative;overflow:hidden;box-shadow:var(--shadow);transition:transform .3s,box-shadow .3s}
+.kpi-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.kpi-card.navy{background:var(--navy)}.kpi-card.blue{background:var(--blue)}.kpi-card.cyan-card{background:#0077A8}
+.kpi-card::after{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.kpi-icon{font-size:1.6rem;margin-bottom:.75rem}
+.kpi-val{font-family:'Sora',sans-serif;font-weight:800;font-size:2rem;color:var(--white);display:block;line-height:1}
+.kpi-label{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.06em;margin-top:6px}
+.kpi-sub{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:4px}
+
+/* PLATFORM MOCKUP */
+.platform-mockup{margin-top:2.5rem;border-radius:16px;overflow:hidden;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+.platform-mockup .bar{background:var(--navy);padding:10px 16px;display:flex;align-items:center;gap:8px}
+.dot-r{width:10px;height:10px;border-radius:50%;background:#EF4444}
+.dot-y{width:10px;height:10px;border-radius:50%;background:#F59E0B}
+.dot-g{width:10px;height:10px;border-radius:50%;background:#10B981}
+.bar .url{margin-left:8px;background:rgba(255,255,255,.08);border-radius:6px;padding:3px 12px;font-size:.72rem;color:rgba(255,255,255,.4)}
+.platform-mockup img{width:100%;display:block}
+
+/* DEMO REPORTE TABS */
+.demo-section{margin-top:2.5rem}
+.tab-nav{display:flex;gap:.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab-btn{padding:8px 18px;border-radius:8px;border:1px solid var(--border);background:var(--white);color:var(--gray);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.tab-btn:hover{border-color:var(--blue);color:var(--blue)}
+.tab-btn.active{background:var(--blue);color:var(--white);border-color:var(--blue)}
+.tab-content{display:none}.tab-content.active{display:block}
+
+/* REPORT CARD */
+.report-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:var(--shadow)}
+.report-header{background:var(--navy);padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+.report-header .rh-name{font-family:'Sora',sans-serif;font-size:1.1rem;font-weight:700;color:var(--white)}
+.report-header .rh-id{font-size:.78rem;color:rgba(255,255,255,.5)}
+.report-header .rh-badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.72rem;padding:4px 12px;border-radius:20px}
+.report-body{padding:1.5rem}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem}
+.info-item{background:var(--offW);border-radius:10px;padding:.85rem 1rem}
+.info-item .ik{font-size:.68rem;color:var(--lgray);letter-spacing:.06em;font-weight:600;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.info-item .iv{font-size:.9rem;color:var(--navy);font-weight:600}
+
+/* SCORE DISPLAY */
+.score-section{display:grid;grid-template-columns:180px 1fr;gap:1.5rem;margin-bottom:1.5rem;align-items:start}
+.score-circle{width:140px;height:140px;border-radius:50%;background:conic-gradient(#F59E0B calc(260/850*360deg), #e5e7eb 0);display:flex;align-items:center;justify-content:center;position:relative;margin:0 auto}
+.score-circle-inner{width:108px;height:108px;border-radius:50%;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-num{font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;color:var(--navy);line-height:1}
+.score-lbl{font-size:.65rem;color:var(--gray);letter-spacing:.08em}
+.score-cat{display:inline-block;background:#FEF3C7;color:#92400E;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-top:6px}
+.score-metrics{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.metric-box{background:var(--offW);border-radius:10px;padding:.85rem 1rem;border-left:3px solid var(--blue)}
+.metric-box.red{border-left-color:var(--red)}
+.metric-box.gold{border-left-color:var(--gold)}
+.metric-box .mv{font-family:'Sora',sans-serif;font-size:1.2rem;font-weight:700;color:var(--navy)}
+.metric-box .ml{font-size:.7rem;color:var(--gray);margin-top:2px}
+
+/* SECTION TABLES */
+.rep-section-title{font-size:.8rem;font-weight:700;color:var(--navy);letter-spacing:.08em;text-transform:uppercase;margin:1.25rem 0 .75rem;padding-bottom:.4rem;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.rep-section-title span{font-size:.7rem;background:var(--sky);color:var(--blue);padding:2px 10px;border-radius:20px;font-weight:600;letter-spacing:.04em}
+.rep-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.rep-table th{background:var(--offW);padding:9px 12px;text-align:left;font-size:.7rem;font-weight:700;letter-spacing:.06em;color:var(--gray);border-bottom:1px solid var(--border)}
+.rep-table td{padding:9px 12px;border-bottom:1px solid var(--border);color:#334155;vertical-align:middle}
+.rep-table tr:last-child td{border-bottom:none}
+.rep-table tr:hover td{background:var(--offW)}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.04em}
+.badge.castigada{background:#FEE2E2;color:#991B1B}
+.badge.normal{background:#D1FAE5;color:#065F46}
+.badge.activo{background:#DBEAFE;color:#1e40af}
+.badge.inactivo{background:#F1F5F9;color:#64748B}
+.badge.atraso{background:#FEF3C7;color:#92400E}
+.badge.score-bad{background:#FEE2E2;color:#991B1B;font-size:.75rem;padding:3px 12px}
+.alert-box{background:#FEF2F2;border:1px solid #FECACA;border-radius:10px;padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;margin-top:1rem}
+.alert-box .ai{font-size:1.4rem}
+.alert-box .at{font-size:.85rem;font-weight:600;color:#991B1B}
+.alert-box .as{font-size:.78rem;color:#B91C1C;margin-top:2px}
+
+/* NOMINA */
+.nomina-employer{background:var(--sky);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem;margin-bottom:.75rem}
+.nomina-employer .ne-name{font-weight:700;color:var(--navy);font-size:.88rem}
+.nomina-employer .ne-rnc{font-size:.72rem;color:var(--gray);margin-top:2px}
+.nomina-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-top:.75rem}
+.nomina-stat{background:var(--white);border-radius:8px;padding:.6rem .8rem;text-align:center}
+.nomina-stat .ns-val{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:700;color:var(--navy)}
+.nomina-stat .ns-lbl{font-size:.65rem;color:var(--gray);margin-top:1px}
+
+/* VEHICULOS RELACIONES */
+.vehicle-card{display:flex;gap:1rem;align-items:center;background:var(--offW);border-radius:10px;padding:.85rem 1rem;margin-bottom:.5rem}
+.vehicle-icon{width:40px;height:40px;border-radius:10px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.vehicle-info .vi-model{font-weight:600;color:var(--navy);font-size:.88rem}
+.vehicle-info .vi-detail{font-size:.75rem;color:var(--gray);margin-top:1px}
+.relation-card{display:flex;gap:12px;align-items:center;padding:.75rem 0;border-bottom:1px solid var(--border)}
+.relation-card:last-child{border-bottom:none}
+.rel-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.85rem;flex-shrink:0}
+.rel-info .ri-name{font-weight:600;color:var(--navy);font-size:.85rem}
+.rel-info .ri-id{font-size:.72rem;color:var(--gray)}
+.rel-badge{margin-left:auto;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px}
+.rb-fam{background:#EDE9FE;color:#6D28D9}
+.rb-posible{background:#FEF3C7;color:#92400E}
+
+/* MAFI */
+#mafi{background:var(--offW)}
+.mafi-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:2.5rem}
+.alliance-badge{display:flex;align-items:center;gap:12px;background:var(--sky);border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:2rem}
+.eq-logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.2rem;color:var(--blue)}
+.eq-sub{font-size:.7rem;color:var(--gray);margin-top:1px}
+.adivider{width:1px;height:32px;background:var(--border)}
+.dc-text{font-size:.82rem;color:var(--navy);font-weight:600}
+.feature-list{display:flex;flex-direction:column;gap:1rem}
+.feature-item{display:flex;align-items:flex-start;gap:14px;background:var(--white);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;transition:border-color .2s,box-shadow .2s}
+.feature-item:hover{border-color:var(--blue);box-shadow:var(--shadow)}
+.feature-icon{width:36px;height:36px;border-radius:10px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.feature-item h4{font-size:.88rem;font-weight:600;color:var(--navy);margin-bottom:2px}
+.feature-item p{font-size:.78rem;color:var(--gray)}
+.pricing-card{background:var(--navy);border-radius:20px;overflow:hidden;box-shadow:var(--shadow-lg);position:sticky;top:80px}
+.pricing-header{background:var(--cyan);padding:1rem 1.5rem;text-align:center}
+.pricing-header span{font-size:.75rem;font-weight:700;letter-spacing:.1em;color:var(--navy)}
+.pricing-body{padding:2rem 1.5rem}
+.pricing-price{font-family:'Sora',sans-serif;font-weight:800;font-size:3.2rem;color:var(--white);line-height:1;text-align:center}
+.pricing-price sub{font-size:1rem;vertical-align:middle;font-weight:500}
+.pricing-period{text-align:center;font-size:.78rem;color:rgba(255,255,255,.45);margin-top:6px}
+.pricing-divider{height:1px;background:rgba(255,255,255,.08);margin:1.5rem 0}
+.pricing-detail{display:flex;justify-content:space-between;align-items:center;margin-bottom:.75rem}
+.pricing-detail .dl{font-size:.8rem;color:rgba(255,255,255,.5)}
+.pricing-detail .dv{font-size:.88rem;color:var(--white);font-weight:600}
+.pricing-total{background:rgba(0,180,216,.15);border:1px solid rgba(0,180,216,.25);border-radius:12px;padding:1rem 1.25rem;margin-top:1.5rem;text-align:center}
+.pricing-total .tl{font-size:.72rem;color:var(--cyan);letter-spacing:.06em;font-weight:600}
+.pricing-total .tv{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;color:var(--gold);display:block;margin-top:4px}
+
+/* MOTOR */
+#motor{background:var(--white)}
+.motor-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:3rem;align-items:start;margin-top:2.5rem}
+.flow-steps{display:flex;flex-direction:column;gap:0}
+.flow-step{display:flex;align-items:flex-start;gap:16px;position:relative;padding-bottom:1.5rem}
+.flow-step:last-child{padding-bottom:0}
+.flow-step:not(:last-child)::after{content:'';position:absolute;left:18px;top:44px;width:2px;height:calc(100% - 44px);background:linear-gradient(to bottom,var(--blue),var(--border))}
+.step-circle{width:38px;height:38px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;z-index:1}
+.step-circle.s-blue{background:var(--blue);color:white}
+.step-circle.s-gold{background:var(--gold);color:white}
+.step-circle.s-navy{background:var(--navy);color:white}
+.step-circle.s-green{background:var(--green);color:white}
+.step-text h4{font-size:.92rem;font-weight:600;color:var(--navy);margin-bottom:3px}
+.step-text p{font-size:.78rem;color:var(--gray)}
+.motor-right{display:flex;flex-direction:column;gap:1.5rem}
+.decision-demo{background:var(--offW);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.demo-header{background:var(--navy);padding:12px 16px}
+.demo-header span{font-size:.75rem;color:rgba(255,255,255,.6);font-weight:500}
+.demo-body{padding:1.25rem}
+.demo-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border)}
+.demo-row:last-child{border-bottom:none}
+.demo-row .dk{font-size:.78rem;color:var(--gray)}
+.demo-row .dv{font-size:.78rem;font-weight:600;color:var(--navy)}
+.demo-badge{padding:3px 10px;border-radius:20px;font-size:.7rem;font-weight:700}
+.demo-badge.approved{background:#D1FAE5;color:#065F46}
+.demo-badge.referred{background:#FEF3C7;color:#92400E}
+.fee-card{background:linear-gradient(135deg,var(--navy) 0%,#1040A0 100%);border-radius:16px;padding:1.5rem;text-align:center}
+.fee-label{font-size:.72rem;font-weight:700;letter-spacing:.1em;color:var(--cyan);margin-bottom:.5rem}
+.fee-amount{font-family:'Sora',sans-serif;font-size:2.5rem;font-weight:800;color:var(--white);line-height:1}
+.fee-period{font-size:.78rem;color:rgba(255,255,255,.45);margin-top:4px}
+.fee-note{font-size:.72rem;color:rgba(255,255,255,.4);margin-top:8px}
+.motor-img-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.motor-img-grid img{width:100%;border-radius:12px;box-shadow:var(--shadow);border:1px solid var(--border)}
+
+/* RESUMEN */
+#resumen{background:var(--navy)}
+#resumen .section-tag{color:var(--cyan)}
+#resumen .section-tag::before{background:var(--cyan)}
+#resumen .section-title{color:var(--white)}
+#resumen .section-desc{color:rgba(255,255,255,.5)}
+.summary-table{margin-top:2.5rem;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:var(--blue)}
+thead th{padding:14px 20px;text-align:left;font-size:.75rem;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.9)}
+thead th:last-child{text-align:right}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
+tbody tr:hover{background:rgba(255,255,255,.04)}
+tbody td{padding:16px 20px;font-size:.88rem;color:rgba(255,255,255,.75)}
+tbody td:last-child{text-align:right;font-weight:700;color:var(--white);font-family:'Sora',sans-serif}
+tbody td .tbadge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.68rem;font-weight:700;letter-spacing:.05em}
+tbody td .tbadge.vigente{background:rgba(16,185,129,.2);color:#6EE7B7}
+tbody td .tbadge.nuevo{background:rgba(0,180,216,.2);color:var(--cyan)}
+tfoot tr{background:rgba(0,180,216,.15)}
+tfoot td{padding:16px 20px;font-weight:700}
+tfoot td:first-child{font-size:.88rem;color:var(--cyan);letter-spacing:.04em}
+tfoot td:last-child{text-align:right;font-family:'Sora',sans-serif;font-size:1.1rem;color:var(--gold)}
+.otf-box{margin-top:1.5rem;border-radius:12px;padding:1.25rem 1.5rem;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);display:flex;align-items:center;gap:16px}
+.otf-icon{font-size:1.5rem}
+.otf-label{font-size:.8rem;color:rgba(255,255,255,.5)}
+.otf-val{font-family:'Sora',sans-serif;font-size:1.25rem;font-weight:700;color:var(--gold)}
+.otf-note{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:2px}
+
+/* IMPLEMENTACION */
+#impl{background:var(--offW)}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.5rem;position:relative}
+.timeline::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:2px;background:linear-gradient(to right,var(--blue),var(--cyan));z-index:0}
+.tl-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:1.5rem 1.25rem;text-align:center;box-shadow:var(--shadow);position:relative;z-index:1;transition:transform .3s,box-shadow .3s}
+.tl-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.tl-week{display:inline-block;padding:5px 14px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:.06em;margin-bottom:1rem;color:var(--white)}
+.w1{background:var(--blue)}.w2{background:#0077A8}.w3{background:var(--gold)}.w4{background:var(--green)}
+.tl-icon{font-size:1.8rem;margin-bottom:.75rem;display:block}
+.tl-title{font-family:'Sora',sans-serif;font-size:.88rem;font-weight:700;color:var(--navy);margin-bottom:.75rem}
+.tl-items{list-style:none;text-align:left}
+.tl-items li{font-size:.76rem;color:var(--gray);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:6px}
+.tl-items li:last-child{border-bottom:none}
+.tl-items li::before{content:'✓';color:var(--blue);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* CIERRE */
+#cierre{background:linear-gradient(135deg,var(--navy) 0%,#0D3080 60%,#1565C0 100%);text-align:center;padding:100px 2rem}
+#cierre .section-tag{justify-content:center;color:var(--cyan)}
+#cierre .section-tag::before{background:var(--cyan)}
+#cierre .section-title{color:var(--white);text-align:center;margin:0 auto 1rem}
+#cierre .section-desc{color:rgba(255,255,255,.5);margin:0 auto 3rem;text-align:center}
+.next-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.25rem;margin-bottom:3rem}
+.next-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:1.25rem;transition:background .2s,border-color .2s}
+.next-card:hover{background:rgba(255,255,255,.1);border-color:rgba(0,180,216,.4)}
+.next-num{font-family:'Sora',sans-serif;font-size:2rem;font-weight:800;color:rgba(255,255,255,.1);line-height:1;margin-bottom:.5rem}
+.next-card h4{font-size:.85rem;font-weight:600;color:var(--white);margin-bottom:4px}
+.next-card p{font-size:.75rem;color:rgba(255,255,255,.45)}
+.cierre-contact{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:1.5rem 2rem;display:inline-block;font-size:.88rem;color:rgba(255,255,255,.6)}
+.cierre-contact strong{color:var(--white)}
+
+footer{background:#060F24;padding:24px 2rem;text-align:center;font-size:.75rem;color:rgba(255,255,255,.3)}
+footer span{color:rgba(255,255,255,.5)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}.reveal-delay-4{transition-delay:.4s}
+
+@media(max-width:860px){.hero-inner,.mafi-grid,.motor-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:1fr 1fr}.timeline{grid-template-columns:1fr 1fr}.next-steps{grid-template-columns:1fr 1fr}.timeline::before{display:none}.nav-links{display:none}.info-grid{grid-template-columns:1fr 1fr}.score-section{grid-template-columns:1fr}.nomina-grid{grid-template-columns:1fr 1fr}.motor-img-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.kpi-grid,.timeline,.next-steps{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand"><div class="dot"></div><span>CATA MULTISERVICES</span></div>
+  <div class="nav-links">
+    <a href="#vigente">Contrato Vigente</a>
+    <a href="#mafi">MAFI X</a>
+    <a href="#motor">Motor de Decisiones</a>
+    <a href="#resumen">Resumen</a>
+    <a href="#impl">Implementación</a>
+  </div>
+  <div class="nav-badge">CREDICEFI · 2026</div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">PROPUESTA COMERCIAL ESTRATÉGICA</div>
+      <h1 class="hero-title">Expansión de Servicios de<br><span>Inteligencia Financiera</span></h1>
+      <p class="hero-sub">Potenciamos la operación crediticia de CREDICEFI con tecnología de análisis financiero de clase mundial, integrada con DataCrédito — Empresa Equifax.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><label>PARA</label><span>CREDICEFI</span></div>
+        <div class="hero-meta-item"><label>FECHA</label><span>Abril 2026</span></div>
+        <div class="hero-meta-item"><label>PRESENTADO POR</label><span>CATA MULTISERVICES SRL</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="hero-card-title">RESUMEN EJECUTIVO · PROPUESTA TOTAL</div>
+      <div class="hero-stat-grid">
+        <div class="hero-stat"><span class="val">RD$40.30</span><div class="lbl">MasterOneX</div><div class="sub">Por consulta vigente</div></div>
+        <div class="hero-stat"><span class="val">RD$85</span><div class="lbl">MAFI X</div><div class="sub">Por consulta nueva</div></div>
+        <div class="hero-stat"><span class="val">RD$50,000</span><div class="lbl">App de Crédito</div><div class="sub">Fee mensual fijo</div></div>
+        <div class="hero-stat"><span class="val" id="total-hero">RD$712,400</span><div class="lbl">Total Mensual</div><div class="sub" style="color:#F59E0B">Antes de ITBIS</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTRATO VIGENTE -->
+<section id="vigente">
+  <div class="section-inner">
+    <div class="section-tag">SITUACIÓN ACTUAL</div>
+    <h2 class="section-title">Contrato Vigente — MasterOneX</h2>
+    <p class="section-desc">Plataforma de consultas de localización, data pública abierta y data privada autorizada. Relación comercial activa con CREDICEFI.</p>
+    <div class="kpi-grid">
+      <div class="kpi-card navy reveal reveal-delay-1"><div class="kpi-icon">🗄️</div><span class="kpi-val">8,000</span><div class="kpi-label">CONSULTAS MENSUALES</div><div class="kpi-sub">Contratadas actualmente</div></div>
+      <div class="kpi-card blue reveal reveal-delay-2"><div class="kpi-icon">💰</div><span class="kpi-val">RD$40.30</span><div class="kpi-label">PRECIO POR CONSULTA</div><div class="kpi-sub">Antes de ITBIS</div></div>
+      <div class="kpi-card cyan-card reveal reveal-delay-3"><div class="kpi-icon">📈</div><span class="kpi-val" id="kpi-fact">RD$322,400</span><div class="kpi-label">FACTURACIÓN MENSUAL</div><div class="kpi-sub">8,000 × RD$40.30 · antes de ITBIS</div></div>
+    </div>
+
+    <!-- REPORTE MASTERONEX DEMO -->
+    <div class="demo-section reveal">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--navy)">📄 Ejemplo de Reporte MasterOneX</div>
+        <div style="font-size:.75rem;color:var(--gray);background:var(--sky);padding:3px 12px;border-radius:20px;border:1px solid var(--border)">Data de demostración</div>
+      </div>
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="showTab('info')">👤 Información Personal</button>
+        <button class="tab-btn" onclick="showTab('contacto')">📞 Contacto & Direcciones</button>
+        <button class="tab-btn" onclick="showTab('nomina')">💼 Nómina</button>
+        <button class="tab-btn" onclick="showTab('vehiculos')">🚗 Vehículos</button>
+        <button class="tab-btn" onclick="showTab('relaciones')">👥 Relaciones</button>
+      </div>
+
+      <!-- TAB: INFO -->
+      <div class="tab-content active" id="tab-info">
+        <div class="report-card">
+          <div class="report-header">
+            <div><div class="rh-name">CARLOS RAFAEL MÉNDEZ PÉREZ</div><div class="rh-id">001-1234567-8 · Cédula de Identidad · 42 años · M · C</div></div>
+            <div class="rh-badge">Generado 11/04/2026 · Documento Confidencial</div>
+          </div>
+          <div class="report-body">
+            <div class="info-grid">
+              <div class="info-item"><div class="ik">🎂 Fecha Nacimiento</div><div class="iv">15-03-1983</div></div>
+              <div class="info-item"><div class="ik">⚧ Sexo</div><div class="iv">Masculino</div></div>
+              <div class="info-item"><div class="ik">💍 Estado Civil</div><div class="iv">Casado</div></div>
+              <div class="info-item"><div class="ik">🌎 Nacionalidad</div><div class="iv">Dominicana</div></div>
+              <div class="info-item"><div class="ik">💼 Ocupación</div><div class="iv" style="color:var(--blue);font-weight:700">CONTADOR PÚBLICO</div></div>
+              <div class="info-item"><div class="ik">📍 Municipio</div><div class="iv">Distrito Nacional</div></div>
+              <div class="info-item"><div class="ik">⚖️ Gestión Cobros</div><div class="iv" style="color:var(--gold);font-weight:700">SÍ · 8 repeticiones</div></div>
+              <div class="info-item"><div class="ik">🏢 Empresario</div><div class="iv">No</div></div>
+              <div class="info-item"><div class="ik">🏠 Inmueble</div><div class="iv">No</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: CONTACTO -->
+      <div class="tab-content" id="tab-contacto">
+        <div class="report-card">
+          <div class="report-header"><div class="rh-name">Información de Contacto & Direcciones</div><div class="rh-badge">CARLOS R. MÉNDEZ PÉREZ</div></div>
+          <div class="report-body">
+            <div class="rep-section-title">📞 Teléfonos <span>6 registros</span></div>
+            <table class="rep-table">
+              <thead><tr><th>Tipo</th><th>Número</th><th>WhatsApp</th><th>Fecha</th></tr></thead>
+              <tbody>
+                <tr><td>Celular Claro</td><td><strong>809-555-1234</strong></td><td>✅ Sí</td><td>N/A</td></tr>
+                <tr><td>Celular Altice</td><td><strong>829-555-4321</strong></td><td>✅ Sí</td><td>N/A</td></tr>
+                <tr><td>Local</td><td>809-555-9876</td><td>—</td><td>N/A</td></tr>
+                <tr><td>Otro</td><td>809-555-6543</td><td>—</td><td>N/A</td></tr>
+              </tbody>
+            </table>
+            <div class="rep-section-title" style="margin-top:1.25rem">📧 Correos Electrónicos</div>
+            <table class="rep-table">
+              <thead><tr><th>Correo</th><th>Fecha</th></tr></thead>
+              <tbody>
+                <tr><td>CARLOSMENDEZ@GMAIL.COM</td><td>N/A</td></tr>
+                <tr><td>cmendez.contable@empresa.com</td><td>N/A</td></tr>
+              </tbody>
+            </table>
+            <div class="rep-section-title" style="margin-top:1.25rem">📍 Direcciones Registradas <span>5 registros</span></div>
+            <table class="rep-table">
+              <thead><tr><th>Dirección</th><th>Fecha</th></tr></thead>
+              <tbody>
+                <tr><td>C/ Las Mercedes #45, Piantini, Santo Domingo</td><td>15-01-2026</td></tr>
+                <tr><td>C/ Las Mercedes #45, Piantini, Distrito Nacional</td><td>10-06-2024</td></tr>
+                <tr><td>Av. Abraham Lincoln #120, Bella Vista</td><td>03-02-2022</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: NOMINA -->
+      <div class="tab-content" id="tab-nomina">
+        <div class="report-card">
+          <div class="report-header"><div class="rh-name">Registros de Nómina <span style="font-size:.8rem;font-weight:400;opacity:.6">2 empleadores</span></div><div class="rh-badge">CARLOS R. MÉNDEZ PÉREZ</div></div>
+          <div class="report-body">
+            <div class="nomina-employer">
+              <div class="ne-name">GRUPO EMPRESARIAL CASTELLANOS SRL</div>
+              <div class="ne-rnc">RNC: 130-88421-5 · Período 2026</div>
+              <div class="nomina-grid">
+                <div class="nomina-stat"><div class="ns-val">2</div><div class="ns-lbl">Registros 2026</div></div>
+                <div class="nomina-stat"><div class="ns-val">RD$38,500</div><div class="ns-lbl">Último Ingreso</div></div>
+                <div class="nomina-stat"><div class="ns-val">RD$77,000</div><div class="ns-lbl">Devengado 2026</div></div>
+                <div class="nomina-stat"><div class="ns-val">RD$38,500</div><div class="ns-lbl">Promedio Mensual</div></div>
+              </div>
+            </div>
+            <div style="margin-top:1rem">
+              <div class="rep-section-title">📅 Ingresos Mensuales — 2026</div>
+              <table class="rep-table">
+                <thead><tr><th>Fecha</th><th style="text-align:right">Ingreso</th></tr></thead>
+                <tbody>
+                  <tr><td>01/02/2026</td><td style="text-align:right;font-weight:600;color:var(--navy)">RD$38,500.00</td></tr>
+                  <tr><td>01/01/2026</td><td style="text-align:right;font-weight:600;color:var(--navy)">RD$38,500.00</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="nomina-employer" style="margin-top:1.5rem">
+              <div class="ne-name">GRUPO EMPRESARIAL CASTELLANOS SRL</div>
+              <div class="ne-rnc">RNC: 130-88421-5 · Período 2025</div>
+              <div class="nomina-grid">
+                <div class="nomina-stat"><div class="ns-val">10</div><div class="ns-lbl">Registros 2025</div></div>
+                <div class="nomina-stat"><div class="ns-val">RD$38,500</div><div class="ns-lbl">Último Ingreso</div></div>
+                <div class="nomina-stat"><div class="ns-val">RD$383,500</div><div class="ns-lbl">Devengado 2025</div></div>
+                <div class="nomina-stat"><div class="ns-val">RD$38,350</div><div class="ns-lbl">Promedio Mensual</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: VEHICULOS -->
+      <div class="tab-content" id="tab-vehiculos">
+        <div class="report-card">
+          <div class="report-header"><div class="rh-name">Vehículos Registrados</div><div class="rh-badge">CARLOS R. MÉNDEZ PÉREZ</div></div>
+          <div class="report-body">
+            <div class="rep-section-title">🚗 Vehículos <span>2 activos</span></div>
+            <div class="vehicle-card">
+              <div class="vehicle-icon">🚙</div>
+              <div class="vehicle-info">
+                <div class="vi-model">TOYOTA RAV4 XLE AWD · Negro · 2023</div>
+                <div class="vi-detail">Placa: <strong>G712345</strong> · Chasis: 2T3RWRFVXNW123456 · <span class="badge activo">ACTIVO</span></div>
+              </div>
+            </div>
+            <div class="vehicle-card">
+              <div class="vehicle-icon">🚗</div>
+              <div class="vehicle-info">
+                <div class="vi-model">HONDA CIVIC EX · Blanco · 2019</div>
+                <div class="vi-detail">Placa: <strong>G498721</strong> · Chasis: 19XFC2F87KE123456 · <span class="badge activo">ACTIVO</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: RELACIONES -->
+      <div class="tab-content" id="tab-relaciones">
+        <div class="report-card">
+          <div class="report-header"><div class="rh-name">Red de Relaciones</div><div class="rh-badge">CARLOS R. MÉNDEZ PÉREZ</div></div>
+          <div class="report-body">
+            <div class="rep-section-title">✅ Relaciones Confirmadas <span>4 registros</span></div>
+            <div class="relation-card"><div class="rel-avatar">MG</div><div class="rel-info"><div class="ri-name">MARTA SOFÍA GÓMEZ REYES</div><div class="ri-id">001-8765432-1</div></div><div class="rel-badge rb-fam">ESPOSO/A</div></div>
+            <div class="relation-card"><div class="rel-avatar">RM</div><div class="rel-info"><div class="ri-name">ROSA ISABEL MÉNDEZ CASTILLO</div><div class="ri-id">001-2345678-9</div></div><div class="rel-badge rb-fam">MADRE/PADRE</div></div>
+            <div class="relation-card"><div class="rel-avatar">AM</div><div class="rel-info"><div class="ri-name">ANDRÉS LUIS MÉNDEZ PÉREZ</div><div class="ri-id">001-3456789-0</div></div><div class="rel-badge rb-fam">HERMANO/A</div></div>
+            <div class="relation-card"><div class="rel-avatar">SM</div><div class="rel-info"><div class="ri-name">SOFÍA VALENTINA MÉNDEZ GÓMEZ</div><div class="ri-id">402-5678901-2</div></div><div class="rel-badge rb-fam">HIJO/A</div></div>
+            <div class="rep-section-title" style="margin-top:1.25rem">⚠️ Posibles Relaciones <span>3 registros</span></div>
+            <div class="relation-card"><div class="rel-avatar">JP</div><div class="rel-info"><div class="ri-name">JULIO ANTONIO PÉREZ MARTE</div><div class="ri-id">001-9876543-2</div></div><div class="rel-badge rb-posible">POSIBLE RELACIÓN</div></div>
+            <div class="relation-card"><div class="rel-avatar">LP</div><div class="rel-info"><div class="ri-name">LUISA FERNANDA PÉREZ MÉNDEZ</div><div class="ri-id">001-6543219-8</div></div><div class="rel-badge rb-posible">POSIBLE RELACIÓN</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-mockup reveal" style="margin-top:2rem">
+      <div class="bar"><div class="dot-r"></div><div class="dot-y"></div><div class="dot-g"></div><div class="url">masteronex.app · MasterOneX — Plataforma de Consultas</div></div>
+      <img src="Plataforma_MasteroneX.png" alt="MasterOneX Platform" onerror="this.style.display='none'">
+    </div>
+  </div>
+</section>
+
+<!-- MAFI X -->
+<section id="mafi">
+  <div class="section-inner">
+    <div class="section-tag">NUEVA INCORPORACIÓN</div>
+    <h2 class="section-title">MAFI X — Maestro de Análisis Financiero</h2>
+    <p class="section-desc">Data crediticia analizada con reportería integral de DataCrédito incluida en cada consulta. Potenciado por nuestra alianza estratégica con Equifax.</p>
+
+    <!-- DEMO REPORTE MAFI -->
+    <div class="demo-section reveal" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem">
+        <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--navy)">📊 Ejemplo de Reporte MAFI X — Análisis Crediticio</div>
+        <div style="font-size:.75rem;color:var(--gray);background:var(--sky);padding:3px 12px;border-radius:20px;border:1px solid var(--border)">Data de demostración</div>
+      </div>
+      <div class="report-card">
+        <div class="report-header" style="background:linear-gradient(135deg,#0B2463,#1565C0)">
+          <div><div class="rh-name">CARLOS RAFAEL MÉNDEZ PÉREZ</div><div class="rh-id">001-1234567-8 · Reporte MAFI X + DataCrédito Integra</div></div>
+          <div class="rh-badge" style="background:rgba(245,158,11,.2);border-color:rgba(245,158,11,.4);color:#FCD34D">⚠️ EN ATRASO</div>
+        </div>
+        <div class="report-body">
+          <!-- SCORE -->
+          <div class="rep-section-title">🎯 Reporte de Crédito DataCrédito</div>
+          <div class="score-section">
+            <div style="text-align:center">
+              <div class="score-circle">
+                <div class="score-circle-inner">
+                  <div class="score-num">260</div>
+                  <div class="score-lbl">SCORE</div>
+                </div>
+              </div>
+              <div class="score-cat">Silver</div>
+            </div>
+            <div class="score-metrics">
+              <div class="metric-box red"><div class="mv">99.35</div><div class="ml">Índice de Riesgo</div></div>
+              <div class="metric-box gold"><div class="mv">RD$15,670</div><div class="ml">Monto Endeudado</div></div>
+              <div class="metric-box red"><div class="mv">2</div><div class="ml">Productos Atrasados</div></div>
+              <div class="metric-box red"><div class="mv">+120 días</div><div class="ml">Días en Atrasos</div></div>
+              <div class="metric-box"><div class="mv">2</div><div class="ml">Préstamos</div></div>
+              <div class="metric-box"><div class="mv">20</div><div class="ml">Total Atrasos</div></div>
+              <div class="metric-box"><div class="mv">RD$0.00</div><div class="ml">Crédito Disponible</div></div>
+              <div class="metric-box red"><div class="mv">0</div><div class="ml">Tarjetas de Crédito</div></div>
+            </div>
+          </div>
+
+          <!-- PRÉSTAMOS -->
+          <div class="rep-section-title" style="margin-top:1.5rem">💳 Préstamos <span>2 productos · CASTIGADOS</span></div>
+          <table class="rep-table">
+            <thead><tr><th>Institución</th><th>Tipo</th><th>Estado</th><th>Aprobado</th><th>Adeudado</th><th>Cuota</th><th>Días Atraso</th></tr></thead>
+            <tbody>
+              <tr><td>CREDIFÁCIL SAS</td><td>CON</td><td><span class="badge castigada">CASTIGADA</span></td><td>RD$4,500</td><td>RD$8,900</td><td>RD$8,900</td><td style="color:var(--red);font-weight:700">4</td></tr>
+              <tr><td>COOPERATIVA UNIÓN SRL</td><td>CON</td><td><span class="badge castigada">CASTIGADA</span></td><td>RD$8,000</td><td>RD$6,770</td><td>RD$800</td><td style="color:var(--red);font-weight:700">4</td></tr>
+            </tbody>
+          </table>
+          <div style="text-align:right;font-size:.8rem;font-weight:700;color:var(--navy);margin-top:.5rem">Total Adeudado: RD$15,670.00</div>
+
+          <!-- SERVICIOS -->
+          <div class="rep-section-title" style="margin-top:1.25rem">🏢 Servicios <span>2 activos</span></div>
+          <table class="rep-table">
+            <thead><tr><th>Institución</th><th>Tipo</th><th>Estado</th><th>Adeudado</th><th>Días Atraso</th></tr></thead>
+            <tbody>
+              <tr><td>EDE ESTE, S.A.</td><td>NNN</td><td><span class="badge normal">NORMAL</span></td><td>RD$0.00</td><td>0</td></tr>
+              <tr><td>ALTICE DOMINICANA S.A.</td><td>TEL</td><td><span class="badge atraso">ART.68 LEY 172-13</span></td><td>RD$0.00</td><td style="color:var(--gold);font-weight:700">4</td></tr>
+            </tbody>
+          </table>
+
+          <div class="alert-box">
+            <div class="ai">⚠️</div>
+            <div><div class="at">Estado de Cuenta: EN ATRASO</div><div class="as">El solicitante presenta atrasos en uno o más productos de crédito. Referido a análisis manual según políticas configuradas.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mafi-grid">
+      <div>
+        <div class="alliance-badge reveal">
+          <div><div class="eq-logo">Equifax</div><div class="eq-sub">DataCrédito · Alianza Estratégica</div></div>
+          <div class="adivider"></div>
+          <div class="dc-text">🤝 Reporte DataCrédito Integra incluido en cada consulta MAFI X</div>
+        </div>
+        <div class="feature-list">
+          <div class="feature-item reveal reveal-delay-1"><div class="feature-icon">🔍</div><div><h4>Reporte Integral DataCrédito</h4><p>Historial completo de crédito incluido en cada consulta sin costo adicional.</p></div></div>
+          <div class="feature-item reveal reveal-delay-2"><div class="feature-icon">🛡️</div><div><h4>Score + Índice de Riesgo</h4><p>Evaluación crediticia avanzada validada por Equifax. Score, categoría y nivel de riesgo detallado.</p></div></div>
+          <div class="feature-item reveal reveal-delay-3"><div class="feature-icon">📊</div><div><h4>Análisis de Endeudamiento</h4><p>Productos activos, montos adeudados, cuotas, atrasos y crédito disponible.</p></div></div>
+          <div class="feature-item reveal reveal-delay-4"><div class="feature-icon">👥</div><div><h4>Mapa de Relaciones y Nómina</h4><p>Red familiar, relaciones empresariales y registros de nómina verificados por TSS.</p></div></div>
+        </div>
+      </div>
+      <div class="pricing-card reveal">
+        <div class="pricing-header"><span>PLAN PROPUESTO — MAFI X</span></div>
+        <div class="pricing-body">
+          <div class="pricing-price"><sub>RD$</sub>85</div>
+          <div class="pricing-period">por consulta · antes de impuestos</div>
+          <div class="pricing-divider"></div>
+          <div class="pricing-detail"><span class="dl">Consultas mensuales</span><span class="dv">4,000</span></div>
+          <div class="pricing-detail"><span class="dl">Precio unitario</span><span class="dv">RD$85.00</span></div>
+          <div class="pricing-detail"><span class="dl">Reporte DataCrédito</span><span class="dv" style="color:#6EE7B7">Incluido ✓</span></div>
+          <div class="pricing-detail"><span class="dl">ITBIS 18%</span><span class="dv" style="color:rgba(255,255,255,.4)">No incluido</span></div>
+          <div class="pricing-total"><div class="tl">FACTURACIÓN MENSUAL ESTIMADA</div><span class="tv" id="mafi-total">RD$340,000</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOTOR DE DECISIONES -->
+<section id="motor">
+  <div class="section-inner">
+    <div class="section-tag">APP DE CRÉDITO</div>
+    <h2 class="section-title">Motor de Decisiones Inteligente</h2>
+    <p class="section-desc">Configure las políticas de préstamo de CREDICEFI y obtenga decisiones crediticias automáticas en tiempo real — sin intervención manual.</p>
+    <div class="motor-grid">
+      <div class="flow-steps">
+        <div class="flow-step reveal reveal-delay-1"><div class="step-circle s-blue">1</div><div class="step-text"><h4>Solicitud de Préstamo</h4><p>El solicitante envía su solicitud. Se registra sin ningún filtro previo (prevalidación).</p></div></div>
+        <div class="flow-step reveal reveal-delay-2"><div class="step-circle s-gold">2</div><div class="step-text"><h4>Lectura de Data</h4><p>El sistema consulta automáticamente MAFI X + MasterOneX — data crediticia e identidad completa.</p></div></div>
+        <div class="flow-step reveal reveal-delay-3"><div class="step-circle s-navy">3</div><div class="step-text"><h4>Validación de Políticas</h4><p>La solicitud pasa por las reglas configuradas: score mínimo, índice de riesgo, capacidad de pago, días de mora.</p></div></div>
+        <div class="flow-step reveal reveal-delay-4"><div class="step-circle s-green">✓</div><div class="step-text"><h4>Decisión Automática</h4><p>El Motor emite: <strong style="color:var(--green)">Crédito Aprobado</strong> o <strong style="color:var(--gold)">Referido a Analista</strong>.</p></div></div>
+      </div>
+      <div class="motor-right">
+        <div class="motor-img-grid reveal">
+          <img src="Motor_de_decisiones.png" alt="Motor de Decisiones" onerror="this.style.display='none'">
+          <img src="Monitor_de_Flujo.png" alt="Monitor de Flujo" onerror="this.style.display='none'">
+        </div>
+        <div class="decision-demo reveal reveal-delay-1">
+          <div class="demo-header"><span>🎛️ Políticas configuradas por CREDICEFI</span></div>
+          <div class="demo-body">
+            <div class="demo-row"><span class="dk">Score mínimo — Aprobación automática</span><span class="dv">700 pts</span></div>
+            <div class="demo-row"><span class="dk">Sueldo mínimo</span><span class="dv">RD$30,000</span></div>
+            <div class="demo-row"><span class="dk">Sueldo máximo</span><span class="dv">RD$300,000</span></div>
+            <div class="demo-row"><span class="dk">Capacidad de pago</span><span class="dv">50%</span></div>
+            <div class="demo-row"><span class="dk">Días de mora permitidos</span><span class="dv">Hasta 10 días</span></div>
+            <div class="demo-row"><span class="dk">Procesos judiciales</span><span class="dv" style="color:var(--red)">No permitidos</span></div>
+            <div class="demo-row"><span class="dk">Rango de préstamo</span><span class="dv">RD$150K – RD$800K</span></div>
+          </div>
+        </div>
+        <div class="decision-demo reveal reveal-delay-2">
+          <div class="demo-header"><span>⚡ Resultado Motor — Solicitud Aprobada</span></div>
+          <div class="demo-body">
+            <div class="demo-row"><span class="dk">Solicitante</span><span class="dv">C. Martínez · 001-XXXXXXX-X</span></div>
+            <div class="demo-row"><span class="dk">Score obtenido</span><span class="dv">742 pts <span class="demo-badge approved">CUMPLE</span></span></div>
+            <div class="demo-row"><span class="dk">Índice de riesgo</span><span class="dv">8.5% <span class="demo-badge approved">CUMPLE</span></span></div>
+            <div class="demo-row"><span class="dk">Capacidad de pago</span><span class="dv">45% <span class="demo-badge approved">CUMPLE</span></span></div>
+            <div class="demo-row"><span class="dk">Días en mora</span><span class="dv">0 días <span class="demo-badge approved">CUMPLE</span></span></div>
+            <div class="demo-row"><span class="dk">Decisión</span><span class="dv"><strong style="color:var(--green)">✅ CRÉDITO APROBADO</strong></span></div>
+          </div>
+        </div>
+        <div class="fee-card reveal reveal-delay-3">
+          <div class="fee-label">FEE MENSUAL FIJO — APP DE CRÉDITO</div>
+          <div class="fee-amount">RD$50,000</div>
+          <div class="fee-period">por mes · antes de impuestos</div>
+          <div class="fee-note">Basado en 8,000 créditos analizados mensualmente por CREDICEFI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUMEN -->
+<section id="resumen">
+  <div class="section-inner">
+    <div class="section-tag">RESUMEN DE INVERSIÓN</div>
+    <h2 class="section-title">Propuesta Integral de Servicios</h2>
+    <p class="section-desc">Todos los servicios contratados y propuestos con sus respectivos valores antes de ITBIS.</p>
+    <div class="summary-table reveal">
+      <table>
+        <thead><tr><th>Servicio</th><th>Estado</th><th>Volumen</th><th>Precio Unitario</th><th>Total Mensual (RD$)</th></tr></thead>
+        <tbody>
+          <tr><td><strong style="color:rgba(255,255,255,.9)">MasterOneX — Consultas</strong><br><small style="color:rgba(255,255,255,.4)">Localización · data pública y privada autorizada</small></td><td><span class="tbadge vigente">VIGENTE</span></td><td>8,000 consultas/mes</td><td>RD$40.30</td><td>RD$322,400</td></tr>
+          <tr><td><strong style="color:rgba(255,255,255,.9)">MAFI X — Análisis Crediticio</strong><br><small style="color:rgba(255,255,255,.4)">DataCrédito Integra + Score + Índice de Riesgo</small></td><td><span class="tbadge nuevo">NUEVO</span></td><td>4,000 consultas/mes</td><td>RD$85.00</td><td>RD$340,000</td></tr>
+          <tr><td><strong style="color:rgba(255,255,255,.9)">App de Crédito — Motor de Decisiones</strong><br><small style="color:rgba(255,255,255,.4)">Aprobación automática configurada por CREDICEFI</small></td><td><span class="tbadge nuevo">NUEVO</span></td><td>Fee fijo mensual</td><td>—</td><td>RD$50,000</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="4">TOTAL MENSUAL ESTIMADO · Antes de ITBIS (18%)</td><td>RD$712,400</td></tr></tfoot>
+      </table>
+    </div>
+    <div class="otf-box reveal"><div class="otf-icon">🚀</div><div><div class="otf-label">ONE TIME FEE — IMPLEMENTACIÓN</div><div class="otf-val">RD$600,000</div><div class="otf-note">Incluye: levantamiento de políticas · configuración del Motor de Decisiones · integración completa · capacitación del equipo. Antes de impuestos.</div></div></div>
+  </div>
+</section>
+
+<!-- IMPLEMENTACION -->
+<section id="impl">
+  <div class="section-inner">
+    <div class="section-tag">PLAN DE IMPLEMENTACIÓN</div>
+    <h2 class="section-title">De la firma al primer crédito aprobado en 4 semanas</h2>
+    <p class="section-desc">Un proceso ágil y sin fricciones para incorporar CREDICEFI al ecosistema completo de servicios.</p>
+    <div class="timeline">
+      <div class="tl-card reveal reveal-delay-1"><div class="tl-week w1">Semana 1</div><span class="tl-icon">📋</span><div class="tl-title">Kickoff & Levantamiento</div><ul class="tl-items"><li>Reunión de arranque con equipo CREDICEFI</li><li>Mapeo de políticas de crédito actuales</li><li>Definición de reglas del Motor de Decisiones</li></ul></div>
+      <div class="tl-card reveal reveal-delay-2"><div class="tl-week w2">Semana 2</div><span class="tl-icon">⚙️</span><div class="tl-title">Configuración del Sistema</div><ul class="tl-items"><li>Integración MAFI X + DataCrédito</li><li>Carga de políticas en Motor de Decisiones</li><li>Pruebas con data de sandbox</li></ul></div>
+      <div class="tl-card reveal reveal-delay-3"><div class="tl-week w3">Semana 3</div><span class="tl-icon">🔬</span><div class="tl-title">Pruebas & Validación</div><ul class="tl-items"><li>Pruebas con solicitudes reales (UAT)</li><li>Ajuste fino de reglas y umbrales</li><li>Capacitación del equipo operativo</li></ul></div>
+      <div class="tl-card reveal reveal-delay-4"><div class="tl-week w4">Semana 4</div><span class="tl-icon">🚀</span><div class="tl-title">Go Live</div><ul class="tl-items"><li>Lanzamiento en producción</li><li>Monitoreo en tiempo real del flujo</li><li>Soporte post-implementación incluido</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- CIERRE -->
+<section id="cierre">
+  <div class="section-inner">
+    <div class="section-tag">PRÓXIMO PASO</div>
+    <h2 class="section-title" style="max-width:600px">Transformemos juntos el crédito de CREDICEFI</h2>
+    <p class="section-desc" style="max-width:500px">Estamos listos para iniciar. Aquí el camino hacia la primera decisión automática de crédito.</p>
+    <div class="next-steps">
+      <div class="next-card reveal reveal-delay-1"><div class="next-num">01</div><h4>Validar Propuesta</h4><p>Revisión con el equipo directivo de CREDICEFI</p></div>
+      <div class="next-card reveal reveal-delay-2"><div class="next-num">02</div><h4>Firma del Acuerdo</h4><p>Contrato de servicios y pago del One Time Fee</p></div>
+      <div class="next-card reveal reveal-delay-3"><div class="next-num">03</div><h4>Inicio Semana 1</h4><p>Levantamiento de políticas e integración</p></div>
+      <div class="next-card reveal reveal-delay-4"><div class="next-num">04</div><h4>Go Live — Semana 4</h4><p>Primer crédito aprobado automáticamente</p></div>
+    </div>
+    <div class="cierre-contact"><strong>CATA MULTISERVICES SRL</strong> &nbsp;·&nbsp; Santo Domingo, República Dominicana &nbsp;·&nbsp; Abril 2026</div>
+  </div>
+</section>
+
+<footer><span>CATA MULTISERVICES SRL</span> &nbsp;·&nbsp; Propuesta Comercial CREDICEFI &nbsp;·&nbsp; Documento Confidencial &nbsp;·&nbsp; Abril 2026</footer>
+
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  event.target.classList.add('active');
+}
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const navLinks=document.querySelectorAll('.nav-links a');
+const sections=document.querySelectorAll('section[id]');
+window.addEventListener('scroll',()=>{
+  let current='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-80)current=s.id});
+  navLinks.forEach(a=>{a.classList.toggle('active',a.getAttribute('href')==='#'+current)});
+});
+</script>
+</body>
+</html>
