@@ -1,1 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto A Dashboard</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f1117;--bg2:#161b27;--bg3:#1e2535;--bg4:#242c40;
+  --text:#e8eaf0;--text2:#9aa3b8;--text3:#5c6480;
+  --border:#2a3348;--border2:#3a4560;
+  --blue:#3b82f6;--blue2:#1d4ed8;--blue3:#93c5fd;
+  --green:#10b981;--green2:#065f46;--green3:#6ee7b7;
+  --red:#ef4444;--red2:#7f1d1d;--red3:#fca5a5;
+  --amber:#f59e0b;--amber2:#78350f;--amber3:#fcd34d;
+  --purple:#8b5cf6;--purple3:#c4b5fd;
+  --teal:#14b8a6;--teal3:#99f6e4;
+  --radius:8px;--radius-lg:12px;
+}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:13px;line-height:1.5}
+.shell{display:grid;grid-template-columns:220px 1fr;grid-template-rows:52px 1fr;height:100vh}
+.topbar{grid-column:1/-1;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;z-index:10}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;color:var(--blue3)}
+.logo-icon{width:28px;height:28px;background:linear-gradient(135deg,var(--blue),var(--purple));border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+.topbar-meta{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--text2)}
+.badge-live{background:#10b98122;color:var(--green3);border:1px solid #10b98144;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-live::before{content:'●';margin-right:4px;font-size:9px}
+.avatar{width:30px;height:30px;border-radius:50%;background:var(--blue2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--blue3);border:1px solid var(--border2)}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);padding:16px 0;overflow-y:auto}
+.nav-section{padding:0 12px;margin-bottom:20px}
+.nav-label{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;padding:0 8px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:8px;border-radius:var(--radius);color:var(--text2);cursor:pointer;font-size:13px;margin-bottom:2px;transition:all .15s}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:#3b82f620;color:var(--blue3)}
+.nav-item i{font-size:16px;width:18px;text-align:center}
+.nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+.main{background:var(--bg);overflow-y:auto;padding:20px}
+.page{display:none}
+.page.active{display:block}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.kpi-label{font-size:11px;color:var(--text3);font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.kpi-value{font-size:24px;font-weight:600;color:var(--text);letter-spacing:-.5px;line-height:1}
+.kpi-sub{font-size:11px;color:var(--text2);margin-top:4px}
+.kpi-delta{font-size:11px;font-weight:600;padding:2px 6px;border-radius:4px;display:inline-block;margin-top:4px}
+.delta-up{background:#10b98120;color:var(--green3)}
+.delta-dn{background:#ef444420;color:var(--red3)}
+.charts-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:20px}
+.chart-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px}
+.card-title{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card-title i{font-size:14px}
+.alerts-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+.alert-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px}
+.alert-item{display:flex;gap:10px;padding:10px;border-radius:var(--radius);margin-bottom:6px;border:1px solid transparent;cursor:pointer;transition:.15s}
+.alert-item:hover{background:var(--bg3)}
+.alert-crit{background:#ef444410;border-color:#ef444430}
+.alert-warn{background:#f59e0b10;border-color:#f59e0b30}
+.alert-info{background:#3b82f610;border-color:#3b82f630}
+.alert-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ai-crit{background:#ef444420;color:var(--red3)}
+.ai-warn{background:#f59e0b20;color:var(--amber3)}
+.ai-info{background:#3b82f620;color:var(--blue3)}
+.alert-body{flex:1;min-width:0}
+.alert-title{font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px}
+.alert-desc{font-size:11px;color:var(--text2);line-height:1.4}
+.alert-action{font-size:10px;font-weight:600;color:var(--amber3);margin-top:4px;background:#f59e0b15;padding:2px 6px;border-radius:4px;display:inline-block}
+.alert-time{font-size:10px;color:var(--text3);margin-top:2px}
+.bureau-list{display:flex;flex-direction:column;gap:6px;max-height:360px;overflow-y:auto}
+.bureau-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px}
+.bureau-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.bureau-name{font-size:12px;font-weight:600;color:var(--text)}
+.bureau-bank{font-size:10px;color:var(--text3)}
+.bureau-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.bb-red{background:var(--red2);color:var(--red3)}
+.bb-amber{background:var(--amber2);color:var(--amber3)}
+.bureau-action{font-size:11px;color:var(--text2);margin-top:4px;padding:4px 8px;background:#f59e0b12;border-radius:4px;border-left:2px solid var(--amber);line-height:1.4}
+.map-section{display:grid;grid-template-columns:220px 1fr;gap:12px;margin-bottom:20px}
+.map-filters{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px}
+.filter-group{margin-bottom:16px}
+.filter-label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;margin-bottom:6px}
+.filter-opt{display:flex;align-items:center;gap:6px;padding:4px 0;font-size:12px;color:var(--text2);cursor:pointer}
+.filter-opt input{accent-color:var(--blue)}
+.map-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;display:flex;flex-direction:column}
+#drMap{flex:1;border-radius:var(--radius);overflow:hidden;position:relative;min-height:320px}
+.map-legend{display:flex;align-items:center;gap:16px;margin-top:10px;font-size:11px;color:var(--text2);flex-wrap:wrap}
+.leg-swatch{width:40px;height:8px;border-radius:2px;display:inline-block}
+.table-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;margin-bottom:20px}
+.table-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.table-toolbar input[type=text]{flex:1;min-width:180px;background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:6px 10px;color:var(--text);font-size:12px;outline:none}
+.table-toolbar input[type=text]::placeholder{color:var(--text3)}
+.table-toolbar input[type=text]:focus{border-color:var(--blue)}
+.tbl-select{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:6px 8px;color:var(--text);font-size:12px;outline:none;cursor:pointer}
+.tbl-select:focus{border-color:var(--blue)}
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius)}
+table{width:100%;border-collapse:collapse;font-size:12px}
+thead th{background:var(--bg3);color:var(--text3);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;padding:8px 10px;text-align:left;white-space:nowrap;border-bottom:1px solid var(--border)}
+tbody tr{border-bottom:1px solid var(--border);transition:.1s}
+tbody tr:hover{background:var(--bg3)}
+tbody td{padding:8px 10px;color:var(--text);white-space:nowrap}
+.risk-bar{display:flex;align-items:center;gap:6px}
+.risk-track{width:60px;height:5px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.risk-fill{height:100%;border-radius:3px}
+.score-pill{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.sp-low{background:#10b98120;color:var(--green3)}
+.sp-med{background:#f59e0b20;color:var(--amber3)}
+.sp-high{background:#ef444420;color:var(--red3)}
+.sp-vhigh{background:#7f1d1d;color:#fca5a5}
+.page-header{font-size:15px;font-weight:600;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.btn-filter{background:var(--bg3);border:1px solid var(--border2);border-radius:6px;padding:6px 12px;color:var(--text2);font-size:12px;cursor:pointer;transition:.15s}
+.btn-filter:hover{background:var(--bg4);color:var(--text)}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:10px}
+@media(max-width:768px){
+  .shell{grid-template-columns:1fr;grid-template-rows:52px 1fr}
+  .sidebar{display:none}
+  .charts-row{grid-template-columns:1fr}
+  .alerts-grid{grid-template-columns:1fr}
+  .map-section{grid-template-columns:1fr}
+  .map-filters{display:none}
+}
+</style>
+</head>
+<body>
 
+<div class="shell">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="logo">
+      <div class="logo-icon"><i class="ti ti-shield-check"></i></div>
+      Proyecto A
+    </div>
+    <span class="badge-live">En vivo</span>
+    <div class="topbar-meta">
+      <i class="ti ti-clock"></i>
+      <span id="clock"></span>
+      <i class="ti ti-bell" style="color:var(--amber3)"></i>
+      <div class="avatar">GM</div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="nav-label">Principal</div>
+      <div class="nav-item active" onclick="showPage('overview',this)"><i class="ti ti-layout-dashboard"></i>Dashboard</div>
+      <div class="nav-item" onclick="showPage('alerts',this)"><i class="ti ti-alert-triangle"></i>Alertas <span class="nav-badge">7</span></div>
+      <div class="nav-item" onclick="showPage('map',this)"><i class="ti ti-map-2"></i>Mapa Geográfico</div>
+      <div class="nav-item" onclick="showPage('portfolio',this)"><i class="ti ti-table"></i>Cartera Completa</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Análisis</div>
+      <div class="nav-item"><i class="ti ti-chart-line"></i>Score Predictivo</div>
+      <div class="nav-item"><i class="ti ti-users"></i>Buró de Crédito</div>
+      <div class="nav-item"><i class="ti ti-report-analytics"></i>Reportes</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Configuración</div>
+      <div class="nav-item"><i class="ti ti-settings"></i>Parámetros IA</div>
+      <div class="nav-item"><i class="ti ti-lock"></i>Acceso &amp; Roles</div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- PAGE: OVERVIEW -->
+    <div class="page active" id="page-overview">
+
+      <div class="kpi-grid">
+        <div class="kpi" style="--accent:var(--blue)">
+          <div class="kpi-label">Cartera Total</div>
+          <div class="kpi-value">RD$42.8B</div>
+          <div class="kpi-sub">Préstamos + Tarjetas</div>
+          <span class="kpi-delta delta-up">▲ 3.2% vs mes ant.</span>
+        </div>
+        <div class="kpi" style="--accent:var(--green)">
+          <div class="kpi-label">Utilización Promedio</div>
+          <div class="kpi-value">67.4%</div>
+          <div class="kpi-sub">Préstamos activos</div>
+          <span class="kpi-delta delta-up">▲ 1.8%</span>
+        </div>
+        <div class="kpi" style="--accent:var(--amber)">
+          <div class="kpi-label">Índice de Morosidad</div>
+          <div class="kpi-value">3.81%</div>
+          <div class="kpi-sub">+30 días de atraso</div>
+          <span class="kpi-delta delta-dn">▼ 0.3% vs mes ant.</span>
+        </div>
+        <div class="kpi" style="--accent:var(--red)">
+          <div class="kpi-label">Cartera Riesgo Alto</div>
+          <div class="kpi-value">RD$3.1B</div>
+          <div class="kpi-sub">Score predictivo &gt;70%</div>
+          <span class="kpi-delta delta-dn">▲ 8.4% este mes</span>
+        </div>
+        <div class="kpi" style="--accent:var(--purple)">
+          <div class="kpi-label">Clientes en Cartera</div>
+          <div class="kpi-value">94,720</div>
+          <div class="kpi-sub">Personas físicas y jurídicas</div>
+          <span class="kpi-delta delta-up">▲ 412 nuevos</span>
+        </div>
+        <div class="kpi" style="--accent:var(--teal)">
+          <div class="kpi-label">Alertas Activas</div>
+          <div class="kpi-value">7</div>
+          <div class="kpi-sub">Requieren atención inmediata</div>
+          <span class="kpi-delta delta-dn" style="background:#ef444420;color:var(--red3)">3 críticas</span>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="card-title"><i class="ti ti-chart-bar"></i>Distribución por Producto</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;font-size:10px;color:var(--text2)">
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#3b82f6;margin-right:3px"></span>Tarjetas 38%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#8b5cf6;margin-right:3px"></span>Hipotecario 28%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;margin-right:3px"></span>Personal 20%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#f59e0b;margin-right:3px"></span>Vehículos 9%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#14b8a6;margin-right:3px"></span>Comercial 5%</span>
+          </div>
+          <div style="position:relative;height:180px"><canvas id="c1"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="card-title"><i class="ti ti-trending-up"></i>Morosidad mensual 2025–2026</div>
+          <div style="position:relative;height:210px"><canvas id="c2"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="card-title"><i class="ti ti-chart-pie-2"></i>Score de Riesgo — Distribución</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px;font-size:10px;color:var(--text2)">
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#10b981;margin-right:3px"></span>Bajo 42%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#f59e0b;margin-right:3px"></span>Moderado 35%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#ef4444;margin-right:3px"></span>Alto 16%</span>
+            <span><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:#7f1d1d;margin-right:3px"></span>Muy Alto 7%</span>
+          </div>
+          <div style="position:relative;height:180px"><canvas id="c3"></canvas></div>
+        </div>
+      </div>
+
+      <div class="alerts-grid">
+        <div class="alert-panel">
+          <div class="card-title"><i class="ti ti-alert-triangle" style="color:var(--red3)"></i>Alertas Preventivas Activas</div>
+          <div id="alertList"></div>
+        </div>
+        <div class="alert-panel">
+          <div class="card-title"><i class="ti ti-building-bank" style="color:var(--amber3)"></i>Alertas Buró Multi-Banco</div>
+          <div class="bureau-list" id="bureauList"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PAGE: ALERTS -->
+    <div class="page" id="page-alerts">
+      <div class="page-header"><i class="ti ti-alert-triangle" style="color:var(--red3)"></i> Centro de Alertas</div>
+      <div class="alerts-grid">
+        <div class="alert-panel">
+          <div class="card-title">Alertas de Límite de Crédito</div>
+          <div id="alertList2"></div>
+        </div>
+        <div class="alert-panel">
+          <div class="card-title">Buró de Crédito Multi-Banco</div>
+          <div class="bureau-list" id="bureauList2"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: MAP -->
+    <div class="page" id="page-map">
+      <div class="page-header"><i class="ti ti-map-2" style="color:var(--blue3)"></i> Mapa de Calor Geográfico — República Dominicana</div>
+      <div class="map-section">
+        <div class="map-filters">
+          <div class="card-title">Filtros</div>
+          <div class="filter-group">
+            <div class="filter-label">Provincia</div>
+            <label class="filter-opt"><input type="checkbox" checked> Distrito Nacional</label>
+            <label class="filter-opt"><input type="checkbox" checked> Santiago</label>
+            <label class="filter-opt"><input type="checkbox" checked> La Vega</label>
+            <label class="filter-opt"><input type="checkbox" checked> San Cristóbal</label>
+            <label class="filter-opt"><input type="checkbox"> La Romana</label>
+            <label class="filter-opt"><input type="checkbox"> Puerto Plata</label>
+            <label class="filter-opt"><input type="checkbox"> San Pedro</label>
+          </div>
+          <div class="filter-group">
+            <div class="filter-label">Sexo</div>
+            <label class="filter-opt"><input type="radio" name="sex" checked> Todos</label>
+            <label class="filter-opt"><input type="radio" name="sex"> Masculino</label>
+            <label class="filter-opt"><input type="radio" name="sex"> Femenino</label>
+          </div>
+          <div class="filter-group">
+            <div class="filter-label">Rango de Edad</div>
+            <label class="filter-opt"><input type="checkbox" checked> 18–30 años</label>
+            <label class="filter-opt"><input type="checkbox" checked> 31–45 años</label>
+            <label class="filter-opt"><input type="checkbox" checked> 46–60 años</label>
+            <label class="filter-opt"><input type="checkbox"> 61+ años</label>
+          </div>
+        </div>
+        <div class="map-card">
+          <div class="card-title"><i class="ti ti-map-pin" style="color:var(--red3)"></i> Concentración de Morosidad por Zona</div>
+          <div id="drMap"></div>
+          <div class="map-legend">
+            <span style="color:var(--text3)">Morosidad:</span>
+            <span class="leg-swatch" style="background:#1a3a5c"></span><span>Baja &lt;2%</span>
+            <span class="leg-swatch" style="background:#2563eb"></span><span>Moderada 2–4%</span>
+            <span class="leg-swatch" style="background:#dc2626"></span><span>Alta &gt;4%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: PORTFOLIO -->
+    <div class="page" id="page-portfolio">
+      <div class="page-header"><i class="ti ti-table" style="color:var(--blue3)"></i> Visualizador de Cartera Completa</div>
+      <div class="table-section">
+        <div class="table-toolbar">
+          <i class="ti ti-search" style="color:var(--text3)"></i>
+          <input type="text" id="searchInput" placeholder="Buscar por nombre, cédula, producto..." oninput="filterTable()">
+          <select class="tbl-select" id="riskFilter" onchange="filterTable()">
+            <option value="">Todos los riesgos</option>
+            <option value="Bajo">Bajo</option>
+            <option value="Moderado">Moderado</option>
+            <option value="Alto">Alto</option>
+            <option value="Muy Alto">Muy Alto</option>
+          </select>
+          <select class="tbl-select" id="productFilter" onchange="filterTable()">
+            <option value="">Todos los productos</option>
+            <option>Tarjeta de Crédito</option>
+            <option>Préstamo Personal</option>
+            <option>Hipotecario</option>
+            <option>Préstamo Vehículo</option>
+          </select>
+        </div>
+        <div class="tbl-wrap">
+          <table id="portTable">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Cédula</th>
+                <th>Producto</th>
+                <th>Límite RD$</th>
+                <th>Utilizado RD$</th>
+                <th>Uso %</th>
+                <th>Atraso</th>
+                <th>Índice Riesgo</th>
+                <th>Score IA</th>
+                <th>Alerta Buró</th>
+                <th>Acción Sugerida</th>
+              </tr>
+            </thead>
+            <tbody id="portBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+// ── CLOCK ──────────────────────────────────────────────
+function updateClock(){
+  const now=new Date();
+  document.getElementById('clock').textContent=now.toLocaleDateString('es-DO',{day:'2-digit',month:'short',year:'numeric'})+', '+now.toLocaleTimeString('es-DO',{hour:'2-digit',minute:'2-digit'});
+}
+updateClock(); setInterval(updateClock,30000);
+
+// ── DATA ───────────────────────────────────────────────
+const portfolio=[
+  {nombre:'Ana García Rodríguez',cedula:'001-1234567-8',producto:'Tarjeta de Crédito',limite:350000,usado:332500,atraso:0,riesgo:'Alto',score:78,buro:'Banco Popular – mora 45d',accion:'Reducir cupo 20%'},
+  {nombre:'Carlos Méndez Peña',cedula:'001-9876543-2',producto:'Préstamo Personal',limite:500000,usado:497000,atraso:32,riesgo:'Muy Alto',score:91,buro:'Scotiabank – mora 60d',accion:'Suspender facilidades'},
+  {nombre:'María Santos Jiménez',cedula:'002-3456789-1',producto:'Hipotecario',limite:4800000,usado:3120000,atraso:0,riesgo:'Bajo',score:12,buro:'',accion:'Ninguna'},
+  {nombre:'Juan Pérez Álvarez',cedula:'001-5550101-7',producto:'Tarjeta de Crédito',limite:280000,usado:261000,atraso:15,riesgo:'Alto',score:82,buro:'Banco Popular – mora 30d',accion:'Reducir cupo 20%'},
+  {nombre:'Luis Fernández Cruz',cedula:'003-7892345-6',producto:'Préstamo Vehículo',limite:1200000,usado:780000,atraso:0,riesgo:'Bajo',score:18,buro:'',accion:'Ninguna'},
+  {nombre:'Rosa Martínez Díaz',cedula:'002-6543219-9',producto:'Préstamo Personal',limite:220000,usado:198000,atraso:8,riesgo:'Moderado',score:52,buro:'BanReservas – mora 15d',accion:'Monitoreo activo'},
+  {nombre:'Pedro Castillo López',cedula:'001-3210987-4',producto:'Tarjeta de Crédito',limite:150000,usado:142000,atraso:60,riesgo:'Muy Alto',score:95,buro:'Popular – mora 90d',accion:'Bloquear tarjeta'},
+  {nombre:'Carmen Reyes Torres',cedula:'003-1122334-5',producto:'Hipotecario',limite:6500000,usado:2860000,atraso:0,riesgo:'Bajo',score:8,buro:'',accion:'Ninguna'},
+  {nombre:'Roberto Núñez Vargas',cedula:'001-9988776-3',producto:'Préstamo Personal',limite:380000,usado:285000,atraso:0,riesgo:'Moderado',score:39,buro:'',accion:'Ninguna'},
+  {nombre:'Sofía Herrera Matos',cedula:'002-4455667-1',producto:'Tarjeta de Crédito',limite:420000,usado:315000,atraso:5,riesgo:'Moderado',score:47,buro:'Scotiabank – mora 7d',accion:'Monitoreo activo'},
+  {nombre:'Miguel Cabrera Soto',cedula:'001-6677889-0',producto:'Préstamo Vehículo',limite:850000,usado:820000,atraso:22,riesgo:'Alto',score:74,buro:'BanReservas – mora 22d',accion:'Congelar crédito adicional'},
+  {nombre:'Lucía Espinal Mieses',cedula:'003-3344556-7',producto:'Hipotecario',limite:8200000,usado:5100000,atraso:0,riesgo:'Bajo',score:21,buro:'',accion:'Ninguna'},
+  {nombre:'Ángel Brito Rosario',cedula:'002-8899001-2',producto:'Tarjeta de Crédito',limite:95000,usado:91200,atraso:45,riesgo:'Muy Alto',score:88,buro:'Popular – mora 50d',accion:'Reducir cupo 30%'},
+  {nombre:'Diana Mora Tejeda',cedula:'001-2233445-6',producto:'Préstamo Personal',limite:175000,usado:92000,atraso:0,riesgo:'Bajo',score:15,buro:'',accion:'Ninguna'},
+  {nombre:'Freddy Alcántara Rivas',cedula:'003-5566778-9',producto:'Tarjeta de Crédito',limite:600000,usado:558000,atraso:12,riesgo:'Alto',score:71,buro:'Citibank – mora 20d',accion:'Reducir cupo 15%'},
+];
+
+const alertsData=[
+  {tipo:'crit',icono:'ti-credit-card',titulo:'Pedro Castillo López',desc:'Utilización tarjeta: 94.7% · 60 días de atraso',action:'Bloquear tarjeta inmediatamente',tiempo:'Hace 2 min'},
+  {tipo:'crit',icono:'ti-user-exclamation',titulo:'Carlos Méndez Peña',desc:'Préstamo al 99.4% · Score IA: 91% impago',action:'Suspender facilidades de crédito',tiempo:'Hace 8 min'},
+  {tipo:'warn',icono:'ti-credit-card',titulo:'Ana García Rodríguez',desc:'Tarjeta al 95.0% · Score IA: 78%',action:'Reducir cupo 20% (RD$70,000)',tiempo:'Hace 15 min'},
+  {tipo:'warn',icono:'ti-alert-circle',titulo:'Ángel Brito Rosario',desc:'Tarjeta al 96.0% · 45 días de atraso',action:'Reducir cupo 30%',tiempo:'Hace 31 min'},
+  {tipo:'info',icono:'ti-trending-up',titulo:'Freddy Alcántara Rivas',desc:'Tarjeta al 93.0% · Alerta buró activa',action:'Monitoreo preventivo',tiempo:'Hace 1h'},
+];
+
+const bureauData=[
+  {nombre:'Juan Pérez Álvarez',banco:'Banco Popular',detalle:'Mora 30 días en tarjeta RD$18,500',nivel:'warn',accion:'Reducir cupo BHD en 20% (RD$56,000) como medida preventiva'},
+  {nombre:'Carlos Méndez Peña',banco:'Scotiabank',detalle:'Mora 60 días · Deuda castigada RD$42,000',nivel:'red',accion:'Suspender toda facilidad crediticia y notificar área legal'},
+  {nombre:'Pedro Castillo López',banco:'Banco Popular',detalle:'Mora 90 días · Demanda judicial activa',nivel:'red',accion:'Bloquear tarjeta. Escalar a Recuperaciones para gestión inmediata'},
+  {nombre:'Rosa Martínez Díaz',banco:'BanReservas',detalle:'Mora 15 días en préstamo personal',nivel:'warn',accion:'Activar monitoreo mensual y contactar cliente para seguimiento'},
+  {nombre:'Sofía Herrera Matos',banco:'Scotiabank',detalle:'Mora 7 días · Primer incidente registrado',nivel:'warn',accion:'Enviar comunicación preventiva al cliente. Sin acción de cupo aún'},
+  {nombre:'Ángel Brito Rosario',banco:'Banco Popular',detalle:'Mora 50 días · Historial negativo previo',nivel:'red',accion:'Reducir cupo BHD en 30%. Activar alertas de seguimiento semanal'},
+  {nombre:'Miguel Cabrera Soto',banco:'BanReservas',detalle:'Mora 22 días · Segundo atraso en 6 meses',nivel:'warn',accion:'Congelar aprobación de créditos adicionales hasta regularización'},
+];
+
+// ── RENDERERS ─────────────────────────────────────────
+function renderAlerts(id){
+  const el=document.getElementById(id); if(!el)return;
+  el.innerHTML=alertsData.map(a=>`
+    <div class="alert-item alert-${a.tipo}">
+      <div class="alert-icon ai-${a.tipo==='crit'?'crit':a.tipo==='warn'?'warn':'info'}"><i class="ti ${a.icono}"></i></div>
+      <div class="alert-body">
+        <div class="alert-title">${a.titulo}</div>
+        <div class="alert-desc">${a.desc}</div>
+        <span class="alert-action"><i class="ti ti-bolt"></i> ${a.action}</span>
+        <div class="alert-time">${a.tiempo}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderBureau(id){
+  const el=document.getElementById(id); if(!el)return;
+  el.innerHTML=bureauData.map(b=>`
+    <div class="bureau-item">
+      <div class="bureau-header">
+        <span class="bureau-name">${b.nombre}</span>
+        <span class="bureau-badge ${b.nivel==='red'?'bb-red':'bb-amber'}">${b.nivel==='red'?'CRÍTICO':'ALERTA'}</span>
+      </div>
+      <div class="bureau-bank"><i class="ti ti-building-bank"></i> ${b.banco} · ${b.detalle}</div>
+      <div class="bureau-action"><strong>Acción:</strong> ${b.accion}</div>
+    </div>`).join('');
+}
+
+function riskMeta(score){
+  if(score<30)return{bg:'#10b98120',col:'var(--green3)',lbl:'Bajo',fill:'#10b981',cls:'sp-low'};
+  if(score<60)return{bg:'#f59e0b20',col:'var(--amber3)',lbl:'Moderado',fill:'#f59e0b',cls:'sp-med'};
+  if(score<80)return{bg:'#ef444420',col:'var(--red3)',lbl:'Alto',fill:'#ef4444',cls:'sp-high'};
+  return{bg:'#7f1d1d',col:'#fca5a5',lbl:'Muy Alto',fill:'#dc2626',cls:'sp-vhigh'};
+}
+
+function renderTable(data){
+  const body=document.getElementById('portBody');
+  body.innerHTML=data.map(r=>{
+    const pct=Math.round(r.usado/r.limite*100);
+    const m=riskMeta(r.score);
+    const barC=pct>90?'#ef4444':pct>75?'#f59e0b':'#10b981';
+    const aColor=r.atraso===0?'var(--green3)':r.atraso<30?'var(--amber3)':'var(--red3)';
+    const buroCell=r.buro
+      ?`<span style="font-size:10px;color:var(--amber3);background:#f59e0b15;padding:2px 5px;border-radius:4px"><i class="ti ti-alert-triangle"></i> ${r.buro}</span>`
+      :`<span style="color:var(--text3);font-size:11px">—</span>`;
+    return`<tr>
+      <td style="font-weight:500">${r.nombre}</td>
+      <td style="color:var(--text2)">${r.cedula}</td>
+      <td><span style="font-size:10px;background:var(--bg3);padding:2px 6px;border-radius:4px;color:var(--text2)">${r.producto}</span></td>
+      <td style="color:var(--text2)">${r.limite.toLocaleString('es-DO')}</td>
+      <td>${r.usado.toLocaleString('es-DO')}</td>
+      <td>
+        <div class="risk-bar">
+          <div class="risk-track"><div class="risk-fill" style="width:${pct}%;background:${barC}"></div></div>
+          <span style="font-size:11px;color:${barC}">${pct}%</span>
+        </div>
+      </td>
+      <td><span style="color:${aColor};font-weight:600">${r.atraso===0?'Al día':r.atraso+' días'}</span></td>
+      <td>
+        <div class="risk-bar">
+          <div class="risk-track"><div class="risk-fill" style="width:${r.score}%;background:${m.fill}"></div></div>
+          <span class="score-pill ${m.cls}">${m.lbl}</span>
+        </div>
+      </td>
+      <td>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:36px;height:36px;border-radius:50%;background:conic-gradient(${m.fill} ${r.score*3.6}deg,var(--bg4) 0);display:flex;align-items:center;justify-content:center">
+            <div style="width:26px;height:26px;border-radius:50%;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:${m.fill}">${r.score}%</div>
+          </div>
+        </div>
+      </td>
+      <td>${buroCell}</td>
+      <td><span style="font-size:10px;color:${r.accion==='Ninguna'?'var(--text3)':'var(--amber3)'}">${r.accion}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+let allData=[...portfolio];
+function filterTable(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  const r=document.getElementById('riskFilter').value;
+  const p=document.getElementById('productFilter').value;
+  renderTable(allData.filter(d=>{
+    const mq=!q||(d.nombre.toLowerCase().includes(q)||d.cedula.includes(q)||d.producto.toLowerCase().includes(q));
+    return mq&&(!r||d.riesgo===r)&&(!p||d.producto===p);
+  }));
+}
+
+// ── NAVIGATION ────────────────────────────────────────
+let mapDrawn=false;
+function showPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if(el)el.classList.add('active');
+  if(id==='alerts'){renderAlerts('alertList2');renderBureau('bureauList2');}
+  if(id==='map'&&!mapDrawn){drawMap();mapDrawn=true;}
+  if(id==='portfolio'){renderTable(allData);}
+}
+
+// ── CHARTS ────────────────────────────────────────────
+function initCharts(){
+  new Chart(document.getElementById('c1'),{
+    type:'doughnut',
+    data:{labels:['Tarjetas','Hipotecario','Personal','Vehículos','Comercial'],
+      datasets:[{data:[38,28,20,9,5],backgroundColor:['#3b82f6','#8b5cf6','#10b981','#f59e0b','#14b8a6'],borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},cutout:'65%'}
+  });
+  new Chart(document.getElementById('c2'),{
+    type:'line',
+    data:{labels:['E25','F','M','A','M','J','J','A','S','O','N','D','E26','F','M','A','M','J'],
+      datasets:[{label:'Morosidad %',data:[3.2,3.4,3.6,3.9,4.1,4.4,4.3,4.5,4.2,4.0,3.8,3.6,3.7,3.9,3.8,3.9,3.8,3.81],
+        borderColor:'#3b82f6',backgroundColor:'#3b82f615',borderWidth:2,pointRadius:3,fill:true,tension:.4}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#5c6480',font:{size:9}},grid:{color:'#2a3348'}},
+              y:{ticks:{color:'#5c6480',font:{size:9},callback:v=>v+'%'},grid:{color:'#2a3348'}}}}
+  });
+  new Chart(document.getElementById('c3'),{
+    type:'bar',
+    data:{labels:['Bajo <30%','Moderado 30–60%','Alto 60–80%','Muy Alto >80%'],
+      datasets:[{data:[42,35,16,7],backgroundColor:['#10b981','#f59e0b','#ef4444','#7f1d1d'],borderRadius:4,borderWidth:0}]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{x:{ticks:{color:'#5c6480',font:{size:9},maxRotation:20,autoSkip:false},grid:{display:false}},
+              y:{ticks:{color:'#5c6480',font:{size:9},callback:v=>v+'%'},grid:{color:'#2a3348'}}}}
+  });
+}
+
+// ── D3 MAP ────────────────────────────────────────────
+function drawMap(){
+  const el=document.getElementById('drMap');
+  if(!el)return;
+  const W=el.clientWidth||600, H=340;
+  const provinces=[
+    {name:'Distrito Nacional',lat:18.483,lon:-69.929,val:6.8,pop:3300000},
+    {name:'Santiago',lat:19.451,lon:-70.697,val:4.9,pop:1100000},
+    {name:'La Vega',lat:19.221,lon:-70.530,val:3.7,pop:410000},
+    {name:'San Cristóbal',lat:18.418,lon:-70.108,val:4.3,pop:670000},
+    {name:'La Romana',lat:18.427,lon:-68.972,val:2.8,pop:310000},
+    {name:'Puerto Plata',lat:19.793,lon:-70.688,val:3.2,pop:330000},
+    {name:'San Pedro',lat:18.457,lon:-69.303,val:3.9,pop:400000},
+    {name:'Duarte',lat:19.300,lon:-70.050,val:2.1,pop:290000},
+    {name:'Barahona',lat:18.209,lon:-71.100,val:2.4,pop:180000},
+    {name:'Azua',lat:18.455,lon:-70.734,val:1.8,pop:220000},
+    {name:'Espaillat',lat:19.620,lon:-70.420,val:1.6,pop:240000},
+    {name:'María Trinidad',lat:19.370,lon:-69.853,val:1.9,pop:140000},
+    {name:'Monte Cristi',lat:19.860,lon:-71.649,val:1.3,pop:120000},
+    {name:'El Seibo',lat:18.768,lon:-69.037,val:2.2,pop:95000},
+    {name:'Hato Mayor',lat:18.762,lon:-69.255,val:2.6,pop:87000},
+    {name:'Pedernales',lat:18.037,lon:-71.744,val:1.1,pop:22000},
+    {name:'Peravia',lat:18.272,lon:-70.335,val:2.0,pop:200000},
+    {name:'San Juan',lat:18.806,lon:-71.228,val:1.7,pop:240000},
+    {name:'Sánchez Ramírez',lat:19.050,lon:-70.150,val:1.5,pop:150000},
+    {name:'Elías Piña',lat:18.874,lon:-71.706,val:1.2,pop:63000},
+  ];
+  const colorScale=d3.scaleLinear().domain([1,4,7]).range(['#1e3a5f','#2563eb','#dc2626']);
+  const xScale=d3.scaleLinear().domain([-72.1,-68.2]).range([30,W-30]);
+  const yScale=d3.scaleLinear().domain([17.6,20.0]).range([H-20,20]);
+  const bubble=d3.scaleSqrt().domain([0,d3.max(provinces,d=>d.pop)]).range([8,42]);
+  const svg=d3.select(el).append('svg').attr('width',W).attr('height',H).style('background','#1e2535').style('border-radius','8px');
+  svg.append('text').text('República Dominicana — Morosidad por Provincia').attr('x',W/2).attr('y',15).attr('text-anchor','middle').attr('fill','#9aa3b8').attr('font-size','11px').attr('font-family','Inter,system-ui,sans-serif');
+  const g=svg.append('g');
+  const tip=d3.select(el).append('div').style('position','absolute').style('background','#242c40').style('border','1px solid #3a4560').style('border-radius','6px').style('padding','8px 10px').style('font-size','11px').style('color','#e8eaf0').style('pointer-events','none').style('display','none').style('max-width','180px').style('font-family','Inter,system-ui,sans-serif');
+  el.style.position='relative';
+  provinces.forEach(p=>{
+    const x=xScale(p.lon), y=yScale(p.lat), r=bubble(p.pop), c=colorScale(p.val);
+    g.append('circle').attr('cx',x).attr('cy',y).attr('r',r).attr('fill',c).attr('fill-opacity',.78).attr('stroke',c).attr('stroke-width',1.5).attr('stroke-opacity',.9).style('cursor','pointer')
+      .on('mouseover',function(e){tip.style('display','block').html(`<strong>${p.name}</strong><br>Morosidad: <span style="color:${c};font-weight:700">${p.val}%</span><br>Cartera aprox: RD$${(p.pop*0.18).toLocaleString('es-DO',{maximumFractionDigits:0})}`)})
+      .on('mousemove',function(e){const b=el.getBoundingClientRect();tip.style('left',(e.clientX-b.left+10)+'px').style('top',(e.clientY-b.top-30)+'px')})
+      .on('mouseout',function(){tip.style('display','none')});
+    g.append('text').attr('x',x).attr('y',y+4).attr('text-anchor','middle').attr('fill','#fff').attr('font-size',r>20?'10px':'8px').attr('font-weight','700').attr('font-family','Inter,system-ui,sans-serif').attr('pointer-events','none').text(p.val+'%');
+    if(p.pop>250000){
+      g.append('text').attr('x',x).attr('y',y+r+11).attr('text-anchor','middle').attr('fill','#9aa3b8').attr('font-size','8px').attr('font-family','Inter,system-ui,sans-serif').attr('pointer-events','none').text(p.name.length>12?p.name.split(' ').pop():p.name);
+    }
+  });
+}
+
+// ── INIT ──────────────────────────────────────────────
+renderAlerts('alertList');
+renderBureau('bureauList');
+renderTable(allData);
+initCharts();
+</script>
+</body>
+</html>
