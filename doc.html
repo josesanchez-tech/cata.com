@@ -1,0 +1,838 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PrestamosCloud · Generador de Contratos</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.11.0/mammoth.browser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.12.1/html2pdf.bundle.min.js"></script>
+<style>
+  :root{
+    --ink:#1b2433;
+    --muted:#5d6b82;
+    --faint:#8a97ab;
+    --line:#e3e6ec;
+    --line-2:#eef1f5;
+    --paper:#eef1f5;
+    --card:#ffffff;
+    --primary:#2557d6;
+    --primary-d:#1c46b3;
+    --primary-soft:#eaf0ff;
+    --ok:#0f9d76;
+    --ok-soft:#e6f6f0;
+    --warn:#b5790f;
+    --warn-soft:#fbf2df;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(27,36,51,.05), 0 8px 24px -18px rgba(27,36,51,.25);
+    --ui: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --doc: Georgia, "Times New Roman", "Iowan Old Style", serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:var(--ui);
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 380px at 80% -120px, #dfe7fb 0%, rgba(223,231,251,0) 70%),
+      var(--paper);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .wrap{max-width:1180px; margin:0 auto; padding:26px 20px 64px;}
+
+  /* Header */
+  header.brand{display:flex; align-items:center; gap:14px; margin-bottom:22px;}
+  .logo{
+    width:46px; height:46px; border-radius:13px; flex:0 0 auto;
+    background:linear-gradient(150deg, #3a66e0, #1f3f9c);
+    display:grid; place-items:center; color:#fff;
+    box-shadow:0 8px 20px -10px rgba(37,87,214,.7);
+  }
+  .brand h1{font-size:18px; margin:0; letter-spacing:-.2px; font-weight:700;}
+  .brand .sub{font-size:12.5px; color:var(--muted); margin-top:1px;}
+  .brand .right{margin-left:auto; font-size:11.5px; color:var(--faint); text-align:right; max-width:230px;}
+
+  /* Layout */
+  .grid{display:grid; grid-template-columns: minmax(360px, 1fr) 1.12fr; gap:20px; align-items:start;}
+  @media (max-width:980px){ .grid{grid-template-columns:1fr;} }
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow); padding:18px 18px 18px;}
+  .card + .card{margin-top:16px;}
+
+  .eyebrow{display:flex; align-items:center; gap:10px; margin:0 0 14px;}
+  .step{width:24px; height:24px; border-radius:8px; background:var(--primary-soft); color:var(--primary-d);
+    display:grid; place-items:center; font-size:12.5px; font-weight:700; flex:0 0 auto;}
+  .eyebrow h2{font-size:13.5px; margin:0; letter-spacing:.02em; text-transform:uppercase; color:var(--muted); font-weight:700;}
+  .eyebrow .hint{margin-left:auto; font-size:12px; color:var(--faint);}
+
+  /* Upload slots */
+  .slots{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  @media (max-width:520px){ .slots{grid-template-columns:1fr;} }
+  .slot{
+    border:1.5px dashed #c9d2e3; border-radius:12px; padding:14px; cursor:pointer;
+    background:#fbfcfe; transition:border-color .15s, background .15s; position:relative; min-height:104px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .slot:hover{border-color:var(--primary); background:var(--primary-soft);}
+  .slot.drag{border-color:var(--primary); background:var(--primary-soft);}
+  .slot.filled{border-style:solid; border-color:var(--ok); background:var(--ok-soft);}
+  .slot .stype{font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--faint); font-weight:700;}
+  .slot .sname{font-weight:600; font-size:13.5px; display:flex; align-items:center; gap:7px; word-break:break-word;}
+  .slot .smeta{font-size:12px; color:var(--muted); margin-top:auto;}
+  .slot .dot{width:8px;height:8px;border-radius:50%;background:#cdd6e6;flex:0 0 auto}
+  .slot.filled .dot{background:var(--ok)}
+  .slot .actions{display:flex; gap:8px; margin-top:6px;}
+  .slot .actions button{font-size:11.5px; padding:3px 9px;}
+  .check{color:var(--ok)}
+
+  /* Segmented */
+  .seg{display:flex; gap:6px; background:var(--line-2); padding:5px; border-radius:12px;}
+  .seg button{
+    flex:1; border:0; background:transparent; padding:9px 10px; border-radius:9px; font-size:13.5px;
+    font-weight:600; color:var(--muted); cursor:pointer; font-family:var(--ui);
+  }
+  .seg button[aria-selected="true"]{background:#fff; color:var(--ink); box-shadow:0 1px 2px rgba(27,36,51,.12);}
+  .seg button:disabled{opacity:.45; cursor:not-allowed;}
+
+  /* Fields */
+  .fields{display:flex; flex-direction:column; gap:12px;}
+  .field label{display:block; font-size:12.5px; font-weight:600; color:var(--muted); margin-bottom:5px;}
+  .field .keytag{font-weight:500; color:var(--faint); font-size:11.5px;}
+  .field .row{display:flex; align-items:center; gap:8px;}
+  input[type=text], textarea, select{
+    width:100%; font-family:var(--ui); font-size:14px; color:var(--ink);
+    border:1px solid var(--line); border-radius:10px; padding:9px 11px; background:#fff; transition:border-color .12s, box-shadow .12s;
+  }
+  textarea{resize:vertical; min-height:64px;}
+  input[type=text]:focus, textarea:focus, select:focus{outline:none; border-color:var(--primary); box-shadow:0 0 0 3px rgba(37,87,214,.16);}
+  .namepick{color:var(--faint); border:0; background:transparent; cursor:pointer; padding:6px; border-radius:8px; line-height:0;}
+  .namepick.active{color:var(--primary);}
+  .namepick:hover{background:var(--primary-soft);}
+
+  .manage{margin-top:14px; border-top:1px dashed var(--line); padding-top:12px;}
+  .manage summary{cursor:pointer; font-size:12.5px; color:var(--primary-d); font-weight:600; list-style:none;}
+  .manage summary::-webkit-details-marker{display:none}
+  .manage .mrow{display:grid; grid-template-columns:auto 1fr; gap:8px 10px; align-items:center; margin-top:10px;}
+  .manage .mrow .tag{font-size:11.5px; color:var(--faint); white-space:nowrap;}
+  .manage label.small{font-size:12px;color:var(--muted)}
+
+  /* Buttons */
+  button{font-family:var(--ui)}
+  .btn{display:inline-flex; align-items:center; gap:8px; justify-content:center; border:1px solid var(--line);
+    background:#fff; color:var(--ink); padding:9px 14px; border-radius:10px; font-weight:600; font-size:13.5px; cursor:pointer;
+    transition:background .12s, border-color .12s, transform .04s;}
+  .btn:hover{background:#f7f9fc}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:var(--primary); border-color:var(--primary); color:#fff;}
+  .btn.primary:hover{background:var(--primary-d); border-color:var(--primary-d);}
+  .btn.ghost{background:transparent; border-color:transparent; color:var(--primary-d);}
+  .btn:disabled{opacity:.5; cursor:not-allowed;}
+  .btn.full{width:100%}
+
+  /* Preview / paper */
+  .previewcard{position:sticky; top:18px;}
+  .previewhead{display:flex; align-items:center; gap:10px; margin-bottom:12px;}
+  .previewhead .fname{font-size:12px; color:var(--muted); margin-left:auto; background:var(--line-2); padding:5px 9px; border-radius:8px; max-width:55%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .paperwrap{background:#dde3ee; border-radius:12px; padding:18px; max-height:62vh; overflow:auto;}
+  .page{
+    width:794px; max-width:100%; margin:0 auto; background:#fff; color:#16202e;
+    font-family:var(--doc); font-size:15px; line-height:1.62;
+    padding:64px 70px; border-radius:3px; box-shadow:0 10px 30px -12px rgba(20,28,46,.4);
+  }
+  .page p{margin:0 0 11px; text-align:justify;}
+  .page h1,.page h2,.page h3{font-family:var(--doc); line-height:1.3; margin:18px 0 10px;}
+  .page h1{font-size:20px; text-align:center;}
+  .page h2{font-size:17px;}
+  .page h3{font-size:15.5px;}
+  .page table{border-collapse:collapse; width:100%; margin:10px 0;}
+  .page td,.page th{border:1px solid #c4ccd8; padding:6px 8px; vertical-align:top;}
+  .page ul,.page ol{margin:0 0 11px; padding-left:22px;}
+  .page img{max-width:100%}
+  .fillv{background:#fff6cf; padding:0 2px; border-radius:3px; box-shadow:inset 0 -2px 0 #f0d97a;}
+  .fillempty{background:#ffe3e3; color:#9c2b2b; padding:0 4px; border-radius:3px; font-family:var(--ui); font-size:11px; font-weight:700; letter-spacing:.02em; text-transform:uppercase;}
+
+  .exportbar{display:flex; gap:10px; margin-top:14px;}
+  .exportbar .btn{flex:1}
+
+  .empty{color:var(--muted); font-size:13.5px; padding:8px 2px;}
+  .empty.center{text-align:center; padding:34px 10px;}
+  .empty .big{font-size:15px; color:var(--ink); font-weight:600; margin-bottom:4px;}
+
+  .note{font-size:12px; color:var(--muted); background:var(--line-2); border-radius:10px; padding:10px 12px; margin-top:12px;}
+  .note b{color:var(--ink)}
+  details.help summary{cursor:pointer; font-size:12.5px; color:var(--primary-d); font-weight:600; list-style:none}
+  details.help summary::-webkit-details-marker{display:none}
+  details.help .body{font-size:12.5px; color:var(--muted); margin-top:8px;}
+  code.k{background:#eef2fb; color:#28407e; padding:1px 6px; border-radius:6px; font-family:ui-monospace,Menlo,Consolas,monospace; font-size:12px;}
+
+  .toast{position:fixed; left:50%; bottom:22px; transform:translateX(-50%) translateY(20px); opacity:0;
+    background:#11203b; color:#fff; padding:11px 16px; border-radius:11px; font-size:13.5px; box-shadow:0 14px 40px -14px rgba(0,0,0,.5);
+    transition:opacity .2s, transform .2s; pointer-events:none; z-index:50; max-width:90vw;}
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  .toast.err{background:#7a2230}
+
+  .pdfstage{position:fixed; left:-99999px; top:0;}
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand">
+    <div class="logo" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A3.5 3.5 0 0 1 18 18H7Z"/>
+        <path d="M12 9.5v5M9.7 12.2 12 9.5l2.3 2.7"/>
+      </svg>
+    </div>
+    <div>
+      <h1>PrestamosCloud · Generador de Contratos</h1>
+      <div class="sub">Autocompleta el contrato y expórtalo a Word y PDF en segundos.</div>
+    </div>
+    <div class="right">Sube cada plantilla una vez. La app recuerda tus plantillas en este dispositivo.</div>
+  </header>
+
+  <div class="grid">
+    <!-- LEFT -->
+    <div class="left">
+      <!-- 1. Plantillas -->
+      <section class="card">
+        <div class="eyebrow"><span class="step">1</span><h2>Plantillas</h2><span class="hint">archivos .docx con etiquetas</span></div>
+        <div class="slots">
+          <div class="slot" id="slot-fisica" data-type="fisica" tabindex="0" role="button" aria-label="Cargar plantilla Persona Física">
+            <div class="stype">Contrato · Persona Física</div>
+            <div class="sname"><span class="dot"></span><span class="snm">Toca para subir .docx</span></div>
+            <div class="smeta" data-meta>Aún sin plantilla</div>
+            <div class="actions" style="display:none">
+              <button class="btn" data-replace>Reemplazar</button>
+              <button class="btn" data-remove>Quitar</button>
+            </div>
+          </div>
+          <div class="slot" id="slot-juridica" data-type="juridica" tabindex="0" role="button" aria-label="Cargar plantilla Persona Jurídica">
+            <div class="stype">Contrato · Persona Jurídica</div>
+            <div class="sname"><span class="dot"></span><span class="snm">Toca para subir .docx</span></div>
+            <div class="smeta" data-meta>Aún sin plantilla</div>
+            <div class="actions" style="display:none">
+              <button class="btn" data-replace>Reemplazar</button>
+              <button class="btn" data-remove>Quitar</button>
+            </div>
+          </div>
+        </div>
+        <details class="help" style="margin-top:12px">
+          <summary>¿Cómo marco los textos a cambiar en mi Word?</summary>
+          <div class="body">
+            En tu documento, sustituye cada dato variable por una etiqueta entre llaves, por ejemplo
+            <code class="k">{nombre_cliente}</code>, <code class="k">{cedula}</code>, <code class="k">{monto}</code>, <code class="k">{fecha}</code>.
+            Usa minúsculas y guion bajo, sin espacios dentro de la llave. La misma etiqueta puede repetirse: se rellena en todos los lugares.
+            Escribe cada etiqueta de corrido (sin cambiar el formato a la mitad) para que se detecte bien.
+          </div>
+        </details>
+        <input type="file" id="file-input" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" style="display:none" />
+      </section>
+
+      <!-- 2. Tipo -->
+      <section class="card">
+        <div class="eyebrow"><span class="step">2</span><h2>Tipo de contrato</h2></div>
+        <div class="seg" role="tablist" aria-label="Tipo de contrato">
+          <button id="seg-fisica" role="tab" aria-selected="true" data-type="fisica">Persona Física</button>
+          <button id="seg-juridica" role="tab" aria-selected="false" data-type="juridica">Persona Jurídica</button>
+        </div>
+        <div class="empty" id="type-hint" style="display:none; margin-top:10px"></div>
+      </section>
+
+      <!-- 3. Datos -->
+      <section class="card">
+        <div class="eyebrow"><span class="step">3</span><h2>Datos del contrato</h2><span class="hint" id="fieldcount"></span></div>
+        <div class="fields" id="fields"></div>
+        <div class="empty center" id="fields-empty">
+          <div class="big">Sin campos todavía</div>
+          Sube una plantilla con etiquetas <code class="k">{como_esta}</code> y aquí aparecerán los campos para rellenar.
+        </div>
+
+        <details class="manage" id="manage" style="display:none">
+          <summary>Gestionar campos (renombrar y elegir el nombre del archivo)</summary>
+          <div id="manage-body"></div>
+        </details>
+
+        <div style="display:flex; gap:10px; margin-top:14px">
+          <button class="btn ghost" id="btn-clear">Vaciar campos</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-col">
+      <section class="card previewcard">
+        <div class="previewhead">
+          <div class="eyebrow" style="margin:0"><span class="step">4</span><h2>Vista previa y exportar</h2></div>
+          <span class="fname" id="fname-preview">—</span>
+        </div>
+        <div class="paperwrap">
+          <div class="page" id="page">
+            <div class="empty center">
+              <div class="big">La vista previa aparecerá aquí</div>
+              Sube una plantilla y empieza a rellenar los datos.
+            </div>
+          </div>
+        </div>
+        <div class="exportbar">
+          <button class="btn primary full" id="btn-word" disabled>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M5 3h9l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="m9 13 1.5 4 1.5-4 1.5 4L15 13"/></svg>
+            Descargar Word
+          </button>
+          <button class="btn full" id="btn-pdf" disabled>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M5 3h9l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M9 17v-4h1.2a1.3 1.3 0 0 1 0 2.6H9M14 17v-4h2M14 15h1.6"/></svg>
+            Descargar PDF
+          </button>
+        </div>
+        <div class="note">
+          <b>Word</b> conserva exactamente el formato de tu plantilla. El <b>PDF</b> es una versión limpia del contenido (texto, títulos, tablas e imágenes del cuerpo). Para un PDF idéntico al Word, abre el Word y usa “Guardar como PDF”.
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="pdfstage" id="pdfstage" aria-hidden="true"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var TYPES = ["fisica","juridica"];
+  var TYPE_LABEL = { fisica:"Persona Física", juridica:"Persona Jurídica" };
+
+  // ---------- storage (graceful) ----------
+  var mem = {};
+  var hasStore = !!(window.storage && typeof window.storage.get === "function");
+  var Store = {
+    get: function(k){ return Promise.resolve().then(function(){
+      if(hasStore){ return window.storage.get(k).then(function(r){ return r? r.value : null; }).catch(function(){ return (k in mem)? mem[k]:null; }); }
+      return (k in mem)? mem[k]:null;
+    });},
+    set: function(k,v){ return Promise.resolve().then(function(){
+      if(hasStore){ return window.storage.set(k,v).catch(function(){ mem[k]=v; }); }
+      mem[k]=v; return null;
+    });},
+    del: function(k){ return Promise.resolve().then(function(){
+      if(hasStore){ return window.storage.delete(k).catch(function(){ delete mem[k]; }); }
+      delete mem[k]; return null;
+    });}
+  };
+  function kTpl(t){ return "pc:tpl:"+t; }
+  function kMeta(t){ return "pc:meta:"+t; }
+
+  // ---------- state ----------
+  var state = {
+    type: "fisica",
+    tpl: { fisica:null, juridica:null },     // {name, b64}
+    meta: { fisica:null, juridica:null },     // {tags:[], html:"", labels:{}, nameField:""}
+    values: { fisica:{}, juridica:{} }
+  };
+
+  // ---------- helpers ----------
+  function $(s,r){ return (r||document).querySelector(s); }
+  function $all(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
+  function escapeHtml(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function escapeXmlText(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function prettify(k){
+    var s = String(k).replace(/[_\-]+/g," ").replace(/\s+/g," ").trim();
+    if(!s) return k;
+    return s.charAt(0).toUpperCase()+s.slice(1);
+  }
+  function safeFile(s){ return String(s).replace(/[\\\/:*?"<>|]+/g,"").replace(/\s+/g," ").trim(); }
+  function abToB64(buf){
+    var bytes=new Uint8Array(buf), bin="", chunk=0x8000;
+    for(var i=0;i<bytes.length;i+=chunk){ bin+=String.fromCharCode.apply(null, bytes.subarray(i,i+chunk)); }
+    return btoa(bin);
+  }
+  function b64ToAb(b64){
+    var bin=atob(b64), len=bin.length, bytes=new Uint8Array(len);
+    for(var i=0;i<len;i++){ bytes[i]=bin.charCodeAt(i); }
+    return bytes.buffer;
+  }
+  function download(blob, filename){
+    var url=URL.createObjectURL(blob), a=document.createElement("a");
+    a.href=url; a.download=filename; document.body.appendChild(a); a.click();
+    setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1200);
+  }
+  var toastTimer=null;
+  function toast(msg, isErr){
+    var t=$("#toast"); t.textContent=msg; t.className="toast show"+(isErr?" err":"");
+    clearTimeout(toastTimer); toastTimer=setTimeout(function(){ t.className="toast"+(isErr?" err":""); }, 2600);
+  }
+
+  // ---------- docx parsing / templating ----------
+  var TAG_RE = /\{([^{}]{1,80})\}/g;
+  var PART_RE = /^word\/(document|header[0-9]*|footer[0-9]*|footnotes|endnotes)\.xml$/;
+
+  function getTagsFromXml(xml){
+    // detect per paragraph to avoid cross-paragraph false matches
+    var tags=[], seen={};
+    var pRe=/<w:p\b[\s\S]*?<\/w:p>/g, pm;
+    var found=false;
+    while((pm=pRe.exec(xml))!==null){
+      found=true;
+      collectFromBlock(pm[0]);
+    }
+    if(!found){ collectFromBlock(xml); }
+    function collectFromBlock(block){
+      var tRe=/<w:t\b[^>]*>([\s\S]*?)<\/w:t>/g, tm, big="";
+      while((tm=tRe.exec(block))!==null){ big+=tm[1]; }
+      var x; TAG_RE.lastIndex=0;
+      while((x=TAG_RE.exec(big))!==null){
+        var key=x[1].trim();
+        if(key && !seen[key]){ seen[key]=1; tags.push(key); }
+      }
+    }
+    return tags;
+  }
+
+  function valueToXml(s){
+    var parts=String(s==null?"":s).split(/\r?\n/).map(escapeXmlText);
+    return parts.join('</w:t><w:br/><w:t xml:space="preserve">');
+  }
+
+  // Fill one xml part: replaces {key} with data[key], preserving formatting, robust to run-splitting.
+  function fillXmlPart(xml, data){
+    var re=/(<w:t\b[^>]*>)([\s\S]*?)(<\/w:t>)/g;
+    var pieces=[], nodes=[], last=0, m;
+    while((m=re.exec(xml))!==null){
+      pieces.push({raw: xml.slice(last, m.index)});
+      pieces.push({node: nodes.length});
+      nodes.push({ open:m[1], close:m[3] });
+      // store original text separately for char arrays
+      nodes[nodes.length-1].text=m[2];
+      last=re.lastIndex;
+    }
+    pieces.push({raw: xml.slice(last)});
+
+    var big="", map=[];
+    for(var i=0;i<nodes.length;i++){
+      var t=nodes[i].text;
+      for(var j=0;j<t.length;j++){ big+=t[j]; map.push({node:i,pos:j}); }
+    }
+    var chars=nodes.map(function(n){ return n.text.split(""); });
+    var touched={};
+
+    var pm; TAG_RE.lastIndex=0;
+    while((pm=TAG_RE.exec(big))!==null){
+      var key=pm[1].trim();
+      if(!Object.prototype.hasOwnProperty.call(data,key)) continue;
+      var startChar=pm.index, endChar=pm.index+pm[0].length-1;
+      for(var c=startChar;c<=endChar;c++){ var mp=map[c]; chars[mp.node][mp.pos]=""; touched[mp.node]=1; }
+      var sp=map[startChar];
+      chars[sp.node][sp.pos]=valueToXml(data[key]);
+    }
+
+    var out="";
+    for(var p=0;p<pieces.length;p++){
+      var pc=pieces[p];
+      if("raw" in pc){ out+=pc.raw; }
+      else {
+        var n=nodes[pc.node], open=n.open;
+        if(touched[pc.node] && !/xml:space\s*=/.test(open)){
+          open=open.replace(/<w:t\b/, '<w:t xml:space="preserve"');
+        }
+        out+=open+chars[pc.node].join("")+n.close;
+      }
+    }
+    return out;
+  }
+
+  // Build a filled .docx blob from stored template + data
+  function buildDocx(b64, data){
+    var buf=b64ToAb(b64);
+    return JSZip.loadAsync(buf).then(function(zip){
+      var parts=zip.file(PART_RE) || [];
+      var jobs=parts.map(function(f){
+        return f.async("string").then(function(xml){
+          zip.file(f.name, fillXmlPart(xml, data));
+        });
+      });
+      return Promise.all(jobs).then(function(){
+        return zip.generateAsync({
+          type:"blob",
+          mimeType:"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+          compression:"DEFLATE"
+        });
+      });
+    });
+  }
+
+  // Parse an uploaded docx -> {tags, html}
+  function parseTemplate(buf){
+    var tagsPromise=JSZip.loadAsync(buf).then(function(zip){
+      var parts=zip.file(PART_RE) || [];
+      return Promise.all(parts.map(function(f){ return f.async("string"); })).then(function(xmls){
+        var all=[], seen={};
+        xmls.forEach(function(xml){
+          getTagsFromXml(xml).forEach(function(t){ if(!seen[t]){ seen[t]=1; all.push(t); } });
+        });
+        return all;
+      });
+    });
+    var htmlPromise=mammoth.convertToHtml({arrayBuffer: buf}).then(function(r){ return r.value || ""; }).catch(function(){ return ""; });
+    return Promise.all([tagsPromise, htmlPromise]).then(function(res){
+      return { tags:res[0], html:res[1] };
+    });
+  }
+
+  // ---------- meta / fields ----------
+  function defaultNameField(tags){
+    var pri=["nombre_cliente","cliente","nombre","razon_social","razonsocial","empresa","nombre_empresa","razon"];
+    for(var i=0;i<pri.length;i++){ if(tags.indexOf(pri[i])>=0) return pri[i]; }
+    for(var j=0;j<tags.length;j++){ if(/nombre|client|razon|empresa/i.test(tags[j])) return tags[j]; }
+    return tags[0]||"";
+  }
+  function persistMeta(t){
+    var mt=state.meta[t]; if(!mt) return;
+    Store.set(kMeta(t), JSON.stringify({ labels:mt.labels||{}, nameField:mt.nameField||"" }));
+  }
+
+  // ---------- rendering ----------
+  function setSlotUI(t){
+    var slot=$("#slot-"+t), tpl=state.tpl[t], mt=state.meta[t];
+    var nm=$(".snm",slot), meta=$("[data-meta]",slot), actions=$(".actions",slot);
+    if(tpl){
+      slot.classList.add("filled");
+      nm.innerHTML='<span class="check">✓</span> '+escapeHtml(tpl.name);
+      meta.textContent=(mt&&mt.tags?mt.tags.length:0)+" campo(s) detectado(s)";
+      actions.style.display="flex";
+    } else {
+      slot.classList.remove("filled");
+      nm.textContent="Toca para subir .docx";
+      meta.textContent="Aún sin plantilla";
+      actions.style.display="none";
+    }
+  }
+
+  function refreshTypeAvailability(){
+    TYPES.forEach(function(t){
+      var btn=$("#seg-"+t);
+      btn.disabled = !state.tpl[t];
+    });
+    var hint=$("#type-hint");
+    if(!state.tpl[state.type]){
+      hint.style.display="block";
+      hint.textContent="Sube la plantilla de "+TYPE_LABEL[state.type]+" para rellenarla.";
+    } else {
+      hint.style.display="none";
+    }
+  }
+
+  function currentMeta(){ return state.meta[state.type]; }
+  function currentValues(){ return state.values[state.type]; }
+
+  function renderFields(){
+    var wrap=$("#fields"), empty=$("#fields-empty"), manage=$("#manage"), count=$("#fieldcount");
+    var mt=currentMeta();
+    wrap.innerHTML="";
+    if(!mt || !mt.tags.length){
+      empty.style.display="block"; manage.style.display="none"; count.textContent="";
+      return;
+    }
+    empty.style.display="none"; manage.style.display="block";
+    count.textContent=mt.tags.length+" campo(s)";
+    var vals=currentValues();
+
+    mt.tags.forEach(function(key){
+      var label=(mt.labels&&mt.labels[key])||prettify(key);
+      var field=document.createElement("div"); field.className="field";
+      var multi=/direccion|domicilio|clausula|observa|nota|detalle|descrip/i.test(key);
+      var control = multi
+        ? '<textarea data-key="'+escapeHtml(key)+'" rows="2" placeholder="'+escapeHtml(label)+'"></textarea>'
+        : '<input type="text" data-key="'+escapeHtml(key)+'" placeholder="'+escapeHtml(label)+'" />';
+      field.innerHTML =
+        '<label>'+escapeHtml(label)+' <span class="keytag">{'+escapeHtml(key)+'}</span></label>'+
+        '<div class="row">'+control+
+          '<button class="namepick'+(mt.nameField===key?' active':'')+'" data-name="'+escapeHtml(key)+'" title="Usar este campo para el nombre del archivo" aria-label="Usar para el nombre del archivo">'+
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="'+(mt.nameField===key?'currentColor':'none')+'" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 17.3-5.4 3 1-6L3 9.8l6-.9L12 3l3 5.9 6 .9-4.6 4.5 1 6z"/></svg>'+
+          '</button>'+
+        '</div>';
+      wrap.appendChild(field);
+      var ctl=$("[data-key]",field);
+      ctl.value=vals[key]||"";
+    });
+
+    renderManage();
+    updateAll();
+  }
+
+  function renderManage(){
+    var mt=currentMeta(); if(!mt) return;
+    var body=$("#manage-body"); body.innerHTML="";
+    var intro=document.createElement("div"); intro.className="empty"; intro.style.padding="6px 0 2px";
+    intro.innerHTML="Renombra cómo se ve cada campo (no cambia tu Word) y marca con la ⭐ cuál se usa para el nombre del archivo.";
+    body.appendChild(intro);
+    mt.tags.forEach(function(key){
+      var row=document.createElement("div"); row.className="mrow";
+      var current=(mt.labels&&mt.labels[key])||"";
+      row.innerHTML=
+        '<span class="tag">{'+escapeHtml(key)+'}</span>'+
+        '<input type="text" data-label="'+escapeHtml(key)+'" placeholder="'+escapeHtml(prettify(key))+'" value="'+escapeHtml(current)+'" />';
+      body.appendChild(row);
+    });
+  }
+
+  function buildFilledHtml(forExport){
+    var mt=currentMeta(); if(!mt) return "";
+    var html=mt.html||"";
+    var vals=currentValues();
+    mt.tags.forEach(function(key){
+      var token="{"+key+"}";
+      var v=(vals[key]==null?"":String(vals[key])).trim();
+      var rep;
+      if(forExport){
+        rep=v?escapeHtml(v).replace(/\r?\n/g,"<br>"):"";
+      } else {
+        rep=v ? '<span class="fillv">'+escapeHtml(v).replace(/\r?\n/g,"<br>")+'</span>'
+              : '<span class="fillempty">'+escapeHtml((mt.labels&&mt.labels[key])||prettify(key))+'</span>';
+      }
+      html=html.split(token).join(rep);
+    });
+    return html;
+  }
+
+  function renderPreview(){
+    var page=$("#page"), mt=currentMeta();
+    if(!mt){
+      page.innerHTML='<div class="empty center"><div class="big">La vista previa aparecerá aquí</div>Sube una plantilla y empieza a rellenar los datos.</div>';
+      return;
+    }
+    if(!mt.html){
+      page.innerHTML='<div class="empty center"><div class="big">Plantilla cargada</div>El cuerpo no se pudo previsualizar, pero el Word se generará con tu formato y datos.</div>';
+      return;
+    }
+    page.innerHTML=buildFilledHtml(false);
+  }
+
+  function clientName(){
+    var mt=currentMeta(); if(!mt) return "Cliente";
+    var nf=mt.nameField, v=nf?((currentValues()[nf]||"")):"";
+    v=String(v).trim();
+    return v||"Cliente";
+  }
+  function baseFilename(){ return safeFile(clientName()+" Contrato de Servicio PrestamosCloud"); }
+
+  function updateExportState(){
+    var ready=!!currentMeta();
+    $("#btn-word").disabled=!ready;
+    $("#btn-pdf").disabled=!ready;
+    $("#fname-preview").textContent = ready ? baseFilename() : "—";
+  }
+
+  function updateAll(){ renderPreview(); updateExportState(); }
+
+  // ---------- events ----------
+  var pendingType=null;
+  function chooseFile(t){ pendingType=t; $("#file-input").value=""; $("#file-input").click(); }
+
+  function handleFile(file, t){
+    if(!file) return;
+    if(!/\.docx$/i.test(file.name)){ toast("Sube un archivo .docx", true); return; }
+    var meta=$("[data-meta]", $("#slot-"+t)); meta.textContent="Procesando…";
+    file.arrayBuffer().then(function(buf){
+      var b64=abToB64(buf);
+      return parseTemplate(buf).then(function(parsed){
+        var prevMeta=state.meta[t];
+        var labels=(prevMeta&&prevMeta.labels)||{};
+        var nameField=(prevMeta&&prevMeta.nameField && parsed.tags.indexOf(prevMeta.nameField)>=0)
+          ? prevMeta.nameField : defaultNameField(parsed.tags);
+        state.tpl[t]={ name:file.name, b64:b64 };
+        state.meta[t]={ tags:parsed.tags, html:parsed.html, labels:labels, nameField:nameField };
+        return Promise.all([
+          Store.set(kTpl(t), JSON.stringify({name:file.name, b64:b64})),
+          Store.set(kMeta(t), JSON.stringify({labels:labels, nameField:nameField}))
+        ]);
+      });
+    }).then(function(){
+      setSlotUI(t);
+      refreshTypeAvailability();
+      if(state.type===t || !state.tpl[state.type]){ selectType(t); }
+      if(state.type===t){ renderFields(); }
+      var n=state.meta[t].tags.length;
+      toast(n?("Plantilla lista · "+n+" campo(s)"):"Plantilla cargada (sin etiquetas detectadas)");
+    }).catch(function(err){
+      console.error(err);
+      setSlotUI(t);
+      toast("No se pudo leer el .docx", true);
+    });
+  }
+
+  function removeTemplate(t){
+    state.tpl[t]=null; state.meta[t]=null; state.values[t]={};
+    Store.del(kTpl(t)); Store.del(kMeta(t));
+    setSlotUI(t); refreshTypeAvailability();
+    if(state.type===t){ renderFields(); updateAll(); }
+    toast("Plantilla eliminada");
+  }
+
+  function selectType(t){
+    state.type=t;
+    TYPES.forEach(function(x){ $("#seg-"+x).setAttribute("aria-selected", x===t?"true":"false"); });
+    refreshTypeAvailability();
+    renderFields();
+    updateAll();
+  }
+
+  function onExportWord(){
+    var t=state.type, tpl=state.tpl[t], mt=state.meta[t];
+    if(!tpl||!mt) return;
+    var data={}; mt.tags.forEach(function(k){ data[k]=currentValues()[k]||""; });
+    var btn=$("#btn-word"); btn.disabled=true;
+    buildDocx(tpl.b64, data).then(function(blob){
+      download(blob, baseFilename()+".docx");
+      toast("Word generado");
+    }).catch(function(err){
+      console.error(err); toast("Error al generar el Word", true);
+    }).then(function(){ btn.disabled=false; });
+  }
+
+  function onExportPdf(){
+    var mt=currentMeta(); if(!mt) return;
+    var btn=$("#btn-pdf"); btn.disabled=true; btn.textContent="Generando…";
+    var stage=$("#pdfstage");
+    var pageEl=document.createElement("div");
+    pageEl.className="page";
+    pageEl.style.width="794px"; pageEl.style.borderRadius="0"; pageEl.style.boxShadow="none";
+    pageEl.innerHTML=buildFilledHtml(true) || "<p></p>";
+    stage.innerHTML=""; stage.appendChild(pageEl);
+
+    var opt={
+      margin:[14,14,16,14],
+      filename: baseFilename()+".pdf",
+      image:{ type:"jpeg", quality:0.98 },
+      html2canvas:{ scale:2, useCORS:true, backgroundColor:"#ffffff" },
+      jsPDF:{ unit:"mm", format:"a4", orientation:"portrait" },
+      pagebreak:{ mode:["css","legacy"] }
+    };
+    html2pdf().set(opt).from(pageEl).save().then(function(){
+      toast("PDF generado");
+    }).catch(function(err){
+      console.error(err); toast("Error al generar el PDF", true);
+    }).then(function(){
+      stage.innerHTML="";
+      btn.disabled=false;
+      btn.innerHTML='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M5 3h9l5 5v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M9 17v-4h1.2a1.3 1.3 0 0 1 0 2.6H9M14 17v-4h2M14 15h1.6"/></svg> Descargar PDF';
+    });
+  }
+
+  // delegated input handling for fields + manage + name pick
+  document.addEventListener("input", function(e){
+    var key=e.target.getAttribute && e.target.getAttribute("data-key");
+    if(key!=null){
+      currentValues()[key]=e.target.value;
+      updateAll();
+      return;
+    }
+    var lkey=e.target.getAttribute && e.target.getAttribute("data-label");
+    if(lkey!=null){
+      var mt=currentMeta(); if(!mt) return;
+      var val=e.target.value.trim();
+      if(val){ mt.labels[lkey]=val; } else { delete mt.labels[lkey]; }
+      persistMeta(state.type);
+      // update visible label text without rebuilding inputs (keep focus)
+      var lbl=document.querySelector('#fields .field label .keytag');
+      renderFieldLabelsOnly();
+    }
+  });
+
+  function renderFieldLabelsOnly(){
+    var mt=currentMeta(); if(!mt) return;
+    $all("#fields .field").forEach(function(field){
+      var ctl=$("[data-key]",field); if(!ctl) return;
+      var key=ctl.getAttribute("data-key");
+      var label=(mt.labels&&mt.labels[key])||prettify(key);
+      var labelEl=$("label",field);
+      labelEl.innerHTML=escapeHtml(label)+' <span class="keytag">{'+escapeHtml(key)+'}</span>';
+      ctl.setAttribute("placeholder",label);
+    });
+  }
+
+  document.addEventListener("click", function(e){
+    var nameBtn=e.target.closest && e.target.closest("[data-name]");
+    if(nameBtn){
+      var mt=currentMeta(); if(!mt) return;
+      mt.nameField=nameBtn.getAttribute("data-name");
+      persistMeta(state.type);
+      $all("#fields .namepick").forEach(function(b){
+        var on=b.getAttribute("data-name")===mt.nameField;
+        b.classList.toggle("active", on);
+        var svg=b.querySelector("svg"); if(svg){ svg.setAttribute("fill", on?"currentColor":"none"); }
+      });
+      updateExportState();
+      return;
+    }
+    var rep=e.target.closest && e.target.closest("[data-replace]");
+    if(rep){ e.stopPropagation(); chooseFile(rep.closest(".slot").getAttribute("data-type")); return; }
+    var rem=e.target.closest && e.target.closest("[data-remove]");
+    if(rem){ e.stopPropagation(); removeTemplate(rem.closest(".slot").getAttribute("data-type")); return; }
+  });
+
+  // slots: click + keyboard + drag/drop
+  TYPES.forEach(function(t){
+    var slot=$("#slot-"+t);
+    slot.addEventListener("click", function(e){
+      if(e.target.closest("[data-replace],[data-remove]")) return;
+      chooseFile(t);
+    });
+    slot.addEventListener("keydown", function(e){
+      if(e.key==="Enter"||e.key===" "){ e.preventDefault(); chooseFile(t); }
+    });
+    ["dragenter","dragover"].forEach(function(ev){ slot.addEventListener(ev, function(e){ e.preventDefault(); slot.classList.add("drag"); }); });
+    ["dragleave","drop"].forEach(function(ev){ slot.addEventListener(ev, function(e){ e.preventDefault(); slot.classList.remove("drag"); }); });
+    slot.addEventListener("drop", function(e){
+      var f=e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if(f) handleFile(f, t);
+    });
+  });
+
+  $("#file-input").addEventListener("change", function(e){
+    var f=e.target.files && e.target.files[0];
+    if(f && pendingType) handleFile(f, pendingType);
+  });
+
+  $all(".seg [data-type]").forEach(function(btn){
+    btn.addEventListener("click", function(){ if(!btn.disabled) selectType(btn.getAttribute("data-type")); });
+  });
+
+  $("#btn-word").addEventListener("click", onExportWord);
+  $("#btn-pdf").addEventListener("click", onExportPdf);
+  $("#btn-clear").addEventListener("click", function(){
+    state.values[state.type]={};
+    renderFields();
+    toast("Campos vaciados");
+  });
+
+  // ---------- boot: restore stored templates ----------
+  function restore(){
+    var jobs=TYPES.map(function(t){
+      return Promise.all([Store.get(kTpl(t)), Store.get(kMeta(t))]).then(function(r){
+        if(!r[0]) return null;
+        var tpl; try{ tpl=JSON.parse(r[0]); }catch(_){ return null; }
+        if(!tpl || !tpl.b64) return null;
+        state.tpl[t]={ name:tpl.name||"plantilla.docx", b64:tpl.b64 };
+        var savedMeta={}; if(r[1]){ try{ savedMeta=JSON.parse(r[1])||{}; }catch(_){ savedMeta={}; } }
+        return parseTemplate(b64ToAb(tpl.b64)).then(function(parsed){
+          var nameField=(savedMeta.nameField && parsed.tags.indexOf(savedMeta.nameField)>=0)
+            ? savedMeta.nameField : defaultNameField(parsed.tags);
+          state.meta[t]={ tags:parsed.tags, html:parsed.html, labels:savedMeta.labels||{}, nameField:nameField };
+          setSlotUI(t);
+        }).catch(function(){ setSlotUI(t); });
+      });
+    });
+    return Promise.all(jobs);
+  }
+
+  restore().then(function(){
+    var first = state.tpl.fisica ? "fisica" : (state.tpl.juridica ? "juridica" : "fisica");
+    selectType(first);
+    refreshTypeAvailability();
+  }).catch(function(err){ console.error(err); selectType("fisica"); });
+
+})();
+</script>
+</body>
+</html>
