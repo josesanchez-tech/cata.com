@@ -1,1 +1,513 @@
+html_content = """<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Residencial - White Sands, Bávaro</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #3b82f6;
+            --secondary: #0d9488;
+            --accent: #f59e0b;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--text-light);
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Tabs Navigation */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background-color: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-light);
+            background-color: #26334d;
+        }
+
+        .tab-btn.active {
+            background-color: var(--primary-light);
+            color: #ffffff;
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--primary-light);
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            font-size: 1.6rem;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin: 20px 0 10px 0;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background-color: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            text-align: center;
+        }
+
+        .metric-card.accent {
+            border-left-color: var(--accent);
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(15, 23, 42, 0.4);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background-color: rgba(30, 58, 138, 0.5);
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: rgba(255,255,255,0.03);
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .highlight-row {
+            background-color: rgba(13, 148, 136, 0.15);
+            font-weight: bold;
+        }
+
+        /* Images */
+        .img-container {
+            width: 100%;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .img-caption {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* List Items */
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Proyecto Residencial White Sands</h1>
+        <p>Bávaro, La Altagracia | 55 Unidades & Amenidades Resort</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs-nav">
+        <button class="tab-btn active" onclick="openTab('resumen')">Resumen General</button>
+        <button class="tab-btn" onclick="openTab('masterplan')">Master Plan</button>
+        <button class="tab-btn" onclick="openTab('planos')">Planos de Aptos</button>
+        <button class="tab-btn" onclick="openTab('renders')">Renders 3D</button>
+        <button class="tab-btn" onclick="openTab('financiero')">Análisis Financiero</button>
+    </div>
+
+    <!-- TAB 1: RESUMEN GENERAL -->
+    <div id="resumen" class="tab-content active">
+        <h2>Descripción del Proyecto</h2>
+        <p>Desarrollo residencial boutique ubicado a pocos metros de la playa en White Sands Beach & Golf, Bávaro. El proyecto consta de 55 unidades de apartamentos distribuidos en bloques de 3 niveles con rooftops privados en las unidades del último piso y patios traseros con picuzzi en el primer nivel.</p>
+        
+        <br>
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Superficie Terreno</div>
+                <div class="metric-value">6,428.95 m²</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Total Unidades</div>
+                <div class="metric-value">55 Aptos</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Niveles Máximos</div>
+                <div class="metric-value">3 + Rooftops</div>
+            </div>
+            <div class="metric-card accent">
+                <div class="metric-label">Parqueos Asignados</div>
+                <div class="metric-value">55 Plazas</div>
+            </div>
+        </div>
+
+        <h3>Distribución por Tipología</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Tipología</th>
+                    <th>Porcentaje</th>
+                    <th>Unidades</th>
+                    <th>Descripción Principales</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Tipología A (Lock-off)</strong></td>
+                    <td>50%</td>
+                    <td>27 Unidades</td>
+                    <td>1 Habitación + Estudio Convertible + 2 Baños Completos (~72 m²)</td>
+                </tr>
+                <tr>
+                    <td><strong>Tipología B (Estándar)</strong></td>
+                    <td>50%</td>
+                    <td>28 Unidades</td>
+                    <td>1 Habitación + 1 Baño Completo (~55 m²)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Características de las Unidades por Nivel</h3>
+        <ul>
+            <li><strong>Primer Nivel:</strong> Patio privado trasero de 22 m² equipado con Picuzzi/Jacuzzi, terraza techada/lounge y jardín.</li>
+            <li><strong>Segundo Nivel:</strong> Balcón privado con vista directa al área social y piscinas.</li>
+            <li><strong>Tercer Nivel:</strong> Incluye terraza Rooftop privada exclusiva (~45-55 m²) en el nivel 4 con Jacuzzi, pergolado, zona de BBQ y solárium.</li>
+        </ul>
+    </div>
+
+    <!-- TAB 2: MASTER PLAN -->
+    <div id="masterplan" class="tab-content">
+        <h2>Plano de Conjunto & Dimensionamiento</h2>
+        <p>Distribución urbanística en forma de "U" diseñada para maximizar las vistas a las áreas verdes y piscina central, optimizando la ventilación cruzada y el uso peatonal.</p>
+        
+        <div class="img-container">
+            <img src="watermarked_img_6939169256248640946.jpg" alt="Master Plan del Proyecto">
+            <div class="img-caption">Figura 1: Master Plan General del Proyecto en terreno de 6,428.95 m².</div>
+        </div>
+
+        <h3>Cuadro de Dimensiones Urbanísticas</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Zona / Elemento</th>
+                    <th>Dimensiones Exactas</th>
+                    <th>Área / Superficie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Linderos del Solar</strong></td>
+                    <td>63.50 m (Frente) x 98.35 m (Fondo)</td>
+                    <td>6,428.95 m²</td>
+                </tr>
+                <tr>
+                    <td><strong>Bloques Residenciales (3)</strong></td>
+                    <td>2 Bloques de 14m x 42m | 1 Bloque de 32m x 14m</td>
+                    <td>~1,624 m² Huella (25.2%)</td>
+                </tr>
+                <tr>
+                    <td><strong>Patio Central Peatonal</strong></td>
+                    <td>32.00 m de ancho x 48.00 m de largo</td>
+                    <td>~1,536 m²</td>
+                </tr>
+                <tr>
+                    <td><strong>Piscina Principal</strong></td>
+                    <td>22.00 m x 8.00 m (Espejo de agua)</td>
+                    <td>176 m²</td>
+                </tr>
+                <tr>
+                    <td><strong>Área de Parqueos</strong></td>
+                    <td>55 plazas (2.50m x 5.00m c/u) + Carril 6m</td>
+                    <td>~1,150 m² (17.8%)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TAB 3: PLANOS ARQUITECTÓNICOS -->
+    <div id="planos" class="tab-content">
+        <h2>Planos Arquitectónicos de Unidades</h2>
+        
+        <h3>1. Planta Arquitectónica - Nivel 1 (Con Patio Privado)</h3>
+        <div class="img-container">
+            <img src="watermarked_img_13039215512906681033.jpg" alt="Plano Apto 1er Nivel con Estudio">
+            <div class="img-caption">Figura 2: Distribución de Apto Tipología A (1 Hab + Estudio + 2 Baños + Patio Privado con Jacuzzi).</div>
+        </div>
+
+        <br>
+        <h3>2. Planta Arquitectónica - Nivel 3 y Rooftop Privado</h3>
+        <div class="img-container">
+            <img src="watermarked_img_526100493509348122.jpg" alt="Plano Nivel 3 y Rooftop">
+            <div class="img-caption">Figura 3: Distribución del 3er Nivel con escalera interna y nivel Rooftop equipado.</div>
+        </div>
+    </div>
+
+    <!-- TAB 4: RENDERS 3D -->
+    <div id="renders" class="tab-content">
+        <h2>Visualización 3D y Renders</h2>
+        <p>Vistas hiperrealistas del complejo, áreas sociales, patios de primer nivel y rooftops.</p>
+
+        <div class="img-container">
+            <img src="watermarked_img_573782732343391740.jpg" alt="Renders 3D del Proyecto">
+            <div class="img-caption">Figura 4: Vistas generales en render 3D (Vista Aérea, Área Social/Piscina, Patio Nivel 1 y Rooftop).</div>
+        </div>
+    </div>
+
+    <!-- TAB 5: ANÁLISIS FINANCIERO -->
+    <div id="financiero" class="tab-content">
+        <h2>Análisis de Factibilidad Financiera</h2>
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Ingresos Totales (Ventas)</div>
+                <div class="metric-value" style="color: #4ade80;">$10,440,000 USD</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Costo Total Proyecto</div>
+                <div class="metric-value" style="color: #f87171;">$8,170,130 USD</div>
+            </div>
+            <div class="metric-card accent">
+                <div class="metric-label">Utilidad Neta (Antes Imp)</div>
+                <div class="metric-value">$2,269,870 USD</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Margen Neto</div>
+                <div class="metric-value">21.7%</div>
+            </div>
+        </div>
+
+        <h3>Estructura Detallada de Costos e Ingresos</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Concepto</th>
+                    <th>Base de Cálculo</th>
+                    <th class="text-right">Monto (USD)</th>
+                    <th class="text-right">% s/ Ventas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td><strong>INGRESOS TOTALES POR VENTAS</strong></td>
+                    <td><strong>4,350 m² vendibles x $2,400 /m²</strong></td>
+                    <td class="text-right"><strong>$10,440,000</strong></td>
+                    <td class="text-right"><strong>100.0%</strong></td>
+                </tr>
+                <tr>
+                    <td>Costo Terreno (Aportado a Fideicomiso)</td>
+                    <td>6,428.95 m² x $210 /m²</td>
+                    <td class="text-right">$1,350,080</td>
+                    <td class="text-right">12.9%</td>
+                </tr>
+                <tr>
+                    <td>Costo Directo de Construcción</td>
+                    <td>4,900 m² construidos x $1,100 /m²</td>
+                    <td class="text-right">$5,390,000</td>
+                    <td class="text-right">51.6%</td>
+                </tr>
+                <tr>
+                    <td>Gastos Indirectos, Licencias y Diseños</td>
+                    <td>~8% sobre costo directo</td>
+                    <td class="text-right">$431,200</td>
+                    <td class="text-right">4.1%</td>
+                </tr>
+                <tr>
+                    <td>Comisiones de Ventas y Marketing</td>
+                    <td>~5% sobre ventas totales</td>
+                    <td class="text-right">$522,000</td>
+                    <td class="text-right">5.0%</td>
+                </tr>
+                <tr>
+                    <td>Honorarios Fideicomiso y Legales</td>
+                    <td>~1.5% sobre ventas totales</td>
+                    <td class="text-right">$156,600</td>
+                    <td class="text-right">1.5%</td>
+                </tr>
+                <tr>
+                    <td>Intereses Préstamo Interino Bancario</td>
+                    <td>$2.69M USD al 8.5% anual (18 meses parcial)</td>
+                    <td class="text-right">$171,800</td>
+                    <td class="text-right">1.6%</td>
+                </tr>
+                <tr>
+                    <td>Costo Financiero Solar Diferido</td>
+                    <td>$1.35M USD al 6.0% anual (18 meses)</td>
+                    <td class="text-right">$121,500</td>
+                    <td class="text-right">1.2%</td>
+                </tr>
+                <tr>
+                    <td>Gastos de Cierre Bancario</td>
+                    <td>1.0% sobre línea de crédito aprobada</td>
+                    <td class="text-right">$26,950</td>
+                    <td class="text-right">0.3%</td>
+                </tr>
+                <tr class="highlight-row">
+                    <td><strong>COSTO TOTAL DEL PROYECTO</strong></td>
+                    <td><strong>Suma de Egresos Operativos y Financieros</strong></td>
+                    <td class="text-right"><strong>$8,170,130</strong></td>
+                    <td class="text-right"><strong>78.2%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Indicadores clave de Rentabilidad</h3>
+        <ul>
+            <li><strong>Utilidad Neta Proyectada:</strong> $2,269,870 USD</li>
+            <li><strong>Margen Neto de Ganancia:</strong> 21.7%</li>
+            <li><strong>Punto de Equilibrio:</strong> Venta de 21 unidades (~38% del proyecto) cubre el 100% de los costos de construcción y el valor del terreno aportado.</li>
+        </ul>
+    </div>
+
+    <script>
+        function openTab(tabId) {
+            // Hide all tabs
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Deactivate all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => button.classList.remove('active'));
+
+            // Show selected tab and activate button
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
+"""
+
+with open("Proyecto_White_Sands.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+
+print("HTML file generated successfully.")
